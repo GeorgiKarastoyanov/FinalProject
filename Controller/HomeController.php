@@ -19,6 +19,9 @@ class HomeController extends BaseController
     public function cart() {
         $this->renderView('cart');
     }
+    public function getAllProducts(){
+        $this->renderView('getAllProducts');
+    }
 
     public function notFound($message) {
         require_once "View/not-found.php";
