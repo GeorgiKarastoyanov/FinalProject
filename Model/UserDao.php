@@ -22,7 +22,8 @@ class UserDao{
     }
 
     public static function getUserByEmail($email){
-        $query = "SELECT id, email, firstName, lastName, adress FROM users WHERE email = :email;";
+
+        $query = "SELECT id, email, firstName, lastName, address FROM users WHERE email = :email;";
         $stmt = $GLOBALS['PDO']->prepare($query);
         $stmt->execute(array('email' => $email));
         $user = $stmt->fetch(\PDO::FETCH_ASSOC);
@@ -42,7 +43,23 @@ class UserDao{
         $stmt = $GLOBALS['PDO']->prepare($query);
         $stmt->execute(array('email' => $email));
         $password = $stmt->fetch(\PDO::FETCH_ASSOC);
-        return $password;
+        return $password['password'];
+    }
+
+    public static function delete($user_id){
+        $query = "UPDATE users SET email='DELETED', password='DELETED', firstName='DELETED', lastName='DELETED', address='DELETED'
+                  WHERE id = :id LIMIT 1;";
+        $stmt = $GLOBALS['PDO']->prepare($query);
+        try{
+            $stmt->execute(array('id' => $user_id));
+
+        }
+        catch (\Exception $e){
+            echo $e->getMessage();
+            return false;
+
+        }
+        return true;
     }
 }
 

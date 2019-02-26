@@ -19,16 +19,6 @@ try{
         require_once $classPath;
     });
 
-    function handleErrors($error){
-        if($error instanceof CustomException){
-
-        }
-        include erorr.php
-    }
-
-
-    set_exception_handler("handleErrors");
-
     $GLOBALS["PDO"] = new PDO("mysql:host=127.0.0.1:3306;dbname=emag","root");
     session_start();
 

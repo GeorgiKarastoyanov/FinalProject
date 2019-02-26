@@ -52,12 +52,12 @@ class UserController extends BaseController
             throw new CustomException('You must enter password!');
         }
 
-        if (strlen($_POST['password']) < 10){
-            throw new CustomException('Password must be at least 10 characters long!');
+        if (strlen($_POST['password']) < 2){
+            throw new CustomException('Password must be at least 3 characters long!');
         }
 
-        if (strlen($_POST['confirm-password']) < 10){
-            throw new CustomException('Confirm-Password must be at least 10 characters long!');
+        if (strlen($_POST['confirm-password']) < 2){
+            throw new CustomException('Confirm-Password must be at least 3 characters long!');
         }
 
         if($_POST['password'] !== $_POST['confirm-password']){
@@ -82,7 +82,7 @@ class UserController extends BaseController
 
         unset($_SESSION['register_email']);
 
-        HomeController::index();
+        header("Location: ?target=home&action=index");
 
     }
 
@@ -114,22 +114,39 @@ class UserController extends BaseController
         if(! isset($_POST['password'])) {
             throw new CustomException('Please enter your password!');
         }
-
-        if(! password_verify($_POST['password'],UserDao::getPasswordByEmail($_SESSION['login_email']))) {
+        $passwordHash = UserDao::getPasswordByEmail($_SESSION['login_email']);
+        if(! password_verify($_POST['password'],$passwordHash)) {
             throw new CustomException('Invalid password!');
         }
         $user = UserDao::getUserByEmail($_SESSION['login_email']);
-
-        $_SESSION['user']['id'] = $user->getId();
-        $_SESSION['user']['email'] = $user->getEmail();
-        $_SESSION['user']['firstName'] = $user->getFirstName();
-        $_SESSION['user']['lastName'] = $user->getLastName();
-        $_SESSION['user']['address'] = $user->getAddress();
-
+        $_SESSION['user']['id'] = $user['id'];
+        $_SESSION['user']['email'] = $user['email'];
+        $_SESSION['user']['firstName'] = $user['firstName'];
+        $_SESSION['user']['lastName'] = $user['lastName'];
+        $_SESSION['user']['address'] = $user['address'];
         unset($_SESSION['login_email']);
+        header("Location: ?target=home&action=index");
 
-        HomeController::index();
+    }
 
+    public function logout(){
+        unset($_SESSION['user']);
+        header("Location: ?target=home&action=index");
+    }
+
+    public function delete(){
+        if(!isset($_SESSION['user']['id'])) {
+            throw new CustomException('Invalid account for deletion!');
+        }
+        if(!UserDao::delete($_SESSION['user']['id'])){
+            throw new CustomException('Account not deleted!');
+
+        }
+        $this->logout();
+    }
+
+    public function edit(){
+        //TO DO...
     }
 
     public function login_email_view(){

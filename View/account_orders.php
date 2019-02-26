@@ -1,7 +1,2 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: STRYGWYR
- * Date: 2/26/2019
- * Time: 12:51 AM
- */
+echo 'account_orders';

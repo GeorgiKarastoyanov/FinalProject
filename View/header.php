@@ -6,19 +6,21 @@
 </head>
 <body>
 <header>
-    <div id="logo"></div>
-    <div id="headerTitle">Emag</div>
+    <h1>Emag</h1>
 </header>
+<h3>Search bar</h3>
 <input id="input-products" onkeyup="loadNames()" type="text" placeholder="Enter product">
 <div id="autoComplete"></div>
-<form>
-    <input type="button" value="<?= isset($_SESSION['user']) ? 'My Account' : 'Log In'?>"
-           onclick="<?= isset($_SESSION['user']) ? '?target=user&action=account_view' : '?target=user&action=login_email_view'?>" />
-</form>
-<a href=""></a>
-<form action="?target=user&action=favorites">
-    <input type="submit" name="favorites" value="Favorites" />
-</form>
-<form action="?target=user&action=cart">
-    <input type="submit" name="cart" value="Cart" />
-</form>
+<br>
+<a href="<?= isset($_SESSION['user']) ? '?target=home&action=account' : '?target=user&action=login_email_view'?>">
+    <?= isset($_SESSION['user']) ? 'My Account' : 'Log In'?>
+</a>
+<br>
+<?= isset($_SESSION['user']) ? '<a href="?target=home&action=favorites">
+    Favorites
+</a>' : ''?>
+<br>
+<a href="?target=home&action=cart">
+    Cart
+</a>
+<br>

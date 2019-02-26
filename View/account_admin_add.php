@@ -1,7 +1,2 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: STRYGWYR
- * Date: 2/26/2019
- * Time: 12:53 AM
- */
+echo 'account_admin_add';
