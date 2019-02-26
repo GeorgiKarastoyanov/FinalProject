@@ -21,11 +21,12 @@ class UserInfo extends User
      * @param $lastName
      * @param $address
      */
-    public function __construct($email,$password,$firstName, $lastName)
+    public function __construct($email,$password,$firstName, $lastName, $address = null)
     {
         parent::__construct($email, $password);
         $this->firstName = $firstName;
         $this->lastName = $lastName;
+        $this->address = $address;
     }
 
 

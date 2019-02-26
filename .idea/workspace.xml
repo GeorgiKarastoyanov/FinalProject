@@ -2,30 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="25096d15-17c3-4e4a-bce5-dae965291a8b" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/git-emag.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Controller/BaseController.php" beforeDir="false" afterPath="$PROJECT_DIR$/Controller/BaseController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Controller/HomeController.php" beforeDir="false" afterPath="$PROJECT_DIR$/Controller/HomeController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Controller/UserController.php" beforeDir="false" afterPath="$PROJECT_DIR$/Controller/UserController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Model/UserDao.php" beforeDir="false" afterPath="$PROJECT_DIR$/Model/UserDao.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/View/account.php" beforeDir="false" afterPath="$PROJECT_DIR$/View/account.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/View/account_admin_add.php" beforeDir="false" afterPath="$PROJECT_DIR$/View/account_admin_add.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/View/account_admin_edit.php" beforeDir="false" afterPath="$PROJECT_DIR$/View/account_admin_edit.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/View/account_orders.php" beforeDir="false" afterPath="$PROJECT_DIR$/View/account_orders.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Model/UserInfo.php" beforeDir="false" afterPath="$PROJECT_DIR$/Model/UserInfo.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/View/account_profile.php" beforeDir="false" afterPath="$PROJECT_DIR$/View/account_profile.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/View/cart.php" beforeDir="false" afterPath="$PROJECT_DIR$/View/cart.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/View/favorites.php" beforeDir="false" afterPath="$PROJECT_DIR$/View/favorites.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/View/header.php" beforeDir="false" afterPath="$PROJECT_DIR$/View/header.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/View/login-email.html" beforeDir="false" afterPath="$PROJECT_DIR$/View/login-email.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/View/login-user.html" beforeDir="false" afterPath="$PROJECT_DIR$/View/login-user.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/View/main.php" beforeDir="false" afterPath="$PROJECT_DIR$/View/main.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/View/register-email.html" beforeDir="false" afterPath="$PROJECT_DIR$/View/register-email.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/View/register-user.html" beforeDir="false" afterPath="$PROJECT_DIR$/View/register-user.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/View/welcome.php" beforeDir="false" afterPath="$PROJECT_DIR$/View/welcome.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/index.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -36,6 +18,24 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/View/main.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="102">
+              <caret line="6" lean-forward="true" selection-start-line="6" selection-end-line="6" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/View/header.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="374">
+              <caret line="22" lean-forward="true" selection-start-line="22" selection-end-line="22" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Controller/HomeController.php">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="323">
@@ -45,19 +45,38 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/View/account.php">
+        <entry file="file://$PROJECT_DIR$/View/account_profile.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="578">
-              <caret line="34" selection-start-line="34" selection-end-line="34" />
+            <state relative-caret-position="255">
+              <caret line="15" lean-forward="true" selection-start-line="15" selection-end-line="15" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/View/register-user.html">
+        <entry file="file://$PROJECT_DIR$/Controller/UserController.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="960">
+              <caret line="224" column="42" selection-start-line="224" selection-start-column="42" selection-end-line="224" selection-end-column="42" />
+              <folding>
+                <element signature="e#225#821#0#PHP" />
+                <element signature="e#272#381#0#PHP" />
+                <element signature="e#827#2881#0#PHP" />
+                <element signature="e#868#988#0#PHP" />
+                <element signature="e#2887#3367#0#PHP" />
+                <element signature="e#3373#4428#0#PHP" />
+                <element signature="e#4434#4554#0#PHP" />
+                <element signature="e#4560#4873#0#PHP" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/View/account_admin_edit.php">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="17">
-              <caret line="1" selection-start-line="1" selection-end-line="9" selection-end-column="7" />
+              <caret line="1" column="26" lean-forward="true" selection-start-line="1" selection-start-column="26" selection-end-line="1" selection-end-column="26" />
             </state>
           </provider>
         </entry>
@@ -72,68 +91,31 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Model/UserInfo.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="459">
+              <caret line="32" column="7" lean-forward="true" selection-start-line="32" selection-start-column="7" selection-end-line="32" selection-end-column="7" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Model/User.php">
+          <provider selected="true" editor-type-id="text-editor" />
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Model/UserDao.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="493">
-              <caret line="65" selection-start-line="65" selection-end-line="65" />
+            <state relative-caret-position="544">
+              <caret line="82" column="41" selection-start-line="82" selection-start-column="41" selection-end-line="82" selection-end-column="41" />
               <folding>
                 <element signature="e#43#761#0#PHP" />
                 <element signature="e#767#1091#0#PHP" />
                 <element signature="e#1097#1407#0#PHP" />
                 <element signature="e#1413#1729#0#PHP" />
+                <element signature="e#1735#2207#0#PHP" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/View/account_profile.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="255">
-              <caret line="15" selection-start-line="15" selection-end-line="15" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/index.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="68">
-              <caret line="7" column="4" selection-start-line="7" selection-start-column="4" selection-end-line="7" selection-end-column="4" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Controller/UserController.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="765">
-              <caret line="163" column="1" selection-start-line="163" selection-start-column="1" selection-end-line="163" selection-end-column="1" />
-              <folding>
-                <element signature="e#225#821#0#PHP" />
-                <element signature="e#827#2881#0#PHP" />
-                <element signature="e#2887#3367#0#PHP" />
-                <element signature="e#3373#4428#0#PHP" />
-                <element signature="e#4434#4554#0#PHP" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/View/account_orders.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="17">
-              <caret line="1" column="22" selection-start-line="1" selection-start-column="22" selection-end-line="1" selection-end-column="22" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/View/header.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="442">
-              <caret line="26" selection-start-line="26" selection-end-line="26" />
             </state>
           </provider>
         </entry>
@@ -153,7 +135,6 @@
         <option value="$PROJECT_DIR$/View/login-email.html" />
         <option value="$PROJECT_DIR$/View/login-user.html" />
         <option value="$PROJECT_DIR$/Controller/HomeController.php" />
-        <option value="$PROJECT_DIR$/View/main.php" />
         <option value="$PROJECT_DIR$/View/welcome.php" />
         <option value="$PROJECT_DIR$/View/register-user.html" />
         <option value="$PROJECT_DIR$/Controller/BaseController.php" />
@@ -163,13 +144,15 @@
         <option value="$PROJECT_DIR$/View/account_admin_edit.php" />
         <option value="$PROJECT_DIR$/View/account.php" />
         <option value="$PROJECT_DIR$/View/header.php" />
-        <option value="$PROJECT_DIR$/Model/UserDao.php" />
-        <option value="$PROJECT_DIR$/Controller/UserController.php" />
+        <option value="$PROJECT_DIR$/Model/UserInfo.php" />
         <option value="$PROJECT_DIR$/View/account_profile.php" />
+        <option value="$PROJECT_DIR$/Controller/UserController.php" />
+        <option value="$PROJECT_DIR$/View/main.php" />
+        <option value="$PROJECT_DIR$/Model/UserDao.php" />
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds" extendedState="7">
+  <component name="ProjectFrameBounds" extendedState="6">
     <option name="y" value="23" />
     <option name="width" value="1920" />
     <option name="height" value="984" />
@@ -247,12 +230,12 @@
       <workItem from="1551121592694" duration="24000" />
       <workItem from="1551125396710" duration="2414000" />
       <workItem from="1551129065532" duration="11457000" />
-      <workItem from="1551180719996" duration="301000" />
+      <workItem from="1551180719996" duration="10118000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="14196000" />
+    <option name="totallyTimeSpent" value="24013000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
@@ -340,31 +323,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/View/account_admin_edit.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
-          <caret line="1" column="26" lean-forward="true" selection-start-line="1" selection-start-column="26" selection-end-line="1" selection-end-column="26" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/View/account_admin_add.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="17">
           <caret line="1" column="25" selection-start-line="1" selection-start-column="25" selection-end-line="1" selection-end-column="25" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/View/main.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="85">
-          <caret line="5" column="1" selection-start-line="5" selection-start-column="1" selection-end-line="5" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Controller/HomeController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="323">
-          <caret line="19" column="31" selection-start-line="19" selection-start-column="31" selection-end-line="19" selection-end-column="31" />
         </state>
       </provider>
     </entry>
@@ -382,36 +344,12 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Controller/BaseController.php">
+    <entry file="file://$PROJECT_DIR$/index.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="187">
-          <caret line="11" selection-start-line="11" selection-end-line="11" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Model/UserDao.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="493">
-          <caret line="65" selection-start-line="65" selection-end-line="65" />
+        <state relative-caret-position="119">
+          <caret line="7" column="4" selection-start-line="7" selection-start-column="4" selection-end-line="7" selection-end-column="4" />
           <folding>
-            <element signature="e#43#761#0#PHP" />
-            <element signature="e#767#1091#0#PHP" />
-            <element signature="e#1097#1407#0#PHP" />
-            <element signature="e#1413#1729#0#PHP" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Controller/UserController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="765">
-          <caret line="163" column="1" selection-start-line="163" selection-start-column="1" selection-end-line="163" selection-end-column="1" />
-          <folding>
-            <element signature="e#225#821#0#PHP" />
-            <element signature="e#827#2881#0#PHP" />
-            <element signature="e#2887#3367#0#PHP" />
-            <element signature="e#3373#4428#0#PHP" />
-            <element signature="e#4434#4554#0#PHP" />
+            <element signature="e#7#39#0#PHP" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -425,22 +363,84 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/View/header.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="442">
-          <caret line="26" selection-start-line="26" selection-end-line="26" />
+        <state relative-caret-position="374">
+          <caret line="22" lean-forward="true" selection-start-line="22" selection-end-line="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/View/account_admin_edit.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="17">
+          <caret line="1" column="26" lean-forward="true" selection-start-line="1" selection-start-column="26" selection-end-line="1" selection-end-column="26" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/View/account_profile.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="255">
-          <caret line="15" selection-start-line="15" selection-end-line="15" />
+          <caret line="15" lean-forward="true" selection-start-line="15" selection-end-line="15" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/index.php">
+    <entry file="file://$PROJECT_DIR$/Model/User.php">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Model/UserInfo.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
-          <caret line="7" column="4" selection-start-line="7" selection-start-column="4" selection-end-line="7" selection-end-column="4" />
+        <state relative-caret-position="459">
+          <caret line="32" column="7" lean-forward="true" selection-start-line="32" selection-start-column="7" selection-end-line="32" selection-end-column="7" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Controller/BaseController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="187">
+          <caret line="11" selection-start-line="11" selection-end-line="11" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Controller/HomeController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="323">
+          <caret line="19" column="31" selection-start-line="19" selection-start-column="31" selection-end-line="19" selection-end-column="31" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/View/main.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="102">
+          <caret line="6" lean-forward="true" selection-start-line="6" selection-end-line="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Controller/UserController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="960">
+          <caret line="224" column="42" selection-start-line="224" selection-start-column="42" selection-end-line="224" selection-end-column="42" />
+          <folding>
+            <element signature="e#225#821#0#PHP" />
+            <element signature="e#272#381#0#PHP" />
+            <element signature="e#827#2881#0#PHP" />
+            <element signature="e#868#988#0#PHP" />
+            <element signature="e#2887#3367#0#PHP" />
+            <element signature="e#3373#4428#0#PHP" />
+            <element signature="e#4434#4554#0#PHP" />
+            <element signature="e#4560#4873#0#PHP" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Model/UserDao.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="544">
+          <caret line="82" column="41" selection-start-line="82" selection-start-column="41" selection-end-line="82" selection-end-column="41" />
+          <folding>
+            <element signature="e#43#761#0#PHP" />
+            <element signature="e#767#1091#0#PHP" />
+            <element signature="e#1097#1407#0#PHP" />
+            <element signature="e#1413#1729#0#PHP" />
+            <element signature="e#1735#2207#0#PHP" />
+          </folding>
         </state>
       </provider>
     </entry>

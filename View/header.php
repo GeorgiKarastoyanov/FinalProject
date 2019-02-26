@@ -16,11 +16,7 @@
     <?= isset($_SESSION['user']) ? 'My Account' : 'Log In'?>
 </a>
 <br>
-<?= isset($_SESSION['user']) ? '<a href="?target=home&action=favorites">
-    Favorites
-</a>' : ''?>
+<?= isset($_SESSION['user']) ? '<a href="?target=home&action=favorites">Favorites</a>' : ''?>
 <br>
-<a href="?target=home&action=cart">
-    Cart
-</a>
+<a href="?target=home&action=cart">Cart</a>
 <br>
