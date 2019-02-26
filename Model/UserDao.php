@@ -61,5 +61,77 @@ class UserDao{
         }
         return true;
     }
+
+    public static function editProfile(UserInfo $user){
+        $query = "UPDATE users SET";
+        $params = [];
+
+        //email
+        if($user->getEmail()){
+            $email = $user->getEmail();
+            $query .= " email = :$email";
+            $params["email"] = $email;
+        }
+        //password
+        if($user->getPassword()){
+            $password = $user->getEmail();
+            $params["password"] = $password;
+            if(!$user->getEmail()){
+                $query .= " password = :password";
+            }
+            else{
+                $query .= ", password = :password";
+            }
+        }
+        //first name
+        if($user->getFirstName()){
+            $firstName = $user->getFirstName();
+            $params["firstName"] = $firstName;
+            if(!$user->getEmail()&& !$user->getPassword()){
+                $query .= " firstName = :firstName";
+            }
+            else{
+                $query .= ", firstName = :firstName";
+            }
+        }
+
+        //last name
+        if($user->getLastName()) {
+            $lastName = $user->getLastName();
+            $params["lastName"] = $lastName;
+            if(!$user->getEmail() && !$user->getPassword() && !$user->getFirstName()){
+                $query .= " lastName = :lastName";
+            }
+            else{
+                $query .= ", lastName = :lastName";
+            }
+        }
+
+        //address
+        if($user->getAddress()) {
+            $address = $user->getAddress();
+            $params["address"] = $address;
+            if(!$user->getEmail()&& !$user->getPassword() && !$user->getFirstName() && !$user->getLastName()){
+                $query .= " address = :address";
+            }
+            else{
+                $query .= ", address = :address";
+            }
+        }
+        $query .= " WHERE id = :id;";
+        $params['id'] = $user->getId();
+        //dd($params,$query);
+        $stmt = $GLOBALS['PDO']->prepare($query);
+        try{
+            $stmt->execute($params);
+
+        }
+        catch (\Exception $e){
+            echo $e->getMessage();
+            return false;
+
+        }
+        return true;
+    }
 }
 
