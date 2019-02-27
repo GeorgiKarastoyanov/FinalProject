@@ -6,7 +6,7 @@ namespace model;
 
 class ProductDao
 {
-    public static function getAllProducts(){
+    public static function getAllProducts($priceOrder,$brand){
 
         /** @var \PDO $pdo */
         $pdo = $GLOBALS["PDO"];
@@ -17,13 +17,39 @@ JOIN categories as c ON s.categoryId = c.id
 JOIN models as m ON m.id = p.modelId
 JOIN brands as b ON b.id = m.brandId";
 
+        $params = [];
+        if ($brand != "") {
+            $query .= " WHERE b.name = ?";
+            $params[] = $brand;
+        }
+
+        if($priceOrder === "ascending") {
+            $query .= " ORDER BY price";
+        }
+        if($priceOrder === "descending"){
+            $query .= " ORDER BY price DESC";
+        }
+
         $stmt = $pdo->prepare($query);
-        $stmt ->execute();
+        $stmt ->execute($params);
         $products = [];
         while($row = $stmt->fetch(\PDO::FETCH_OBJ)){
             $products[] = new Product($row->id,$row->price, $row->quantity, $row->subCat,$row->cat ,$row->model, $row->brand);
         }
         return $products;
+    }
+
+    public static function getAllBrands(){
+        /** @var \PDO $pdo */
+        $pdo = $GLOBALS["PDO"];
+        $stmt = $pdo->prepare("SELECT name FROM brands");
+        $stmt ->execute();
+        $rows = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+        $brands = [];
+        foreach ($rows as $row){
+            $brands[] = $row["name"];
+        }
+        return $brands;
     }
 
     public static function addProduct(Product $product){
