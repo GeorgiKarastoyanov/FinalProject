@@ -14,22 +14,23 @@ class ProductController extends BaseController{
     private $brand = "";
 
     public function getAllProducts(){
-        include "View/getAllProducts.php";
+        require "View/getAllProducts.php";
     }
 
     public function showAllProducts(){
-        $products = ProductDao::getAllProducts($this->priceOrder,$this->brand);
+        $products = ProductDao::getAllProducts();
         $brands = ProductDao::getAllBrands();
         $selectedOrder = "";
         $selectedBrand = "";
-        include "View/allProductsView.php";
+        require "View/allProductsView.php";
     }
 
     public function addProductView(){
-        include "View/addProducts.php";
+        require "View/addProducts.php";
     }
 
     public function addProduct(){
+
         //TO DO better validations
 //        if(isset($_POST["addProduct"])){
 //            $id = "";
@@ -56,6 +57,7 @@ class ProductController extends BaseController{
 //            ProductDao::addProduct($product);
 //            throw new CustomException('Product Uploaded');
 //        }
+
     }
 
     public function changePrice(){
@@ -63,8 +65,8 @@ class ProductController extends BaseController{
             $productId = $_POST["productId"];
             $amount = $_POST["changePrice"];
             ProductDao::changePrice($productId,$amount);
-            $products = ProductDao::getAllProducts($this->priceOrder,$this->brand);
-            include "View/allProductsView.php";
+            $products = ProductDao::getAllProducts();
+            require "View/allProductsView.php";
         }
     }
 
@@ -72,7 +74,7 @@ class ProductController extends BaseController{
     if(isset($_POST["view"])){
         $productId = $_POST["productId"];
         $product = ProductDao::getProduct($productId);
-        include "View/showProduct.php";
+        require "View/showProduct.php";
     }
     }
 
@@ -87,22 +89,37 @@ class ProductController extends BaseController{
 
     public function filter(){
         if(isset($_GET["priceOrder"]) && $_GET["priceOrder"] != "all"){
-            $this->priceOrder = $_GET["priceOrder"];
-            $selectedOrder = $this->priceOrder;
+            $priceOrder = $_GET["priceOrder"];
+            $selectedOrder = $priceOrder;
         }
         else{
+            $priceOrder = "";
             $selectedOrder = "";
         }
         if(isset($_GET["brand"]) && $_GET["brand"] != "all"){
-            $this->brand = $_GET["brand"];
-            $selectedBrand = $this->brand;
+            $brand = $_GET["brand"];
+            $selectedBrand = $brand;
         }
         else{
+            $brand = "";
             $selectedBrand = "";
         }
-        $products = ProductDao::getAllProducts($this->priceOrder,$this->brand);
+        if(isset($_GET["page"])){
+            $page = $_GET["page"];
+        }
+        else{
+            $page = 1;
+        }
+        $products = ProductDao::getAllProducts($priceOrder,$brand,$page);
         $brands = ProductDao::getAllBrands();
-        include "View/allProductsView.php";
+        require "View/allProductsView.php";
+    }
+    public function makePages(){
+        $products = ProductDao::countProducts();
+        $arr["totalProducts"] = $products;
+        $arr["productsPerPage"] = 2;
+        header('Content-Type: application/json');
+        echo json_encode($arr);
     }
 
 }

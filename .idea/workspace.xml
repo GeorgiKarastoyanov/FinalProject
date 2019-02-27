@@ -2,22 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="25096d15-17c3-4e4a-bce5-dae965291a8b" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/View/topProducts.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Controller/BaseController.php" beforeDir="false" afterPath="$PROJECT_DIR$/Controller/BaseController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Controller/HomeController.php" beforeDir="false" afterPath="$PROJECT_DIR$/Controller/HomeController.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/View/css/styles.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Controller/ProductController.php" beforeDir="false" afterPath="$PROJECT_DIR$/Controller/ProductController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Controller/UserController.php" beforeDir="false" afterPath="$PROJECT_DIR$/Controller/UserController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Model/Product.php" beforeDir="false" afterPath="$PROJECT_DIR$/Model/Product.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Model/ProductDao.php" beforeDir="false" afterPath="$PROJECT_DIR$/Model/ProductDao.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Model/UserDao.php" beforeDir="false" afterPath="$PROJECT_DIR$/Model/UserDao.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/View/account.php" beforeDir="false" afterPath="$PROJECT_DIR$/View/account.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/View/account_admin_add.php" beforeDir="false" afterPath="$PROJECT_DIR$/View/account_admin_add.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/View/account_order_details.php" beforeDir="false" afterPath="$PROJECT_DIR$/View/account_order_details.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/View/account_orders.php" beforeDir="false" afterPath="$PROJECT_DIR$/View/account_orders.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/View/favorites.php" beforeDir="false" afterPath="$PROJECT_DIR$/View/favorites.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/View/header.php" beforeDir="false" afterPath="$PROJECT_DIR$/View/header.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/index.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/View/allProductsView.php" beforeDir="false" afterPath="$PROJECT_DIR$/View/allProductsView.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/View/js/filters.js" beforeDir="false" afterPath="$PROJECT_DIR$/View/js/filters.js" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -27,7 +16,7 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/View/topProducts.php">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="289">
@@ -40,7 +29,7 @@
         <entry file="file://$PROJECT_DIR$/View/favorites.php">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="289">
-              <caret line="17" column="8" lean-forward="true" selection-start-line="17" selection-start-column="8" selection-end-line="17" selection-end-column="8" />
+              <caret line="17" column="8" selection-start-line="17" selection-start-column="8" selection-end-line="17" selection-end-column="8" />
             </state>
           </provider>
         </entry>
@@ -63,21 +52,14 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Controller/ProductController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="527">
-              <caret line="107" column="1" lean-forward="true" selection-start-line="107" selection-start-column="1" selection-end-line="107" selection-end-column="1" />
+            <state relative-caret-position="-791">
+              <caret line="32" lean-forward="true" selection-start-line="32" selection-end-line="32" />
               <folding>
                 <element signature="e#31#49#0#PHP" expanded="true" />
                 <element signature="e#286#368#0#PHP" />
-                <element signature="e#374#642#0#PHP" />
-                <element signature="e#648#727#0#PHP" />
-                <element signature="e#733#1961#0#PHP" />
-                <element signature="e#1967#2330#0#PHP" />
-                <element signature="e#2336#2545#0#PHP" />
-                <element signature="e#2551#2899#0#PHP" />
-                <element signature="e#2905#3561#0#PHP" />
               </folding>
             </state>
           </provider>
@@ -87,9 +69,8 @@
         <entry file="file://$PROJECT_DIR$/Model/ProductDao.php">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="544">
-              <caret line="123" column="1" lean-forward="true" selection-start-line="123" selection-start-column="1" selection-end-line="123" selection-end-column="1" />
+              <caret line="138" column="1" selection-start-line="138" selection-start-column="1" selection-end-line="138" selection-end-column="1" />
               <folding>
-                <element signature="e#50#1129#0#PHP" />
                 <element signature="e#1135#1505#0#PHP" />
                 <element signature="e#1511#2138#0#PHP" />
                 <element signature="e#2144#2401#0#PHP" />
@@ -132,13 +113,13 @@
         <option value="$PROJECT_DIR$/Controller/HomeController.php" />
         <option value="$PROJECT_DIR$/Controller/BaseController.php" />
         <option value="$PROJECT_DIR$/View/account_orders.php" />
-        <option value="$PROJECT_DIR$/Controller/ProductController.php" />
         <option value="$PROJECT_DIR$/View/account_order_details.php" />
         <option value="$PROJECT_DIR$/Controller/UserController.php" />
         <option value="$PROJECT_DIR$/View/favorites.php" />
         <option value="$PROJECT_DIR$/View/header.php" />
         <option value="$PROJECT_DIR$/Model/ProductDao.php" />
         <option value="$PROJECT_DIR$/View/topProducts.php" />
+        <option value="$PROJECT_DIR$/Controller/ProductController.php" />
       </list>
     </option>
   </component>
@@ -223,12 +204,12 @@
       <workItem from="1551180719996" duration="11908000" />
       <workItem from="1551211209169" duration="11466000" />
       <workItem from="1551261284079" duration="3288000" />
-      <workItem from="1551283436643" duration="10881000" />
+      <workItem from="1551283436643" duration="11220000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="51438000" />
+    <option name="totallyTimeSpent" value="51777000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
@@ -463,7 +444,7 @@
     <entry file="file://$PROJECT_DIR$/View/favorites.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="289">
-          <caret line="17" column="8" lean-forward="true" selection-start-line="17" selection-start-column="8" selection-end-line="17" selection-end-column="8" />
+          <caret line="17" column="8" selection-start-line="17" selection-start-column="8" selection-end-line="17" selection-end-column="8" />
         </state>
       </provider>
     </entry>
@@ -474,30 +455,11 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Controller/ProductController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="527">
-          <caret line="107" column="1" lean-forward="true" selection-start-line="107" selection-start-column="1" selection-end-line="107" selection-end-column="1" />
-          <folding>
-            <element signature="e#31#49#0#PHP" expanded="true" />
-            <element signature="e#286#368#0#PHP" />
-            <element signature="e#374#642#0#PHP" />
-            <element signature="e#648#727#0#PHP" />
-            <element signature="e#733#1961#0#PHP" />
-            <element signature="e#1967#2330#0#PHP" />
-            <element signature="e#2336#2545#0#PHP" />
-            <element signature="e#2551#2899#0#PHP" />
-            <element signature="e#2905#3561#0#PHP" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Model/ProductDao.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="544">
-          <caret line="123" column="1" lean-forward="true" selection-start-line="123" selection-start-column="1" selection-end-line="123" selection-end-column="1" />
+          <caret line="138" column="1" selection-start-line="138" selection-start-column="1" selection-end-line="138" selection-end-column="1" />
           <folding>
-            <element signature="e#50#1129#0#PHP" />
             <element signature="e#1135#1505#0#PHP" />
             <element signature="e#1511#2138#0#PHP" />
             <element signature="e#2144#2401#0#PHP" />
@@ -511,6 +473,17 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="289">
           <caret line="17" column="8" lean-forward="true" selection-start-line="17" selection-start-column="8" selection-end-line="17" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Controller/ProductController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-791">
+          <caret line="32" lean-forward="true" selection-start-line="32" selection-end-line="32" />
+          <folding>
+            <element signature="e#31#49#0#PHP" expanded="true" />
+            <element signature="e#286#368#0#PHP" />
+          </folding>
         </state>
       </provider>
     </entry>

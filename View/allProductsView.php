@@ -6,8 +6,10 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Products</title>
+    <link rel="stylesheet" href="View/css/styles.css">
 </head>
-<body>
+<body onload="pager()">
+<input id="hiddenPage" type="hidden" value="<?php echo $page ?>">
 <select id="priceFilter" onchange="filter()">
     <option value="all" <?php echo $selectedOrder == "" ? "selected" : "" ?>>Sort by price</option>
     <option value="ascending" <?php echo $selectedOrder == "ascending" ? "selected" : ""?>>Ascending</option>
@@ -54,6 +56,7 @@
         </tr>
     <?php } ?>
 </table>
+<div id="pager" ></div>
 </body>
 <script src="View/js/filters.js"></script>
 </html>
