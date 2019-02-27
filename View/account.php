@@ -7,6 +7,7 @@ echo "account nav";
             <ul>
                 <li><a href="?target=home&action=account">Profile</a></li>
                 <li><a href="?target=user&action=myOrders">My Orders</a></li>
+                <li><a href="?target=user&action=favorites">Favorites</a></li>
                 <?php if(isset($_SESSION['user']['id']) && $_SESSION['user']['id'] == 1){ ?>
                 <li>Admin Panel
                     <ul>

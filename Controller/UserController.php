@@ -231,23 +231,30 @@ class UserController extends BaseController
         $_SESSION['user']['lastName'] = $lastName;
         $_SESSION['user']['address'] = $address;
 
-        //TO DO massage success
         header("Location: ?target=home&action=index");
 
 
     }
-    //to do
+
     public function myOrders(){
         if(! isset($_SESSION['user']['id'])){
             throw new CustomException('You are not logged!');
         }
 
         $orders = UserDao::getAllOrders($_SESSION['user']['id']);
-        $_SESSION['user']['orders'] = $orders;
 
-        $this->renderView(['account','account_orders']);
+        $this->renderView(['account','account_orders'], ['orders' => $orders]);
 
 
+    }
+
+    public function favorites(){
+        if(! isset($_SESSION['user']['id'])){
+            throw new CustomException('You are not logged!');
+        }
+
+        $favorites = UserDao::getFavorites($_SESSION['user']['id']);
+        $this->renderView(['account','favorites'],['favorites' => $favorites]);
     }
 
     public function login_email_view(){

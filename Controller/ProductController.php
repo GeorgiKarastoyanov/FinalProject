@@ -30,18 +30,32 @@ class ProductController extends BaseController{
     }
 
     public function addProduct(){
-        if(isset($_POST["addProduct"])){
-            $id = "";
-            $price = $_POST["price"];
-            $quantity = $_POST["quantity"];
-            $subCat = $_POST["subCat"];
-            $category = $_POST["category"];
-            $brand = $_POST["brand"];
-            $model = $_POST["model"];
-            $product = new Product($id,$price,$quantity,$subCat,$category,$model,$brand);
-            ProductDao::addProduct($product);
-            include"View/added.php";
-        }
+        //TO DO better validations
+//        if(isset($_POST["addProduct"])){
+//            $id = "";
+//            $price = $_POST["price"];
+//            $quantity = $_POST["quantity"];
+//            $subCat = $_POST["sub-category"];
+//            $category = $_POST["category"];
+//            $brand = $_POST["brand"];
+//            $model = $_POST["model"];
+//            if(empty($_FILES)) {
+//                throw new CustomException('File not uploaded');
+//            }
+//            $tmp_name = $_FILES['img']['tmp_name'];
+//            if(!is_uploaded_file($tmp_name)) {
+//                throw new CustomException('File not uploaded');
+//            }
+//            $file_name = $brand.$model.".jpg";
+//            if(!move_uploaded_file($tmp_name, "View/product_images/$file_name")) {
+//                throw new CustomException('File not uploaded');
+//            }
+//            $image_uri = "View/product_images/$file_name";
+//            $product = new Product($id,$price,$quantity,$subCat,$category,$model,$brand,$image_uri);
+//            dd($product);
+//            ProductDao::addProduct($product);
+//            throw new CustomException('Product Uploaded');
+//        }
     }
 
     public function changePrice(){
@@ -68,8 +82,7 @@ class ProductController extends BaseController{
         }
         $orderId = $_GET['order'];
         $orderDetails = ProductDao::getOrderDetails($orderId);
-        $_SESSION['user']['orderDetails'] = $orderDetails;
-        $this->renderView(['account','account_order_details']);
+        $this->renderView(['account','account_order_details'],['orderDetails' => $orderDetails]);
     }
 
     public function filter(){
@@ -91,4 +104,5 @@ class ProductController extends BaseController{
         $brands = ProductDao::getAllBrands();
         include "View/allProductsView.php";
     }
+
 }
