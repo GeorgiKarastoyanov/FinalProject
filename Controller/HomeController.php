@@ -5,22 +5,31 @@ namespace controller;
 class HomeController extends BaseController
 {
     public function index() {
-      $this->renderView('main');
+      $this->renderView(['main']);
     }
 
     public function favorites() {
-        $this->renderView('favorites');
+        $this->renderView(['favorites']);
     }
 
     public function account() {
-        $this->renderView('account');
+        $this->renderView(['account','account_profile']);
+    }
+
+    public function addProduct() {
+        $this->renderView(['account','account_admin_add']);
+    }
+
+    public function editProduct() {
+        $this->renderView(['account','account_admin_edit']);
     }
 
     public function cart() {
-        $this->renderView('cart');
+        $this->renderView(['cart']);
     }
+
     public function getAllProducts(){
-        $this->renderView('getAllProducts');
+        $this->renderView(['getAllProducts']);
     }
 
     public function notFound($message) {
