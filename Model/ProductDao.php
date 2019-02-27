@@ -1,17 +1,12 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: georg
- * Date: 26.2.2019 г.
- * Time: 14:22
- */
+
 
 namespace model;
 
 
 class ProductDao
 {
-    public static function getAllProducts(){
+    public static function getAllProducts($priceOrder,$brand){
 
         /** @var \PDO $pdo */
         $pdo = $GLOBALS["PDO"];
@@ -22,13 +17,39 @@ JOIN categories as c ON s.categoryId = c.id
 JOIN models as m ON m.id = p.modelId
 JOIN brands as b ON b.id = m.brandId";
 
+        $params = [];
+        if ($brand != "") {
+            $query .= " WHERE b.name = ?";
+            $params[] = $brand;
+        }
+
+        if($priceOrder === "ascending") {
+            $query .= " ORDER BY price";
+        }
+        if($priceOrder === "descending"){
+            $query .= " ORDER BY price DESC";
+        }
+
         $stmt = $pdo->prepare($query);
-        $stmt ->execute();
+        $stmt ->execute($params);
         $products = [];
         while($row = $stmt->fetch(\PDO::FETCH_OBJ)){
             $products[] = new Product($row->id,$row->price, $row->quantity, $row->subCat,$row->cat ,$row->model, $row->brand);
         }
         return $products;
+    }
+
+    public static function getAllBrands(){
+        /** @var \PDO $pdo */
+        $pdo = $GLOBALS["PDO"];
+        $stmt = $pdo->prepare("SELECT name FROM brands");
+        $stmt ->execute();
+        $rows = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+        $brands = [];
+        foreach ($rows as $row){
+            $brands[] = $row["name"];
+        }
+        return $brands;
     }
 
     public static function addProduct(Product $product){
@@ -62,5 +83,17 @@ JOIN brands as b ON b.id = m.brandId WHERE p.id = ?";
         $product = new Product($row->id,$row->price, $row->quantity, $row->subCat,$row->cat ,$row->model, $row->brand);
         return $product;
 
+    }
+
+    public static function getOrderDetails($orderId){
+        $query = "SELECT CONCAT(d.name, ' ', c.name) as productName, a.price, a.quantity FROM ordered_products as a 
+                  LEFT JOIN products as b ON b.id = a.productId
+                  LEFT JOIN models as c ON c.id = b.modelId
+                  LEFT JOIN brands as d ON c.brandId = d.id
+                  WHERE orderId = :orderId;";
+        $stmt = $GLOBALS['PDO']->prepare($query);
+        $stmt->execute(array('orderId' => $orderId));
+        $orderDetails = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+        return $orderDetails;
     }
 }

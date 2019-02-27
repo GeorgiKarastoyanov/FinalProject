@@ -4,9 +4,11 @@ namespace controller;
 
 abstract class BaseController
 {
-    protected function renderView($viewName){
+    protected function renderView(array $viewNames){
         require_once "View/header.php";
-        require_once "View/" . $viewName . ".php";
+        foreach ($viewNames as $view){
+            require_once "View/" . $view . ".php";
+        }
         require_once "View/footer.php";
     }
 

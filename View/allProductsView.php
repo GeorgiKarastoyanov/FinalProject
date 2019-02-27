@@ -8,6 +8,17 @@
     <title>Products</title>
 </head>
 <body>
+<select id="priceFilter" onchange="filter()">
+    <option value="all" <?php echo $selectedOrder == "" ? "selected" : "" ?>>Sort by price</option>
+    <option value="ascending" <?php echo $selectedOrder == "ascending" ? "selected" : ""?>>Ascending</option>
+    <option value="descending" <?php echo $selectedOrder == "descending" ? "selected" : ""?>>Descending</option>
+</select>
+<select id="brandFilter" onchange="filter()">
+    <option value="all" <?php echo $selectedBrand == "" ? "selected" : "" ?>>Sort by brand</option>
+    <?php foreach ($brands as $brand) {?>
+    <option value="<?php echo $brand;  ?>" <?php echo $selectedBrand == $brand ? "selected" : "" ?> > <?php echo $brand;  ?></option>
+    <?php } ?>
+</select>
 <table>
     <tr>
         <th>Price</th>
@@ -44,4 +55,5 @@
     <?php } ?>
 </table>
 </body>
+<script src="View/js/filters.js"></script>
 </html>

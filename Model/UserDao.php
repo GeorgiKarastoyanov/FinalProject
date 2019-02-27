@@ -63,66 +63,32 @@ class UserDao{
     }
 
     public static function editProfile(UserInfo $user){
-        $query = "UPDATE users SET";
+        $query = "UPDATE users SET email = :email,";
         $params = [];
-
-        //email
-        if($user->getEmail()){
-            $email = $user->getEmail();
-            $query .= " email = :$email";
-            $params["email"] = $email;
-        }
+        $email = $user->getEmail();
+        $params["email"] = $email;
         //password
         if($user->getPassword()){
-            $password = $user->getEmail();
+            $password = $user->getPassword();
             $params["password"] = $password;
-            if(!$user->getEmail()){
-                $query .= " password = :password";
-            }
-            else{
-                $query .= ", password = :password";
-            }
+            $query .= " password = :password,";
         }
-        //first name
-        if($user->getFirstName()){
-            $firstName = $user->getFirstName();
-            $params["firstName"] = $firstName;
-            if(!$user->getEmail()&& !$user->getPassword()){
-                $query .= " firstName = :firstName";
-            }
-            else{
-                $query .= ", firstName = :firstName";
-            }
-        }
+        $query .= " firstName = :firstName, lastName = :lastName, address = :address WHERE id = :id;";
 
-        //last name
-        if($user->getLastName()) {
-            $lastName = $user->getLastName();
-            $params["lastName"] = $lastName;
-            if(!$user->getEmail() && !$user->getPassword() && !$user->getFirstName()){
-                $query .= " lastName = :lastName";
-            }
-            else{
-                $query .= ", lastName = :lastName";
-            }
-        }
+        $firstName = $user->getFirstName();
+        $params["firstName"] = $firstName;
 
-        //address
-        if($user->getAddress()) {
-            $address = $user->getAddress();
-            $params["address"] = $address;
-            if(!$user->getEmail()&& !$user->getPassword() && !$user->getFirstName() && !$user->getLastName()){
-                $query .= " address = :address";
-            }
-            else{
-                $query .= ", address = :address";
-            }
-        }
-        $query .= " WHERE id = :id;";
-        $params['id'] = $user->getId();
-        //dd($params,$query);
-        $stmt = $GLOBALS['PDO']->prepare($query);
+        $lastName = $user->getLastName();
+        $params["lastName"] = $lastName;
+
+        $address = $user->getAddress();
+        $params["address"] = $address;
+
+        $id = $user->getId();
+        $params["id"] = $id;
+
         try{
+            $stmt = $GLOBALS['PDO']->prepare($query);
             $stmt->execute($params);
 
         }
@@ -132,6 +98,14 @@ class UserDao{
 
         }
         return true;
+    }
+
+    public static function getAllOrders($userId){
+        $query = "SELECT id, date FROM orders WHERE userId = :id;";
+        $stmt = $GLOBALS['PDO']->prepare($query);
+        $stmt->execute(array('id' => $userId));
+        $orders = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+        return $orders;
     }
 }
 
