@@ -6,7 +6,7 @@ namespace model;
 
 class ProductDao
 {
-    public static function getAllProducts($priceOrder,$brand){
+    public static function getAllProducts($priceOrder = "",$brand = "", $page = 1){
 
         /** @var \PDO $pdo */
         $pdo = $GLOBALS["PDO"];
@@ -30,6 +30,11 @@ JOIN brands as b ON b.id = m.brandId";
             $query .= " ORDER BY price DESC";
         }
 
+        $perPage = 2;
+        $offset = ($page-1)*$perPage;
+
+        $query .= " LIMIT $perPage OFFSET $offset";
+
         $stmt = $pdo->prepare($query);
         $stmt ->execute($params);
         $products = [];
@@ -39,6 +44,16 @@ JOIN brands as b ON b.id = m.brandId";
         return $products;
     }
 
+    public static function countProducts(){
+        /** @var \PDO $pdo */
+        $pdo = $GLOBALS["PDO"];
+        $stmt = $pdo->prepare("SELECT COUNT(*) as total FROM products");
+        $stmt ->execute();
+        $rows = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+        $result = $rows[0];
+        $count = $result["total"];
+        return $count;
+    }
     public static function getAllBrands(){
         /** @var \PDO $pdo */
         $pdo = $GLOBALS["PDO"];
