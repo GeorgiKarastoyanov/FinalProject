@@ -36,7 +36,7 @@ class HomeController extends BaseController
         require_once "View/not-found.php";
     }
 
-    public function showSubCat(){
-        $this->renderView(['allCategoryView']);
-    }
+//    public function showSubCat(){
+//        $this->renderView(['allCategoryView']);
+//    }
 }

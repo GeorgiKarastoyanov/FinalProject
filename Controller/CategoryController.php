@@ -14,24 +14,10 @@ use model\SubCategoryDao;
 
 class CategoryController
 {
-//    public function showAllCategories(){
-//
-//        if (isset($_POST["allCategories"])){
-//
-//            $categories = CategoryDao::getAllCategories();
-//
-//
-//            /** @var Category $category */
-//        }
-//        include "view/main.php";
-//    }
 
     public static function showSubCat(){
         if(isset($_POST["category"])){
-            $test = [];
-            $test[] = SubCategoryDao::getSubCategory($_POST["category"]);
             echo json_encode(SubCategoryDao::getSubCategory($_POST["category"]));
         }
-        //include "View/allCategoryView.php";
     }
 }
