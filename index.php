@@ -19,7 +19,7 @@ try{
         require_once $classPath;
     });
 
-    $GLOBALS["PDO"] = new PDO("mysql:host=127.0.0.1:3307;dbname=emag","root");
+    $GLOBALS["PDO"] = new PDO("mysql:host=127.0.0.1:3306;dbname=emag","root");
     session_start();
 
     $controllerName = isset($_GET["target"]) ? $_GET["target"] : "home";

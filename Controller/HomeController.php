@@ -5,7 +5,7 @@ namespace controller;
 class HomeController extends BaseController
 {
     public function index() {
-      $this->renderView(['getAllProducts']);
+      $this->renderView(['getAllProducts','topProducts']);
     }
 
     public function favorites() {
