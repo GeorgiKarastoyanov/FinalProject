@@ -112,6 +112,18 @@ JOIN brands as b ON b.id = m.brandId WHERE p.id = ?";
 
     }
 
+    public static function getSpecs($productId){
+        /** @var \PDO $pdo */
+        $pdo = $GLOBALS["PDO"];
+        $stmt = $pdo->prepare("SELECT ps.name,sv.value FROM products as p
+JOIN spec_values as sv ON sv.productId = p.id
+JOIN product_spec as ps ON sv.specID = ps.Id
+WHERE p.id = ?");
+        $stmt ->execute([$productId]);
+        $specs = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+        return $specs;
+    }
+
     public static function getOrderDetails($orderId){
         $query = "SELECT CONCAT(d.name, ' ', c.name) as productName, a.price, a.quantity FROM ordered_products as a 
                   LEFT JOIN products as b ON b.id = a.productId

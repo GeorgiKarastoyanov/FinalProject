@@ -13,16 +13,15 @@ class ProductController extends BaseController{
     private $priceOrder = "";
     private $brand = "";
 
-    public function getAllProducts(){
-        require "View/getAllProducts.php";
-    }
-
     public function showAllProducts(){
         $products = ProductDao::getAllProducts();
         $brands = ProductDao::getAllBrands();
         $selectedOrder = "";
         $selectedBrand = "";
-        require "View/allProductsView.php";
+        $this->renderView(['allProductsView'],['products' => $products,'brands' => $brands,
+                                                'selectedBrand' => $selectedBrand,
+                                                    'selectedOrder'=>$selectedOrder]);
+//        require "View/allProductsView.php";
     }
 
     public function addProductView(){
@@ -60,22 +59,24 @@ class ProductController extends BaseController{
 
     }
 
-    public function changePrice(){
-        if(isset($_POST["change"])){
-            $productId = $_POST["productId"];
-            $amount = $_POST["changePrice"];
-            ProductDao::changePrice($productId,$amount);
-            $products = ProductDao::getAllProducts();
-            require "View/allProductsView.php";
-        }
-    }
+//    public function changePrice(){
+//        if(isset($_POST["change"])){
+//            $productId = $_POST["productId"];
+//            $amount = $_POST["changePrice"];
+//            ProductDao::changePrice($productId,$amount);
+//            $products = ProductDao::getAllProducts();
+//            require "View/allProductsView.php";
+//        }
+//    }
+
 
     public function getProduct(){
-    if(isset($_POST["view"])){
-        $productId = $_POST["productId"];
-        $product = ProductDao::getProduct($productId);
-        require "View/showProduct.php";
-    }
+        if(isset($_POST["view"])){
+            $productId = $_POST["productId"];
+            $product = ProductDao::getProduct($productId);
+            $specifications = ProductDao::getSpecs($productId);
+            require "View/showProduct.php";
+        }
     }
 
     public function orderDetails(){
@@ -112,7 +113,12 @@ class ProductController extends BaseController{
         }
         $products = ProductDao::getAllProducts($priceOrder,$brand,$page);
         $brands = ProductDao::getAllBrands();
-        require "View/allProductsView.php";
+        $this->renderView(['allProductsView'],['products' => $products,'brands' => $brands,'page' => $page,
+                                                'priceOrder' => $priceOrder,'brand' => $brand,
+                                                'selectedBrand' => $selectedBrand,
+                                                'selectedOrder'=>$selectedOrder]);
+
+        //require "View/allProductsView.php";
     }
     public function makePages(){
         $products = ProductDao::countProducts();
