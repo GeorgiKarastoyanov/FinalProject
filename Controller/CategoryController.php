@@ -8,24 +8,30 @@
 
 namespace controller;
 
-namespace controller;
-
 use model\SubCategory;
 use model\SubCategoryDao;
 
 
 class CategoryController
 {
-    public function showAllCategories(){
+//    public function showAllCategories(){
+//
+//        if (isset($_POST["allCategories"])){
+//
+//            $categories = CategoryDao::getAllCategories();
+//
+//
+//            /** @var Category $category */
+//        }
+//        include "view/main.php";
+//    }
 
-        if (isset($_POST["allCategories"])){
-
-            $categories = CategoryDao::getAllCategories();
-
-
-            /** @var Category $category */
+    public static function showSubCat(){
+        if(isset($_POST["category"])){
+            $test = [];
+            $test[] = SubCategoryDao::getSubCategory($_POST["category"]);
+            echo json_encode(SubCategoryDao::getSubCategory($_POST["category"]));
         }
-        include "view/main.php";
+        //include "View/allCategoryView.php";
     }
-
 }
