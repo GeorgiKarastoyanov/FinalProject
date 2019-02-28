@@ -13,53 +13,70 @@ class ProductController extends BaseController{
     private $priceOrder = "";
     private $brand = "";
 
-    public function getAllProducts(){
-        include "View/getAllProducts.php";
-    }
-
     public function showAllProducts(){
-        $products = ProductDao::getAllProducts($this->priceOrder,$this->brand);
+        $products = ProductDao::getAllProducts();
         $brands = ProductDao::getAllBrands();
         $selectedOrder = "";
         $selectedBrand = "";
-        include "View/allProductsView.php";
+        $this->renderView(['allProductsView'],['products' => $products,'brands' => $brands,
+                                                'selectedBrand' => $selectedBrand,
+                                                    'selectedOrder'=>$selectedOrder]);
+//        require "View/allProductsView.php";
     }
 
     public function addProductView(){
-        include "View/addProducts.php";
+        require "View/addProducts.php";
     }
 
     public function addProduct(){
-        if(isset($_POST["addProduct"])){
-            $id = "";
-            $price = $_POST["price"];
-            $quantity = $_POST["quantity"];
-            $subCat = $_POST["subCat"];
-            $category = $_POST["category"];
-            $brand = $_POST["brand"];
-            $model = $_POST["model"];
-            $product = new Product($id,$price,$quantity,$subCat,$category,$model,$brand);
-            ProductDao::addProduct($product);
-            include"View/added.php";
-        }
+
+        //TO DO better validations
+//        if(isset($_POST["addProduct"])){
+//            $id = "";
+//            $price = $_POST["price"];
+//            $quantity = $_POST["quantity"];
+//            $subCat = $_POST["sub-category"];
+//            $category = $_POST["category"];
+//            $brand = $_POST["brand"];
+//            $model = $_POST["model"];
+//            if(empty($_FILES)) {
+//                throw new CustomException('File not uploaded');
+//            }
+//            $tmp_name = $_FILES['img']['tmp_name'];
+//            if(!is_uploaded_file($tmp_name)) {
+//                throw new CustomException('File not uploaded');
+//            }
+//            $file_name = $brand.$model.".jpg";
+//            if(!move_uploaded_file($tmp_name, "View/product_images/$file_name")) {
+//                throw new CustomException('File not uploaded');
+//            }
+//            $image_uri = "View/product_images/$file_name";
+//            $product = new Product($id,$price,$quantity,$subCat,$category,$model,$brand,$image_uri);
+//            dd($product);
+//            ProductDao::addProduct($product);
+//            throw new CustomException('Product Uploaded');
+//        }
+
     }
 
-    public function changePrice(){
-        if(isset($_POST["change"])){
-            $productId = $_POST["productId"];
-            $amount = $_POST["changePrice"];
-            ProductDao::changePrice($productId,$amount);
-            $products = ProductDao::getAllProducts($this->priceOrder,$this->brand);
-            include "View/allProductsView.php";
-        }
-    }
+//    public function changePrice(){
+//        if(isset($_POST["change"])){
+//            $productId = $_POST["productId"];
+//            $amount = $_POST["changePrice"];
+//            ProductDao::changePrice($productId,$amount);
+//            $products = ProductDao::getAllProducts();
+//            require "View/allProductsView.php";
+//        }
+//    }
+
 
     public function getProduct(){
-    if(isset($_POST["view"])){
-        $productId = $_POST["productId"];
-        $product = ProductDao::getProduct($productId);
-        include "View/showProduct.php";
-    }
+        if(isset($_POST["view"])){
+            $productId = $_POST["productId"];
+            $product = ProductDao::getProduct($productId);
+            $specifications = ProductDao::getSpecs($productId);
+            require "View/showProduct.php";
+        }
     }
 
     public function orderDetails(){
@@ -68,27 +85,47 @@ class ProductController extends BaseController{
         }
         $orderId = $_GET['order'];
         $orderDetails = ProductDao::getOrderDetails($orderId);
-        $_SESSION['user']['orderDetails'] = $orderDetails;
-        $this->renderView(['account','account_order_details']);
+        $this->renderView(['account','account_order_details'],['orderDetails' => $orderDetails]);
     }
 
     public function filter(){
         if(isset($_GET["priceOrder"]) && $_GET["priceOrder"] != "all"){
-            $this->priceOrder = $_GET["priceOrder"];
-            $selectedOrder = $this->priceOrder;
+            $priceOrder = $_GET["priceOrder"];
+            $selectedOrder = $priceOrder;
         }
         else{
+            $priceOrder = "";
             $selectedOrder = "";
         }
         if(isset($_GET["brand"]) && $_GET["brand"] != "all"){
-            $this->brand = $_GET["brand"];
-            $selectedBrand = $this->brand;
+            $brand = $_GET["brand"];
+            $selectedBrand = $brand;
         }
         else{
+            $brand = "";
             $selectedBrand = "";
         }
-        $products = ProductDao::getAllProducts($this->priceOrder,$this->brand);
+        if(isset($_GET["page"])){
+            $page = $_GET["page"];
+        }
+        else{
+            $page = 1;
+        }
+        $products = ProductDao::getAllProducts($priceOrder,$brand,$page);
         $brands = ProductDao::getAllBrands();
-        include "View/allProductsView.php";
+        $this->renderView(['allProductsView'],['products' => $products,'brands' => $brands,'page' => $page,
+                                                'priceOrder' => $priceOrder,'brand' => $brand,
+                                                'selectedBrand' => $selectedBrand,
+                                                'selectedOrder'=>$selectedOrder]);
+
+        //require "View/allProductsView.php";
     }
+    public function makePages(){
+        $products = ProductDao::countProducts();
+        $arr["totalProducts"] = $products;
+        $arr["productsPerPage"] = 2;
+        header('Content-Type: application/json');
+        echo json_encode($arr);
+    }
+
 }

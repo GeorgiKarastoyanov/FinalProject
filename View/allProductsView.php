@@ -6,17 +6,19 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Products</title>
+    <link rel="stylesheet" href="View/css/styles.css">
 </head>
-<body>
+<body onload="pager()">
+<input id="hiddenPage" type="hidden" value="<?php echo $params['page']; ?>">
 <select id="priceFilter" onchange="filter()">
-    <option value="all" <?php echo $selectedOrder == "" ? "selected" : "" ?>>Sort by price</option>
-    <option value="ascending" <?php echo $selectedOrder == "ascending" ? "selected" : ""?>>Ascending</option>
-    <option value="descending" <?php echo $selectedOrder == "descending" ? "selected" : ""?>>Descending</option>
+    <option value="all" <?php echo $params['selectedOrder'] == "" ? "selected" : "" ?>>Sort by price</option>
+    <option value="ascending" <?php echo  $params['selectedOrder'] == "ascending" ? "selected" : ""?>>Ascending</option>
+    <option value="descending" <?php echo  $params['selectedOrder'] == "descending" ? "selected" : ""?>>Descending</option>
 </select>
 <select id="brandFilter" onchange="filter()">
-    <option value="all" <?php echo $selectedBrand == "" ? "selected" : "" ?>>Sort by brand</option>
-    <?php foreach ($brands as $brand) {?>
-    <option value="<?php echo $brand;  ?>" <?php echo $selectedBrand == $brand ? "selected" : "" ?> > <?php echo $brand;  ?></option>
+    <option value="all" <?php echo  $params['selectedBrand'] == "" ? "selected" : "" ?>>Sort by brand</option>
+    <?php foreach ( $params['brands'] as $brand) {?>
+    <option value="<?php echo $brand;  ?>" <?php echo  $params['selectedBrand'] == $brand ? "selected" : "" ?> > <?php echo $brand;  ?></option>
     <?php } ?>
 </select>
 <table>
@@ -30,7 +32,7 @@
         <th>Change price</th>
         <th>View Product</th>
     </tr>
-    <?php foreach ($products as $product) {?>
+    <?php foreach ( $params['products'] as $product) {?>
         <tr>
             <td><?php echo $product->getPrice(); ?></td>
             <td><?php echo $product->getQuantity(); ?></td>
@@ -54,6 +56,7 @@
         </tr>
     <?php } ?>
 </table>
+<div id="pager" ></div>
 </body>
 <script src="View/js/filters.js"></script>
 </html>

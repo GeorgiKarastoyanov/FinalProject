@@ -6,7 +6,7 @@ namespace model;
 
 class ProductDao
 {
-    public static function getAllProducts($priceOrder,$brand){
+    public static function getAllProducts($priceOrder = "",$brand = "", $page = 1){
 
         /** @var \PDO $pdo */
         $pdo = $GLOBALS["PDO"];
@@ -30,6 +30,11 @@ JOIN brands as b ON b.id = m.brandId";
             $query .= " ORDER BY price DESC";
         }
 
+        $perPage = 2;
+        $offset = ($page-1)*$perPage;
+
+        $query .= " LIMIT $perPage OFFSET $offset";
+
         $stmt = $pdo->prepare($query);
         $stmt ->execute($params);
         $products = [];
@@ -39,6 +44,16 @@ JOIN brands as b ON b.id = m.brandId";
         return $products;
     }
 
+    public static function countProducts(){
+        /** @var \PDO $pdo */
+        $pdo = $GLOBALS["PDO"];
+        $stmt = $pdo->prepare("SELECT COUNT(*) as total FROM products");
+        $stmt ->execute();
+        $rows = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+        $result = $rows[0];
+        $count = $result["total"];
+        return $count;
+    }
     public static function getAllBrands(){
         /** @var \PDO $pdo */
         $pdo = $GLOBALS["PDO"];
@@ -53,12 +68,24 @@ JOIN brands as b ON b.id = m.brandId";
     }
 
     public static function addProduct(Product $product){
-        /** @var \PDO $pdo */
-        $pdo = $GLOBALS["PDO"];
-        $stmt = $pdo->prepare("INSERT INTO products (subCategoryId, modelId, price, quantity) 
-        VALUES ((SELECT id FROM sub_categories WHERE name = ?), 
-        (SELECT id FROM models WHERE name = ?), ?, ?)");
-        $stmt ->execute([$product->getSubCategory(),$product->getModel(),$product->getPrice(),$product->getQuantity()]);
+//        /** @var \PDO $pdo */
+//        $pdo = $GLOBALS["PDO"];
+//        $pdo->beginTransaction();
+//        try {
+//            if($product)
+//            $query = "INSERT INTO categories (name) VALUES (:category);";
+//            $stmt = $pdo->prepare($query);
+//            $stmt->execute(array("category" => $product->getCategory()));
+//
+//
+//            $pdo->commit();
+//        }
+//        catch (\PDOException $e){
+//            echo "error - " . $e->getMessage();
+//            $pdo->rollBack();
+//            return false;
+//        }
+        return true;
     }
 
     public static function changePrice($productId, $amount){
@@ -85,6 +112,18 @@ JOIN brands as b ON b.id = m.brandId WHERE p.id = ?";
 
     }
 
+    public static function getSpecs($productId){
+        /** @var \PDO $pdo */
+        $pdo = $GLOBALS["PDO"];
+        $stmt = $pdo->prepare("SELECT ps.name,sv.value FROM products as p
+JOIN spec_values as sv ON sv.productId = p.id
+JOIN product_spec as ps ON sv.specID = ps.Id
+WHERE p.id = ?");
+        $stmt ->execute([$productId]);
+        $specs = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+        return $specs;
+    }
+
     public static function getOrderDetails($orderId){
         $query = "SELECT CONCAT(d.name, ' ', c.name) as productName, a.price, a.quantity FROM ordered_products as a 
                   LEFT JOIN products as b ON b.id = a.productId
@@ -95,5 +134,18 @@ JOIN brands as b ON b.id = m.brandId WHERE p.id = ?";
         $stmt->execute(array('orderId' => $orderId));
         $orderDetails = $stmt->fetchAll(\PDO::FETCH_ASSOC);
         return $orderDetails;
+    }
+
+    public static function getTopProducts(){
+        $query = "SELECT CONCAT(c.name, ' ', b.name) as productName, SUM(a.quantity) as totalSells, e.img_uri FROM ordered_products as a
+                  LEFT JOIN products as d ON d.id = a.productId
+                  LEFT JOIN models as b ON b.id = d.modelId
+                  LEFT JOIN brands as c ON c.id = b.brandid
+                  LEFT JOIN products_images as e ON b.id = e.productId
+                  GROUP BY a.productId ORDER BY totalSells DESC LIMIT 5;";
+        $stmt = $GLOBALS['PDO']->prepare($query);
+        $stmt->execute();
+        $topProducts = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+        return $topProducts;
     }
 }

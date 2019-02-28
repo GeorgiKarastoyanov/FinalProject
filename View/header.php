@@ -6,7 +6,7 @@
 </head>
 <body>
 <header>
-    <h1>Emag</h1>
+    <h1><a href="?target=home&action=index">eMag</a></h1>
 </header>
 <h3>Search bar</h3>
 <input id="input-products" onkeyup="loadNames()" type="text" placeholder="Enter product">
@@ -16,7 +16,7 @@
     <?= isset($_SESSION['user']) ? 'My Account' : 'Log In'?>
 </a>
 <br>
-<?= isset($_SESSION['user']) ? '<a href="?target=home&action=favorites">Favorites</a>' : ''?>
+<?= isset($_SESSION['user']) ? '<a href="?target=user&action=favorites">Favorites</a>' : ''?>
 <br>
-<a href="?target=home&action=cart">Cart</a>
+<a href="?target=user&action=cart">Cart</a>
 <br>

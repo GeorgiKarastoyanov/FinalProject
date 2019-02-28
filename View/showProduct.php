@@ -26,5 +26,10 @@
             <td><?php echo $product->getModel(); ?></td>
         </tr>
 </table>
+<div>
+    <?php //TODO show details
+    var_dump($specifications) ?>
+</div>
+
 </body>
 </html>

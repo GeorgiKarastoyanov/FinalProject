@@ -107,5 +107,18 @@ class UserDao{
         $orders = $stmt->fetchAll(\PDO::FETCH_ASSOC);
         return $orders;
     }
+
+    public static function getFavorites($userId){
+        $query = "SELECT b.id,CONCAT(e.name, ' ', d.name) as productName, b.price FROM favourites as a 
+                  LEFT JOIN products as b ON a.productId = b.id
+                  LEFT JOIN models as d ON d.id = b.modelId
+                  LEFT JOIN brands as e ON e.id = b.subCategoryId
+                  WHERE a.userId = :id;";
+        $stmt = $GLOBALS['PDO']->prepare($query);
+        $stmt->execute(array('id' => $userId));
+        $orders = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+        return $orders;
+    }
+
 }
 

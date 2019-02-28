@@ -19,6 +19,7 @@ class Product
     private $category;
     private $model;
     private $brand;
+    private $img;
 
     /**
      * Product constructor.
@@ -30,7 +31,7 @@ class Product
      * @param $model
      * @param $brand
      */
-    public function __construct($id,$price, $quantity, $subCategory, $category, $model, $brand)
+    public function __construct($id,$price, $quantity, $subCategory, $category, $model, $brand, $img = null)
     {
         $this->id = $id;
         $this->price = $price;
@@ -39,6 +40,7 @@ class Product
         $this->category = $category;
         $this->model = $model;
         $this->brand = $brand;
+        $this->img = $img;
     }
 
     /**
@@ -47,6 +49,22 @@ class Product
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * @return null
+     */
+    public function getImg()
+    {
+        return $this->img;
+    }
+
+    /**
+     * @param null $img
+     */
+    public function setImg($img)
+    {
+        $this->img = $img;
     }
 
     /**
