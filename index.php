@@ -21,6 +21,7 @@ try{
 
     include "config.php";
     $GLOBALS["PDO"] = new PDO("mysql:host=127.0.0.1:".DB_PORT.";dbname=emag","root");
+
     session_start();
 
     $controllerName = isset($_GET["target"]) ? $_GET["target"] : "home";

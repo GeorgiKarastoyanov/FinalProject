@@ -18,7 +18,7 @@ class ProductController extends BaseController{
         $subCat = $_GET["subCat"];
         $_SESSION["subCat"] = $subCat;
         $products = ProductDao::getAllProducts($subCat);
-        $brands = ProductDao::getAllBrands();
+        $brands = ProductDao::getAllBrands($subCat);
         $selectedOrder = "";
         $selectedBrand = "";
         $this->renderView(['allProductsView'],['products' => $products,'brands' => $brands,
@@ -116,7 +116,7 @@ class ProductController extends BaseController{
         $subCat = $_SESSION["subCat"];
 
         $products = ProductDao::getAllProducts($subCat, $priceOrder,$brand,$page);
-        $brands = ProductDao::getAllBrands();
+        $brands = ProductDao::getAllBrands($subCat);
         $this->renderView(['allProductsView'],['products' => $products,'brands' => $brands,'page' => $page,
                                                 'priceOrder' => $priceOrder,'brand' => $brand,
                                                 'selectedBrand' => $selectedBrand,

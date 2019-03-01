@@ -65,17 +65,17 @@ JOIN brands as b ON b.id = m.brandId";
         return $count;
     }
 
-    public static function getAllBrands()
-    {
+    public static function getAllBrands($subCat){
         /** @var \PDO $pdo */
         $pdo = $GLOBALS["PDO"];
-        $stmt = $pdo->prepare("SELECT name FROM brands");
-        $stmt->execute();
+        $stmt = $pdo->prepare("SELECT brands.name as brandName FROM brands JOIN
+      sub_categories ON brands.subCategoryId = sub_categories.id WHERE sub_categories.name = :subCat");
+        $stmt ->execute(array('subCat' => $subCat));
         $rows = $stmt->fetchAll(\PDO::FETCH_ASSOC);
         $brands = [];
-        foreach ($rows as $row) {
-            $brands[] = $row["name"];
-        }
+        foreach ($rows as $row){
+            $brands[] = $row["brandName"];
+            }
         return $brands;
     }
 

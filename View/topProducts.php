@@ -1,6 +1,7 @@
 <?php
 $topProducts = \model\ProductDao::getTopProducts();
 ?>
+<h1>Best Sellers</h1>
 <table>
     <tr>
         <th>Image</th>
