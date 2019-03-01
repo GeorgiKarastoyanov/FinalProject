@@ -22,7 +22,7 @@ JOIN brands as b ON b.id = m.brandId";
             $query .= " WHERE b.name = ?";
             $params[] = $brand;
         }
-        
+
         if($brand != ""){
             $query .= " AND s.name = ?";
             $params[] = $subCat;
