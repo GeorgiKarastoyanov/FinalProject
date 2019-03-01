@@ -9,18 +9,18 @@ function getSubCategory(name) {
         return response.json();
     })
         .then(function (myJson) {
-            //console.log(myJson.subcategory)
             var buttons_div = document.getElementById("subCategories");
             buttons_div.innerHTML = "";
             for (var i = 0;i < myJson.length; i++){
                 var button = document.createElement("button");
                 button.value = myJson[i]["name"];
                 button.innerHTML = myJson[i]["name"];
-                button.addEventListener('click', function (name) {
+                var subCat =  myJson[i]["name"];
+                button.addEventListener('click', function (subCat) {
                     return function () {
-                        getProducts(name);
+                        getProducts(subCat);
                     }
-                }(name));
+                }(subCat));
                 buttons_div.appendChild(button);
             }
         })
