@@ -14,14 +14,16 @@ class ProductController extends BaseController{
     private $brand = "";
 
     public function showAllProducts(){
-        $products = ProductDao::getAllProducts();
-        $brands = ProductDao::getAllBrands();
+
+        $subCat = $_GET["subCat"];
+        $_SESSION["subCat"] = $subCat;
+        $products = ProductDao::getAllProducts($subCat);
+        $brands = ProductDao::getAllBrands($subCat);
         $selectedOrder = "";
         $selectedBrand = "";
         $this->renderView(['allProductsView'],['products' => $products,'brands' => $brands,
                                                 'selectedBrand' => $selectedBrand,
                                                     'selectedOrder'=>$selectedOrder]);
-//        require "View/allProductsView.php";
     }
 
     public function addProductView(){
@@ -111,14 +113,15 @@ class ProductController extends BaseController{
         else{
             $page = 1;
         }
-        $products = ProductDao::getAllProducts($priceOrder,$brand,$page);
-        $brands = ProductDao::getAllBrands();
+        $subCat = $_SESSION["subCat"];
+
+        $products = ProductDao::getAllProducts($subCat, $priceOrder,$brand,$page);
+        $brands = ProductDao::getAllBrands($subCat);
         $this->renderView(['allProductsView'],['products' => $products,'brands' => $brands,'page' => $page,
                                                 'priceOrder' => $priceOrder,'brand' => $brand,
                                                 'selectedBrand' => $selectedBrand,
                                                 'selectedOrder'=>$selectedOrder]);
 
-        //require "View/allProductsView.php";
     }
     public function makePages(){
         $products = ProductDao::countProducts();
@@ -128,4 +131,8 @@ class ProductController extends BaseController{
         echo json_encode($arr);
     }
 
+    public function showAllBrandPictures(){
+        $brands = ProductDao::getAllPictureBrands();
+        $this->renderView(['topBrands'],['brands' => $brands]);
+    }
 }
