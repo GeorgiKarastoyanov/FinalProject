@@ -131,4 +131,8 @@ class ProductController extends BaseController{
         echo json_encode($arr);
     }
 
+    public function showAllBrandPictures(){
+        $brands = ProductDao::getAllPictureBrands();
+        $this->renderView(['topBrands'],['brands' => $brands]);
+    }
 }

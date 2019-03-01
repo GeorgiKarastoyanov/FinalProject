@@ -39,4 +39,9 @@ class HomeController extends BaseController
 //    public function showSubCat(){
 //        $this->renderView(['allCategoryView']);
 //    }
+
+//    public function showAllPictureBrands(){
+//        $this->renderView(['topBrands']);
+//    }
+
 }

@@ -14,8 +14,7 @@ use model\SubCategoryDao;
 
 class CategoryController
 {
-
-    public static function showSubCat(){
+    public function showSubCat(){
         if(isset($_POST["category"])){
             echo json_encode(SubCategoryDao::getSubCategory($_POST["category"]));
         }
