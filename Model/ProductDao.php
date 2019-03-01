@@ -6,7 +6,7 @@ namespace model;
 
 class ProductDao
 {
-    public static function getAllProducts($priceOrder = "",$brand = "", $page = 1){
+    public static function getAllProducts($subCat, $priceOrder = "", $brand = "", $page = 1){
 
         /** @var \PDO $pdo */
         $pdo = $GLOBALS["PDO"];
@@ -22,7 +22,14 @@ JOIN brands as b ON b.id = m.brandId";
             $query .= " WHERE b.name = ?";
             $params[] = $brand;
         }
-
+        if($brand != ""){
+            $query .= " AND s.name = ?";
+            $params[] = $subCat;
+        }
+        else{
+            $query .= " WHERE s.name = ?";
+            $params[] = $subCat;
+        }
         if($priceOrder === "ascending") {
             $query .= " ORDER BY price";
         }
