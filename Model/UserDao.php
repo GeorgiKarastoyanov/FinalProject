@@ -119,6 +119,5 @@ class UserDao{
         $orders = $stmt->fetchAll(\PDO::FETCH_ASSOC);
         return $orders;
     }
-
 }
 
