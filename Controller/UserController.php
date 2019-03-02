@@ -4,6 +4,8 @@ namespace controller;
 use exception\CustomException;
 use exception\InvalidParameterException;
 use exception\NotFoundException;
+use model\ProductDao;
+use model\SubCategoryDao;
 use Model\UserDao;
 use model\UserInfo;
 
@@ -255,6 +257,39 @@ class UserController extends BaseController
 
         $favorites = UserDao::getFavorites($_SESSION['user']['id']);
         $this->renderView(['account','favorites'],['favorites' => $favorites]);
+    }
+
+    public function addProductStep1View(){
+        $allSubCategories = SubCategoryDao::getSubCategory();
+        $distinctBrands = SubCategoryDao::getAllDistinctBrands();
+        $this->renderView(['addProductStep1'],['allSubCategories' => $allSubCategories , 'brands' => $distinctBrands]);
+    }
+
+    public function addProductStep2View(){
+        if(! isset($_POST['addProductStep1'])){
+            throw new CustomException('First Step Not Complete');
+        }
+        if(! isset($_POST['sub-categories'])){
+            throw new CustomException('Sub-categories not set');
+        }
+        if(! isset($_POST['brands'])){
+            throw new CustomException('Brands not set');
+        }
+        if(! isset($_POST['model'])){
+            throw new CustomException('Model not set');
+        }
+
+        $subCategoryId = $_POST['sub-categories'];
+        $brand = $_POST['brands'];
+        $model = $_POST['model'];
+        $productSpec = SubCategoryDao::getAllSpecForCategory($subCategoryId);
+        $_SESSION['user']['addProduct']['brandName'] = $brand;
+        $_SESSION['user']['addProduct']['model'] = $model;
+        $_SESSION['user']['addProduct']['subCategoryId'] = $subCategoryId;
+
+        $this->renderView(['addProductStep2'],['productSpec' => $productSpec]);
+
+
     }
 
     public function login_email_view(){
