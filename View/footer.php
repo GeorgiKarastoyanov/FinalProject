@@ -12,19 +12,21 @@
 </head>
 <body>
 
-<footer style="background-color: skyblue; width: 100%;height: 20vh">
+<!--TODO  fix the style with css/footer.css -->
+
+<footer style="background-color: silver; width: 100%;height: 20vh;">
     <table id="orders" style="float: left; margin-right: 30%">
     <tr>
         <th>Orders</th>
     </tr>
     <tr>
-        <td><a href="View/account_orders.php">My Orders</a></td>
+        <td><a href="View/account_orders.php" style="text-decoration: none">My Orders</a></td>
     </tr>
     <tr>
-        <td><a href="View/account_profile.php">My Account</a></td>
+        <td><a href="View/account_profile.php" style="text-decoration: none">My Account</a></td>
     </tr>
     <tr>
-        <td><a href="">F A Q</a></td>
+        <td><a href="" style="text-decoration: none">F A Q</a></td>
     </tr>
 </table>
 <table id="contacts" style="float: left;margin-right: 30%">
@@ -32,10 +34,10 @@
         <th>Contacts</th>
     </tr>
     <tr>
-        <td><a href="https://www.emag.bg/info/za-vrazka-s-nas?ref=footer_3_1">Information</a></td>
+        <td><a href="https://www.emag.bg/info/za-vrazka-s-nas?ref=footer_3_1" target="_blank" style="text-decoration: none">Information</a></td>
     </tr>
     <tr>
-        <td><a href="">Phone: +359 888 88 88 88 </a></td>
+        <td><a href="" style="text-decoration: none">Phone: +359 888 88 88 88 </a></td>
     </tr>
 </table>
 <table id="our_partners" style="float: left" cellspacing="0">
@@ -43,13 +45,13 @@
         <th>Our Partners</th>
     </tr>
     <tr>
-        <td><a href="https://www.samsung.com/bg/">Samsung</a></td>
+        <td><a href="https://www.samsung.com/bg/" target="_blank" style="text-decoration: none">Samsung</a></td>
     <tr>
-        <td><a href="https://www.zara.com/bg/en/">Zara</a></td>
+        <td><a href="https://www.zara.com/bg/en/" target="_blank" style="text-decoration: none">Zara</a></td>
     </tr>
 
     <tr>
-        <td><a href="https://www.bosch.bg/">Bosh</a></td>
+        <td><a href="https://www.bosch.bg/" target="_blank" style="text-decoration: none">Bosh</a></td>
     </tr>
 </table>
 

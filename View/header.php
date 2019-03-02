@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <title>Emag</title>
-    <script src="js/loadNames.js"></script>
 </head>
 <body>
 <header>
