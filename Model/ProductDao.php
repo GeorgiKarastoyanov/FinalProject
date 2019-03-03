@@ -80,26 +80,63 @@ JOIN brands as b ON b.id = m.brandId";
         return $brands;
     }
 
-    public static function addProduct(Product $product)
+    public static function addProduct(Product $product, $spec)
     {
-//        /** @var \PDO $pdo */
-//        $pdo = $GLOBALS["PDO"];
-//        $pdo->beginTransaction();
-//        try {
-//            if($product)
-//            $query = "INSERT INTO categories (name) VALUES (:category);";
-//            $stmt = $pdo->prepare($query);
-//            $stmt->execute(array("category" => $product->getCategory()));
-//
-//
-//            $pdo->commit();
-//        }
-//        catch (\PDOException $e){
-//            echo "error - " . $e->getMessage();
-//            $pdo->rollBack();
-//            return false;
-//        }
-        return true;
+        /** @var \PDO $pdo */
+        $pdo = $GLOBALS["PDO"];
+        $pdo->beginTransaction();
+        $brandId = $product->getBrand();
+        $modelId = $product->getModel();
+        try {
+            //if $product->getBRand(); is numeric it means that the subCat/brandName pair exist and no need to insert (we have brandId)
+            //else we need to insert the brand name with subcategoryId and take new brand ID;
+            if (!is_numeric($product->getBrand())) {
+                $query = "INSERT INTO brands (subCategoryId, name) 
+                           VALUES (:subCategoryId, :name);";
+                $stmt = $pdo->prepare($query);
+                $stmt->execute(['subCategoryId' => $product->getSubCategory(), 'name' => $product->getBrand()]);
+                $brandId = $pdo->lastInsertId();
+            }
+            // Next we inset the model because we have brandId
+            //if $product->getModel(); is numeric it means that the brandId/modelName pair exist and no need to insert (we have modelId)
+            //else we need to insert the modelName with brandId and take the new modelId
+            if (!is_numeric($product->getModel())) {
+                $query = "INSERT INTO models (brandId, name) 
+                           VALUES (:brandId, :modelName);";
+                $stmt = $pdo->prepare($query);
+                $stmt->execute(['brandId' => $brandId, 'modelName' => $product->getModel()]);
+                $modelId = $pdo->lastInsertId();
+            }
+            // now we have modelId and we can insert product price and quantity
+            $query = "INSERT INTO products (subCategoryId, modelId, price, quantity) 
+                           VALUES (:subCategoryId, :modelId, :price, :quantity);";
+            $stmt = $pdo->prepare($query);
+            $stmt->execute(['subCategoryId' => $product->getSubCategory(), 'modelId' => $modelId,
+                'price' => $product->getPrice(), 'quantity' => $product->getQuantity()]);
+            $productId = $pdo->lastInsertId();
+
+            //now we have productId so we can insert product image_uri and product spec values
+            //first we insert img
+            $query = "INSERT INTO product_images (productId, img_uri) 
+                           VALUES (:productId, :img_uri);";
+            $stmt = $pdo->prepare($query);
+            $stmt->execute(['productId' => $productId, 'img_uri' => $product->getImg()]);
+            //lastly we insert product spec values
+            //we might have more than 1 spec value to insert so we need to loop to insert all of them
+            foreach ($spec as $specId => $value) {
+                $query = "INSERT INTO spec_values (productId, specId, value) 
+                           VALUES (:productId, :specId, :value);";
+                $stmt = $pdo->prepare($query);
+                $stmt->execute(['productId' => $productId, 'specId' => $specId, 'value' => $value]);
+            }
+
+            $pdo->commit();
+        } catch (\PDOException $e) {
+            echo "Something went Wrong - " . $e->getMessage();
+            $pdo->rollBack();
+            return false;
+        }
+        return $productId;
     }
 
     public static function changePrice($productId, $amount)
@@ -184,6 +221,7 @@ WHERE p.id = ?");
         return $brands;
     }
 
+
     public static function getAutoLoadNames()
     {
         /** @var \PDO $pdo */
@@ -202,6 +240,29 @@ WHERE p.id = ?");
         foreach ($rows as $row) {
             $names[] = $row["name"];
         }
-       return $names;
+        return $names;
     }
+
+    public static function checkBrandIdExist($brandName, $subCategoryId)
+    {
+        /** @var \PDO $pdo */
+        $pdo = $GLOBALS["PDO"];
+        $query = "SELECT id FROM brands WHERE subCategoryId = :subCategoryId AND name = :brandName;";
+        $stmt = $pdo->prepare($query);
+        $stmt->execute(array('subCategoryId' => $subCategoryId, 'brandName' => $brandName));
+        $brandId = $stmt->fetch(\PDO::FETCH_ASSOC);
+        return $brandId;
+    }
+
+    public static function checkModelIdExist($brandId, $modelName)
+    {
+        /** @var \PDO $pdo */
+        $pdo = $GLOBALS["PDO"];
+        $query = "SELECT id FROM models WHERE brandId = :brandId AND name = :modelName;";
+        $stmt = $pdo->prepare($query);
+        $stmt->execute(array('brandId' => $brandId, 'modelName' => $modelName));
+        $modelId = $stmt->fetch(\PDO::FETCH_ASSOC);
+        return $modelId;
+    }
+
 }

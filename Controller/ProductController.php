@@ -33,47 +33,94 @@ class ProductController extends BaseController
         require "View/addProducts.php";
     }
 
-    public function addProduct()
-    {
+//    public function addProduct()
+//    {
+//
+//        //TO DO better validations
+////        if(isset($_POST["addProduct"])){
+////            $id = "";
+////            $price = $_POST["price"];
+////            $quantity = $_POST["quantity"];
+////            $subCat = $_POST["sub-category"];
+////            $category = $_POST["category"];
+////            $brand = $_POST["brand"];
+////            $model = $_POST["model"];
+////            if(empty($_FILES)) {
+////                throw new CustomException('File not uploaded');
+////            }
+////            $tmp_name = $_FILES['img']['tmp_name'];
+////            if(!is_uploaded_file($tmp_name)) {
+////                throw new CustomException('File not uploaded');
+////            }
+////            $file_name = $brand.$model.".jpg";
+////            if(!move_uploaded_file($tmp_name, "View/product_images/$file_name")) {
+////                throw new CustomException('File not uploaded');
+////            }
+////            $image_uri = "View/product_images/$file_name";
+////            $product = new Product($id,$price,$quantity,$subCat,$category,$model,$brand,$image_uri);
+////            dd($product);
+////            ProductDao::addProduct($product);
+////            throw new CustomException('Product Uploaded');
+////        }
+//
+//=======
+    public function addProduct(){
+        if(! isset($_SESSION['user']['addProduct'])){
+            throw new CustomException('First Step input not submit');
+        }
+        if(! isset($_POST['addProduct'])){
+            throw new CustomException('Second Step input not submit');
+        }
+        if(! isset($_POST['price'])){
+            throw new CustomException('Price not set');
+        }
+        if(! isset($_POST['quantity'])){
+            throw new CustomException('Price not set');
+        }
+        if(! isset($_POST['spec'])){
+            throw new CustomException('Product spec not set');
+        }
+        if(empty($_FILES)) {
+            throw new CustomException('Img not attached');
+        }
+        $image_uri = null;
+        $tmp_name = $_FILES['img']['tmp_name'];
+        if(! is_uploaded_file($tmp_name)) {
+            throw new CustomException('Img not uploaded');
+        }
+        $file_name = time().".jpg";
+        if(! move_uploaded_file($tmp_name, "View/images/$file_name")){
+            throw new CustomException('Img not moved');
+        }
+        $image_uri = "View/images/$file_name";
 
-        //TO DO better validations
-//        if(isset($_POST["addProduct"])){
-//            $id = "";
-//            $price = $_POST["price"];
-//            $quantity = $_POST["quantity"];
-//            $subCat = $_POST["sub-category"];
-//            $category = $_POST["category"];
-//            $brand = $_POST["brand"];
-//            $model = $_POST["model"];
-//            if(empty($_FILES)) {
-//                throw new CustomException('File not uploaded');
-//            }
-//            $tmp_name = $_FILES['img']['tmp_name'];
-//            if(!is_uploaded_file($tmp_name)) {
-//                throw new CustomException('File not uploaded');
-//            }
-//            $file_name = $brand.$model.".jpg";
-//            if(!move_uploaded_file($tmp_name, "View/product_images/$file_name")) {
-//                throw new CustomException('File not uploaded');
-//            }
-//            $image_uri = "View/product_images/$file_name";
-//            $product = new Product($id,$price,$quantity,$subCat,$category,$model,$brand,$image_uri);
-//            dd($product);
-//            ProductDao::addProduct($product);
-//            throw new CustomException('Product Uploaded');
-//        }
 
+
+        $specIds = $_POST['spec'];
+        $price = $_POST['quantity'];
+        $quantity = $_POST['quantity'];
+        $brandName = $_SESSION['user']['addProduct']['brandName'];
+        $modelName = $_SESSION['user']['addProduct']['model'];
+        $subCategoryId = $_SESSION['user']['addProduct']['subCategoryId'];
+        $brandId = ProductDao::checkBrandIdExist($brandName,$subCategoryId);
+        $productId = null;
+        $category = null;
+        $modelId = null;
+        if($brandId != false){
+            $brandName = $brandId['id'];
+            $modelId = ProductDao::checkModelIdExist($brandId['id'],$modelName);
+        }
+        if($modelId != false){
+            $modelName = $modelId;
+        }
+        $addProduct = new Product($productId, $price, $quantity,$subCategoryId, $category, $modelName,$brandName, $image_uri);
+        $productId = ProductDao::addProduct($addProduct,$specIds);
+        if(!is_numeric($productId)){
+            throw new CustomException('Product not added');
+        }
+        //TO DO go to showProduct page
+        throw new CustomException('BRAVO!!!');
     }
-
-//    public function changePrice(){
-//        if(isset($_POST["change"])){
-//            $productId = $_POST["productId"];
-//            $amount = $_POST["changePrice"];
-//            ProductDao::changePrice($productId,$amount);
-//            $products = ProductDao::getAllProducts();
-//            require "View/allProductsView.php";
-//        }
-//    }
 
 
     public function getProduct()

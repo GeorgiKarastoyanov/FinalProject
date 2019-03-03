@@ -11,7 +11,7 @@ echo "account nav";
                 <?php if(isset($_SESSION['user']['id']) && $_SESSION['user']['id'] == 1){ ?>
                 <li>Admin Panel
                     <ul>
-                        <li><a href='?target=home&action=addProduct'>Add Product</a></li>
+                        <li><a href='?target=user&action=addProductStep1View'>Add Product</a></li>
                         <li><a href='?target=home&action=editProduct'>Edit Product</a></li>
                     </ul>
                 </li> <?php } ?>
@@ -21,12 +21,3 @@ echo "account nav";
 
 </aside>
 <?php
-//if(!isset($_GET['account'])){
-//    require_once 'account_profile.php';
-//}
-//elseif ($_GET['account'] == 'admin_add'){
-//require_once 'account_admin_add.php';
-//}
-//elseif ($_GET['account'] == 'admin_edit'){
-//    require_once 'account_admin_edit.php';
-//}
