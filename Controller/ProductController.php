@@ -33,37 +33,6 @@ class ProductController extends BaseController
         require "View/addProducts.php";
     }
 
-//    public function addProduct()
-//    {
-//
-//        //TO DO better validations
-////        if(isset($_POST["addProduct"])){
-////            $id = "";
-////            $price = $_POST["price"];
-////            $quantity = $_POST["quantity"];
-////            $subCat = $_POST["sub-category"];
-////            $category = $_POST["category"];
-////            $brand = $_POST["brand"];
-////            $model = $_POST["model"];
-////            if(empty($_FILES)) {
-////                throw new CustomException('File not uploaded');
-////            }
-////            $tmp_name = $_FILES['img']['tmp_name'];
-////            if(!is_uploaded_file($tmp_name)) {
-////                throw new CustomException('File not uploaded');
-////            }
-////            $file_name = $brand.$model.".jpg";
-////            if(!move_uploaded_file($tmp_name, "View/product_images/$file_name")) {
-////                throw new CustomException('File not uploaded');
-////            }
-////            $image_uri = "View/product_images/$file_name";
-////            $product = new Product($id,$price,$quantity,$subCat,$category,$model,$brand,$image_uri);
-////            dd($product);
-////            ProductDao::addProduct($product);
-////            throw new CustomException('Product Uploaded');
-////        }
-//
-//=======
     public function addProduct(){
         if(! isset($_SESSION['user']['addProduct'])){
             throw new CustomException('First Step input not submit');
@@ -118,6 +87,7 @@ class ProductController extends BaseController
         if(!is_numeric($productId)){
             throw new CustomException('Product not added');
         }
+        unset($_SESSION['user']['addProduct']);
         //TO DO go to showProduct page
         throw new CustomException('BRAVO!!!');
     }
@@ -175,6 +145,7 @@ class ProductController extends BaseController
 
     }
 
+
     public function makePages()
     {
         $products = ProductDao::countProducts();
@@ -196,4 +167,5 @@ class ProductController extends BaseController
             echo json_encode(ProductDao::getAutoLoadNames());
         }
     }
+
 }
