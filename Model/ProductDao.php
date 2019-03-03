@@ -194,10 +194,10 @@ WHERE p.id = ?");
 
     public static function getTopProducts()
     {
-        $query = "SELECT CONCAT(c.name, ' ', b.name) as productName, SUM(a.quantity) as totalSells, e.img_uri FROM ordered_products as a
+        $query = "SELECT d.price,d.id,CONCAT(c.name, ' ', b.name) as productName, SUM(a.quantity) as totalSells, e.img_uri FROM ordered_products as a
                   LEFT JOIN products as d ON d.id = a.productId
                   LEFT JOIN models as b ON b.id = d.modelId
-                  LEFT JOIN brands as c ON c.id = b.brandid
+                  LEFT JOIN brands as c ON c.id = b.brandId
                   LEFT JOIN products_images as e ON b.id = e.productId
                   GROUP BY a.productId ORDER BY totalSells DESC LIMIT 5;";
         $stmt = $GLOBALS['PDO']->prepare($query);
