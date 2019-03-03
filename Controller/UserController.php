@@ -292,6 +292,38 @@ class UserController extends BaseController
 
     }
 
+    public function editProductView(){
+        if(! isset($_GET['productId'])){
+            throw new NotFoundException();
+        }
+        $productId = $_GET['productId'];
+        $product = ProductDao::getProduct($productId);
+        $this->renderView(['account','account_admin_edit'],['product' => $product]);
+    }
+
+    public function editProduct(){
+        if(! isset($_POST['edit-product'])){
+            throw new CustomException('Form not send!');
+        }
+        if(! isset($_POST['quantity'])){
+            throw new CustomException('Quantity not set!');
+        }
+        if(! isset($_POST['price'])){
+            throw new CustomException('Price not set!');
+        }
+        if(! isset($_POST['productId'])){
+            throw new CustomException('Product ID not set!');
+        }
+        $quantity =$_POST['quantity'];
+        $price =$_POST['price'];
+        $productId =$_POST['productId'];
+        if (! ProductDao::editProduct($price, $quantity, $productId)){
+            throw new CustomException('Product not edited!');
+        }
+        throw new CustomException('Bravo');
+
+    }
+
     public function login_email_view(){
         require_once "View/login-email.html";
     }

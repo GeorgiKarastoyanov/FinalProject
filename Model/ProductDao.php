@@ -240,4 +240,21 @@ WHERE p.id = ?");
         return $modelId;
     }
 
+    public static function editProduct($price, $quantity, $productId){
+        /** @var \PDO $pdo */
+        $pdo = $GLOBALS["PDO"];
+        $query = "UPDATE products SET price = :price, quantity = :quantity
+                  WHERE id = :id;";
+        $stmt = $pdo->prepare($query);
+        try{
+            $stmt->execute(['id' => $productId, 'price' => $price, 'quantity' => $quantity]);
+        }
+        catch (\PDOException $e){
+            echo "Something went Wrong - " . $e->getMessage();
+            return false;
+        }
+        return true;
+
+    }
+
 }

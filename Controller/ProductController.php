@@ -26,9 +26,9 @@ class ProductController extends BaseController{
                                                     'selectedOrder'=>$selectedOrder]);
     }
 
-    public function addProductView(){
-        require "View/addProducts.php";
-    }
+//    public function addProductView(){
+//        require "View/addProducts.php";
+//    }
 
     public function addProduct(){
         if(! isset($_SESSION['user']['addProduct'])){
@@ -84,6 +84,7 @@ class ProductController extends BaseController{
         if(!is_numeric($productId)){
             throw new CustomException('Product not added');
         }
+        unset($_SESSION['user']['addProduct']);
         //TO DO go to showProduct page
         throw new CustomException('BRAVO!!!');
     }
@@ -140,6 +141,7 @@ class ProductController extends BaseController{
                                                 'selectedOrder'=>$selectedOrder]);
 
     }
+
     public function makePages(){
         $products = ProductDao::countProducts();
         $arr["totalProducts"] = $products;
@@ -152,4 +154,5 @@ class ProductController extends BaseController{
         $brands = ProductDao::getAllPictureBrands();
         $this->renderView(['topBrands'],['brands' => $brands]);
     }
+
 }
