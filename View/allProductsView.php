@@ -29,7 +29,7 @@
         <th>Category</th>
         <th>Brand</th>
         <th>Model</th>
-        <th>Change price</th>
+        <th>Image</th>
         <th>View Product</th>
     </tr>
     <?php foreach ( $params['products'] as $product) {?>
@@ -40,19 +40,15 @@
             <td><?php echo $product->getCategory();?></td>
             <td><?php echo $product->getBrand(); ?></td>
             <td><?php echo $product->getModel(); ?></td>
+            <td><img src="<?php $product->getImg()?>" width="20px" height="20px"></td>
             <td>
-                <form method="post" action="?target=product&action=changePrice">
-                    <input type="hidden" name="productId" value="<?php echo $product->getId(); ?>">
-                    <input type="number" name="changePrice" >
-                    <input type="submit" name="change" value="Change Price">
-                </form>
+                <a href="?target=product&action=getProduct&productId=<?php echo $product->getId();?>"><button>View details</button></a>
             </td>
+            <?php if(isset($_SESSION['user']['id']) && $_SESSION['user']['id'] == 1){ ?>
             <td>
-                <form method="post" action="?target=product&action=getProduct">
-                    <input type="hidden" name="productId" value="<?php echo $product->getId(); ?>">
-                    <input type="submit" name="view" value="View">
-                </form>
+                <button>Edit product</button>
             </td>
+            <?php } ?>
         </tr>
     <?php } ?>
 </table>

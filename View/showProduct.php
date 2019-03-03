@@ -18,17 +18,17 @@
         <th>Model</th>
     </tr>
         <tr>
-            <td><?php echo $product->getPrice(); ?></td>
-            <td><?php echo $product->getQuantity(); ?></td>
-            <td><?php echo $product->getSubCategory(); ?></td>
-            <td><?php echo $product->getCategory();?></td>
-            <td><?php echo $product->getBrand(); ?></td>
-            <td><?php echo $product->getModel(); ?></td>
+            <td><?php echo $params['product']->getPrice(); ?></td>
+            <td><?php echo $params['product']->getQuantity(); ?></td>
+            <td><?php echo $params['product']->getSubCategory(); ?></td>
+            <td><?php echo $params['product']->getCategory();?></td>
+            <td><?php echo $params['product']->getBrand(); ?></td>
+            <td><?php echo $params['product']->getModel(); ?></td>
         </tr>
 </table>
 <div>
     <?php //TODO show details
-    var_dump($specifications) ?>
+    var_dump($params['specifications']) ?>
 </div>
 
 </body>

@@ -125,11 +125,11 @@ class ProductController extends BaseController
 
     public function getProduct()
     {
-        if (isset($_POST["view"])) {
-            $productId = $_POST["productId"];
+        if (isset($_GET["productId"]) && !empty($_GET["productId"])) {
+            $productId = $_GET["productId"];
             $product = ProductDao::getProduct($productId);
             $specifications = ProductDao::getSpecs($productId);
-            require "View/showProduct.php";
+            $this->renderView(['showProduct'], ['product' => $product, 'specifications' => $specifications]);
         }
     }
 
