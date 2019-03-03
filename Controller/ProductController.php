@@ -9,11 +9,13 @@ use exception\CustomException;
 use exception\InvalidParameterException;
 use exception\NotFoundException;
 
-class ProductController extends BaseController{
+class ProductController extends BaseController
+{
     private $priceOrder = "";
     private $brand = "";
 
-    public function showAllProducts(){
+    public function showAllProducts()
+    {
 
         $subCat = $_GET["subCat"];
         $_SESSION["subCat"] = $subCat;
@@ -21,16 +23,18 @@ class ProductController extends BaseController{
         $brands = ProductDao::getAllBrands($subCat);
         $selectedOrder = "";
         $selectedBrand = "";
-        $this->renderView(['allProductsView'],['products' => $products,'brands' => $brands,
-                                                'selectedBrand' => $selectedBrand,
-                                                    'selectedOrder'=>$selectedOrder]);
+        $this->renderView(['allProductsView'], ['products' => $products, 'brands' => $brands,
+            'selectedBrand' => $selectedBrand,
+            'selectedOrder' => $selectedOrder]);
     }
 
-    public function addProductView(){
+    public function addProductView()
+    {
         require "View/addProducts.php";
     }
 
-    public function addProduct(){
+    public function addProduct()
+    {
 
         //TO DO better validations
 //        if(isset($_POST["addProduct"])){
@@ -72,8 +76,9 @@ class ProductController extends BaseController{
 //    }
 
 
-    public function getProduct(){
-        if(isset($_POST["view"])){
+    public function getProduct()
+    {
+        if (isset($_POST["view"])) {
             $productId = $_POST["productId"];
             $product = ProductDao::getProduct($productId);
             $specifications = ProductDao::getSpecs($productId);
@@ -81,49 +86,50 @@ class ProductController extends BaseController{
         }
     }
 
-    public function orderDetails(){
-        if(! isset($_GET['order'])){
+    public function orderDetails()
+    {
+        if (!isset($_GET['order'])) {
             throw new NotFoundException();
         }
         $orderId = $_GET['order'];
         $orderDetails = ProductDao::getOrderDetails($orderId);
-        $this->renderView(['account','account_order_details'],['orderDetails' => $orderDetails]);
+        $this->renderView(['account', 'account_order_details'], ['orderDetails' => $orderDetails]);
     }
 
-    public function filter(){
-        if(isset($_GET["priceOrder"]) && $_GET["priceOrder"] != "all"){
+    public function filter()
+    {
+        if (isset($_GET["priceOrder"]) && $_GET["priceOrder"] != "all") {
             $priceOrder = $_GET["priceOrder"];
             $selectedOrder = $priceOrder;
-        }
-        else{
+        } else {
             $priceOrder = "";
             $selectedOrder = "";
         }
-        if(isset($_GET["brand"]) && $_GET["brand"] != "all"){
+        if (isset($_GET["brand"]) && $_GET["brand"] != "all") {
             $brand = $_GET["brand"];
             $selectedBrand = $brand;
-        }
-        else{
+        } else {
             $brand = "";
             $selectedBrand = "";
         }
-        if(isset($_GET["page"])){
+        if (isset($_GET["page"])) {
             $page = $_GET["page"];
-        }
-        else{
+        } else {
             $page = 1;
         }
         $subCat = $_SESSION["subCat"];
 
-        $products = ProductDao::getAllProducts($subCat, $priceOrder,$brand,$page);
+        $products = ProductDao::getAllProducts($subCat, $priceOrder, $brand, $page);
         $brands = ProductDao::getAllBrands($subCat);
-        $this->renderView(['allProductsView'],['products' => $products,'brands' => $brands,'page' => $page,
-                                                'priceOrder' => $priceOrder,'brand' => $brand,
-                                                'selectedBrand' => $selectedBrand,
-                                                'selectedOrder'=>$selectedOrder]);
+        $this->renderView(['allProductsView'], ['products' => $products, 'brands' => $brands, 'page' => $page,
+            'priceOrder' => $priceOrder, 'brand' => $brand,
+            'selectedBrand' => $selectedBrand,
+            'selectedOrder' => $selectedOrder]);
 
     }
-    public function makePages(){
+
+    public function makePages()
+    {
         $products = ProductDao::countProducts();
         $arr["totalProducts"] = $products;
         $arr["productsPerPage"] = 2;
@@ -131,8 +137,16 @@ class ProductController extends BaseController{
         echo json_encode($arr);
     }
 
-    public function showAllBrandPictures(){
+    public function showAllBrandPictures()
+    {
         $brands = ProductDao::getAllPictureBrands();
-        $this->renderView(['topBrands'],['brands' => $brands]);
+        $this->renderView(['topBrands'], ['brands' => $brands]);
+    }
+
+    public function showAutoLoadNames()
+    {
+        if(isset($_POST["text"])){
+            echo json_encode(ProductDao::getAutoLoadNames());
+        }
     }
 }

@@ -7,7 +7,8 @@ namespace model;
 class ProductDao
 {
 
-    public static function getAllProducts($subCat, $priceOrder = "", $brand = "", $page = 1){
+    public static function getAllProducts($subCat, $priceOrder = "", $brand = "", $page = 1)
+    {
         /** @var \PDO $pdo */
         $pdo = $GLOBALS["PDO"];
         $query = "SELECT p.id as id, price, quantity, s.name as subCat, c.name as cat,
@@ -23,15 +24,14 @@ JOIN brands as b ON b.id = m.brandId";
             $params[] = $brand;
         }
 
-        if($brand != ""){
+        if ($brand != "") {
             $query .= " AND s.name = ?";
             $params[] = $subCat;
-        }
-        else{
+        } else {
             $query .= " WHERE s.name = ?";
             $params[] = $subCat;
         }
-        if($priceOrder === "ascending") {
+        if ($priceOrder === "ascending") {
 
             $query .= " ORDER BY price";
         }
@@ -65,17 +65,18 @@ JOIN brands as b ON b.id = m.brandId";
         return $count;
     }
 
-    public static function getAllBrands($subCat){
+    public static function getAllBrands($subCat)
+    {
         /** @var \PDO $pdo */
         $pdo = $GLOBALS["PDO"];
         $stmt = $pdo->prepare("SELECT brands.name as brandName FROM brands JOIN
       sub_categories ON brands.subCategoryId = sub_categories.id WHERE sub_categories.name = :subCat");
-        $stmt ->execute(array('subCat' => $subCat));
+        $stmt->execute(array('subCat' => $subCat));
         $rows = $stmt->fetchAll(\PDO::FETCH_ASSOC);
         $brands = [];
-        foreach ($rows as $row){
+        foreach ($rows as $row) {
             $brands[] = $row["brandName"];
-            }
+        }
         return $brands;
     }
 
@@ -177,9 +178,30 @@ WHERE p.id = ?");
         $brands = [];
         foreach ($rows as $row) {
             $brand = [];
-            $brand ["image"] =  $row["image_uri"];
+            $brand ["image"] = $row["image_uri"];
             $brands[] = $brand;
         }
         return $brands;
+    }
+
+    public static function getAutoLoadNames()
+    {
+        /** @var \PDO $pdo */
+        $pdo = $GLOBALS["PDO"];
+        $query = "SELECT DISTINCT name FROM models";
+        $params = [];
+        if (isset($_POST["text"])) {
+            $query .= " HAVING name LIKE ?";
+            $params[] = "%" . $_POST["text"] . "%";
+        }
+        $query .= " LIMIT 5";
+        $stmt = $pdo->prepare($query);
+        $stmt->execute($params);
+        $rows = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+        $names = [];
+        foreach ($rows as $row) {
+            $names[] = $row["name"];
+        }
+       return $names;
     }
 }

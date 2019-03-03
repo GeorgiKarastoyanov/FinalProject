@@ -3,6 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <title>Emag</title>
+    <script src="View/js/autoComplete.js"></script>
+    <link rel="stylesheet" href="View/css/styles.css">
 </head>
 <body>
 <header>
@@ -20,3 +22,4 @@
 <br>
 <a href="?target=user&action=cart">Cart</a>
 <br>
+
