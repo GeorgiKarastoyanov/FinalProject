@@ -5,7 +5,7 @@ namespace controller;
 class HomeController extends BaseController
 {
     public function index() {
-      $this->renderView(['allCategoryView','topProducts']);
+      $this->renderView(['allCategoryView','topProducts','topBrands']);
     }
 
     public function favorites() {
@@ -35,13 +35,5 @@ class HomeController extends BaseController
     public function notFound($message) {
         require_once "View/not-found.php";
     }
-
-//    public function showSubCat(){
-//        $this->renderView(['allCategoryView']);
-//    }
-
-//    public function showAllPictureBrands(){
-//        $this->renderView(['topBrands']);
-//    }
 
 }

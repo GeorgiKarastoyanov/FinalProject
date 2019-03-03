@@ -3,3 +3,29 @@
     height: 5vh;
     background-color: lightblue;
 }
+#autoComplete{
+    width: 100px;
+    height: 100px;
+    background-color: grey;
+    display: none;
+}
+footer{
+    background-color: silver;
+    width: 100%;
+    height: 20vh;
+}
+
+#table-orders{
+    margin-right: 33%;
+    float: left;
+}
+#table-contacts{
+    margin-right: 33%;
+    float: left;
+}
+#table-our_partners{
+    float: left;
+}
+footer table a{
+    text-decoration: none;
+}
