@@ -12,11 +12,12 @@ class ProductDao
         /** @var \PDO $pdo */
         $pdo = $GLOBALS["PDO"];
         $query = "SELECT p.id as id, price, quantity, s.name as subCat, c.name as cat,
-m.name as model, b.name as brand FROM products as p
+m.name as model, b.name as brand, pi.img_uri as img FROM products as p
 JOIN sub_categories as s ON p.subCategoryId = s.id
 JOIN categories as c ON s.categoryId = c.id
 JOIN models as m ON m.id = p.modelId
-JOIN brands as b ON b.id = m.brandId";
+JOIN brands as b ON b.id = m.brandId
+JOIN products_images as pi ON pi.productId = p.id";
 
         $params = [];
         if ($brand != "") {
@@ -48,7 +49,7 @@ JOIN brands as b ON b.id = m.brandId";
         $stmt->execute($params);
         $products = [];
         while ($row = $stmt->fetch(\PDO::FETCH_OBJ)) {
-            $products[] = new Product($row->id, $row->price, $row->quantity, $row->subCat, $row->cat, $row->model, $row->brand);
+            $products[] = new Product($row->id, $row->price, $row->quantity, $row->subCat, $row->cat, $row->model, $row->brand, $row->img);
         }
         return $products;
     }
@@ -193,10 +194,10 @@ WHERE p.id = ?");
 
     public static function getTopProducts()
     {
-        $query = "SELECT CONCAT(c.name, ' ', b.name) as productName, SUM(a.quantity) as totalSells, e.img_uri FROM ordered_products as a
+        $query = "SELECT d.price,d.id,CONCAT(c.name, ' ', b.name) as productName, SUM(a.quantity) as totalSells, e.img_uri FROM ordered_products as a
                   LEFT JOIN products as d ON d.id = a.productId
                   LEFT JOIN models as b ON b.id = d.modelId
-                  LEFT JOIN brands as c ON c.id = b.brandid
+                  LEFT JOIN brands as c ON c.id = b.brandId
                   LEFT JOIN products_images as e ON b.id = e.productId
                   GROUP BY a.productId ORDER BY totalSells DESC LIMIT 5;";
         $stmt = $GLOBALS['PDO']->prepare($query);
@@ -263,6 +264,23 @@ WHERE p.id = ?");
         $stmt->execute(array('brandId' => $brandId, 'modelName' => $modelName));
         $modelId = $stmt->fetch(\PDO::FETCH_ASSOC);
         return $modelId;
+    }
+
+    public static function editProduct($price, $quantity, $productId){
+        /** @var \PDO $pdo */
+        $pdo = $GLOBALS["PDO"];
+        $query = "UPDATE products SET price = :price, quantity = :quantity
+                  WHERE id = :id;";
+        $stmt = $pdo->prepare($query);
+        try{
+            $stmt->execute(['id' => $productId, 'price' => $price, 'quantity' => $quantity]);
+        }
+        catch (\PDOException $e){
+            echo "Something went Wrong - " . $e->getMessage();
+            return false;
+        }
+        return true;
+
     }
 
 }

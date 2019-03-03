@@ -12,7 +12,7 @@ echo "account nav";
                 <li>Admin Panel
                     <ul>
                         <li><a href='?target=user&action=addProductStep1View'>Add Product</a></li>
-                        <li><a href='?target=home&action=editProduct'>Edit Product</a></li>
+                        <li><a href='?target=user&action=editProductView'>Edit Product</a></li>
                     </ul>
                 </li> <?php } ?>
                 <li><a href="?target=user&action=logout">Log Out</a></li>
