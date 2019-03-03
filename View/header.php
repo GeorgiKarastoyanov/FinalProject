@@ -14,7 +14,7 @@
 <input id="input-products" onkeyup="loadNames()" type="text" placeholder="Enter product">
 <div id="autoComplete"></div>
 <br>
-<a href="<?= isset($_SESSION['user']) ? '?target=home&action=account' : '?target=user&action=login_email_view'?>">
+<a href="<?= isset($_SESSION['user']) ? '?target=home&action=account' : '?target=user&action=loginEmailView'?>">
     <?= isset($_SESSION['user']) ? 'My Account' : 'Log In'?>
 </a>
 <br>

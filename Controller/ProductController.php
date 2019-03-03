@@ -88,8 +88,7 @@ class ProductController extends BaseController
             throw new CustomException('Product not added');
         }
         unset($_SESSION['user']['addProduct']);
-        //TO DO go to showProduct page
-        throw new CustomException('BRAVO!!!');
+        header("Location: ?target=product&action=getProduct&productId=$productId");
     }
 
 
@@ -101,6 +100,10 @@ class ProductController extends BaseController
             $specifications = ProductDao::getSpecs($productId);
             $this->renderView(['showProduct'], ['product' => $product, 'specifications' => $specifications]);
         }
+        else{
+            throw new NotFoundException();
+        }
+
     }
 
     public function orderDetails()
