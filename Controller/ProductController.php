@@ -164,9 +164,8 @@ class ProductController extends BaseController
         }else{
             $products = ProductDao::countProducts($_SESSION["subCat"], $_SESSION['brand']);
         }
-
         $arr["totalProducts"] = $products;
-        $arr["productsPerPage"] = 2;
+        $arr["productsPerPage"] = 5;
         $this->isJson = true;
         return $arr;
         //header('Content-Type: application/json');
@@ -182,7 +181,7 @@ class ProductController extends BaseController
     public function showAutoLoadNames()
     {
         if(isset($_POST["text"])){
-
+            header("content-type:application/jason");
             $this->isJson = true;
             return ProductDao::getAutoLoadNames();
         }

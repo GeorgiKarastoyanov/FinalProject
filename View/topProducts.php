@@ -22,7 +22,7 @@ $topProducts = \model\ProductDao::getTopProducts();
     <div class="card" style="width:180px">
         <img class="card-img-top" src="<?=$favorite['img_uri'] ?>" alt="Card image" style="width:80%">
         <div class="card-body">
-            <a href="?target=product&action=getProduct&productId=<?php echo $favorite['id'];?>" class="btn btn-primary , stretched-link">View product</a>
+            <a href="?target=product&action=getProduct&productId=<?php echo $favorite['id'];?>" class="btn btn-primary , stretched-link">View product</a><br>
             <a> Price : <?=$favorite['price'] ?> $</a>
         </div>
     </div>

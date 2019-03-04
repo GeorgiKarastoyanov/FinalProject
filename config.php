@@ -1,2 +1,2 @@
 <?php
-define("DB_PORT","3307");
+define("DB_PORT","3306");

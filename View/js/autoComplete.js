@@ -15,7 +15,6 @@ function loadNames() {
                 autoComplete.innerHTML = "";
                 autoComplete.style.display = "block";
                 for(var i = 0; i < myJson.length; i++){
-                    autoComplete.innerHTML += "<a href='/profile' style='text-decoration: none'>"+myJson[i]+"</a><br>";
                     autoComplete.innerHTML += '<a href="?target=product&action=getProduct&productId=' + myJson[i].id + '">' + myJson[i].name + '</a></br>';
                 }
             })
