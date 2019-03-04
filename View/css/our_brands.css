@@ -1,0 +1,15 @@
+
+img{
+    width: 100px;
+    height: 100px;
+    margin: 0;
+}
+
+
+#table-picture-brand ul li {
+    display: inline;
+    margin-left: 2%;
+}
+#table-picture-brand ul li::after, li::before {
+    box-sizing: border-box;
+}

@@ -216,11 +216,15 @@ WHERE p.id = ?");
         return $topProducts;
     }
 
-    public static function getAllPictureBrands()
+     public static function getAllPictureBrands()
     {
         /** @var \PDO $pdo */
         $pdo = $GLOBALS["PDO"];
-        $stmt = $pdo->prepare("SELECT image_uri FROM brands");
+        $stmt = $pdo->prepare("SELECT DISTINCT SUM(a.quantity) AS totalQuantity, d.name,d.image_uri  FROM ordered_products as a
+                  LEFT JOIN products AS b ON b.id = a.productId
+                  LEFT JOIN sub_categories AS c ON c.id = b.subCategoryId
+                  LEFT JOIN brands AS d ON c.id = d.subCategoryId
+                  GROUP BY d.name ORDER BY totalQuantity DESC LIMIT 5");
         $stmt->execute();
         $rows = $stmt->fetchAll(\PDO::FETCH_ASSOC);
         $brands = [];
@@ -237,7 +241,9 @@ WHERE p.id = ?");
     {
         /** @var \PDO $pdo */
         $pdo = $GLOBALS["PDO"];
-        $query = "SELECT DISTINCT name FROM models";
+        $query = "SELECT a.id, CONCAT(c.name, ' ',b.name) as name FROM products as a
+                  LEFT JOIN models as b ON b.id = a.modelId
+                  LEFT JOIN brands as c ON c.id = b.brandID";
         $params = [];
         if (isset($_POST["text"])) {
             $query .= " HAVING name LIKE ?";
@@ -246,12 +252,7 @@ WHERE p.id = ?");
         $query .= " LIMIT 5";
         $stmt = $pdo->prepare($query);
         $stmt->execute($params);
-        $rows = $stmt->fetchAll(\PDO::FETCH_ASSOC);
-        $names = [];
-        foreach ($rows as $row) {
-            $names[] = $row["name"];
-        }
-        return $names;
+        return $stmt->fetchAll(\PDO::FETCH_ASSOC);
     }
 
     public static function checkBrandIdExist($brandName, $subCategoryId)
@@ -291,6 +292,16 @@ WHERE p.id = ?");
         }
         return true;
 
+    }
+
+    public static function getAllCategories(){
+        /** @var \PDO $pdo */
+        $pdo = $GLOBALS["PDO"];
+        $query = "SELECT name FROM categories";
+        $stmt = $pdo->prepare($query);
+        $stmt->execute();
+        $brands = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+        return $brands;
     }
 
 }

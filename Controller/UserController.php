@@ -262,7 +262,7 @@ class UserController extends BaseController
     public function addProductStep1View(){
         $allSubCategories = SubCategoryDao::getSubCategory();
         $distinctBrands = SubCategoryDao::getAllDistinctBrands();
-        $this->renderView(['addProductStep1'],['allSubCategories' => $allSubCategories , 'brands' => $distinctBrands]);
+        $this->renderView(['account','addProductStep1'],['allSubCategories' => $allSubCategories , 'brands' => $distinctBrands]);
     }
 
     public function addProductStep2View(){
@@ -287,7 +287,7 @@ class UserController extends BaseController
         $_SESSION['user']['addProduct']['model'] = $model;
         $_SESSION['user']['addProduct']['subCategoryId'] = $subCategoryId;
 
-        $this->renderView(['addProductStep2'],['productSpec' => $productSpec]);
+        $this->renderView(['account','addProductStep2'],['productSpec' => $productSpec]);
 
 
     }
@@ -350,5 +350,8 @@ class UserController extends BaseController
     }
     public function registerUserView(){
         require_once "View/registerUser.php";
+    }
+    public function editProductSearch(){
+        $this->renderView(['account','adminSearchProductEdit']);
     }
 }

@@ -182,6 +182,7 @@ class ProductController extends BaseController
     public function showAutoLoadNames()
     {
         if(isset($_POST["text"])){
+
             $this->isJson = true;
             return ProductDao::getAutoLoadNames();
         }
