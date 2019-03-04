@@ -280,4 +280,14 @@ WHERE p.id = ?");
 
     }
 
+    public static function getAllCategories(){
+        /** @var \PDO $pdo */
+        $pdo = $GLOBALS["PDO"];
+        $query = "SELECT name FROM categories";
+        $stmt = $pdo->prepare($query);
+        $stmt->execute();
+        $brands = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+        return $brands;
+    }
+
 }
