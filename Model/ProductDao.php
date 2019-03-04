@@ -206,11 +206,15 @@ WHERE p.id = ?");
         return $topProducts;
     }
 
-    public static function getAllPictureBrands()
+     public static function getAllPictureBrands()
     {
         /** @var \PDO $pdo */
         $pdo = $GLOBALS["PDO"];
-        $stmt = $pdo->prepare("SELECT image_uri FROM brands");
+        $stmt = $pdo->prepare("SELECT DISTINCT SUM(a.quantity) AS totalQuantity, d.name,d.image_uri  FROM ordered_products as a
+                  LEFT JOIN products AS b ON b.id = a.productId
+                  LEFT JOIN sub_categories AS c ON c.id = b.subCategoryId
+                  LEFT JOIN brands AS d ON c.id = d.subCategoryId
+                  GROUP BY d.name ORDER BY totalQuantity DESC LIMIT 5");
         $stmt->execute();
         $rows = $stmt->fetchAll(\PDO::FETCH_ASSOC);
         $brands = [];
