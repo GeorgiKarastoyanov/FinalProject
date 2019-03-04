@@ -12,7 +12,7 @@
                 <td><?=$favorite['productName'] ?></td>
                 <td><?=$favorite['price'] ?></td>
                 <td><input type="submit" onclick="addToCart(<?=$favorite['productId'] ?>)" name="<?=$favorite['productId'] ?>" value="Add to cart"></td>
-                <td></td>
+                <td><a href="?target=user&action=removeFavorite&productId=<?=$favorite['productId']?>"><button>Remove</button></a></td>
             </tr>
             <?php } ?>
 </table>

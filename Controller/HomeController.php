@@ -13,7 +13,7 @@ class HomeController extends BaseController
     }
 
     public function account() {
-        $this->renderView(['account','account_profile']);
+        $this->renderView(['account','accountProfile']);
     }
 
     public function addProduct() {

@@ -138,7 +138,7 @@ class UserController extends BaseController
 
     public function delete(){
         if(!isset($_SESSION['user']['id'])) {
-            throw new CustomException('Invalid account for deletion!');
+            throw new NotFoundException();
         }
         if(!UserDao::delete($_SESSION['user']['id'])){
             throw new CustomException('Account not deleted!');
@@ -147,7 +147,7 @@ class UserController extends BaseController
         $this->logout();
     }
 
-    public function edit_profile(){
+    public function editProfile(){
         if (strtolower($_SERVER["REQUEST_METHOD"]) !== "post") {
             throw new NotFoundException();
         }
@@ -245,7 +245,7 @@ class UserController extends BaseController
 
         $orders = UserDao::getAllOrders($_SESSION['user']['id']);
 
-        $this->renderView(['account','account_orders'], ['orders' => $orders]);
+        $this->renderView(['account','accountOrders'], ['orders' => $orders]);
 
 
     }
@@ -322,6 +322,21 @@ class UserController extends BaseController
         }
         header("Location: ?target=product&action=getProduct&productId=$productId");
 
+    }
+
+    public function removeFavorite(){
+        if(! isset($_GET['productId'])){
+            header("Location: ?target=home&action=index");
+        }
+        if(! isset($_SESSION['user']['id'])){
+            header("Location: ?target=home&action=index");
+        }
+        $userId = $_SESSION['user']['id'];
+        $productId= $_GET['productId'];
+        if(! UserDao::removeFavorite($productId,$userId)){
+            throw new CustomException("Product not removed form favorites");
+        }
+        header("Location: ?target=user&action=favorites");
     }
 
     public function loginEmailView(){

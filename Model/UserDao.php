@@ -119,5 +119,19 @@ class UserDao{
         $orders = $stmt->fetchAll(\PDO::FETCH_ASSOC);
         return $orders;
     }
+
+    public static function removeFavorite($productId, $userId){
+        $query = "DELETE FROM favourites WHERE userId = :userId AND productId = :productId LIMIT 1;";
+        $stmt = $GLOBALS['PDO']->prepare($query);
+
+        try{
+            $stmt->execute(array('userId' => $userId, 'productId' => $productId));
+        }
+        catch (\Exception $e){
+            echo $e->getMessage();
+            return false;
+        }
+        return true;
+    }
 }
 

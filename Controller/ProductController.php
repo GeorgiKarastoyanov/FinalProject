@@ -113,7 +113,7 @@ class ProductController extends BaseController
         }
         $orderId = $_GET['order'];
         $orderDetails = ProductDao::getOrderDetails($orderId);
-        $this->renderView(['account', 'account_order_details'], ['orderDetails' => $orderDetails]);
+        $this->renderView(['account', 'accountOrderDetails'], ['orderDetails' => $orderDetails]);
     }
 
     public function filter()
