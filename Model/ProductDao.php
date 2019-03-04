@@ -54,16 +54,26 @@ JOIN products_images as pi ON pi.productId = p.id";
         return $products;
     }
 
-    public static function countProducts()
+    public static function countProducts($subCat = "",$brand = "")
     {
         /** @var \PDO $pdo */
         $pdo = $GLOBALS["PDO"];
-        $stmt = $pdo->prepare("SELECT COUNT(*) as total FROM products");
-        $stmt->execute();
-        $rows = $stmt->fetchAll(\PDO::FETCH_ASSOC);
-        $result = $rows[0];
-        $count = $result["total"];
-        return $count;
+        $query = "SELECT COUNT(*) as total FROM products JOIN sub_categories
+ON products.subCategoryId = sub_categories.id
+JOIN brands ON sub_categories.id = brands.subCategoryId";
+        if(!empty($subCat)){
+            $query .= " WHERE sub_categories.name = :subCat";
+             $params = array('subCat' => $subCat);
+             if(!empty($brand)){
+                 $query .= " AND brands.name = :brand";
+                 $params = array('subCat' => $subCat, 'brand' => $brand);
+             }
+
+         }
+        $stmt = $pdo->prepare($query);
+        $stmt->execute($params);
+        $row = $stmt->fetch(\PDO::FETCH_ASSOC);
+        return $row["total"];
     }
 
     public static function getAllBrands($subCat)

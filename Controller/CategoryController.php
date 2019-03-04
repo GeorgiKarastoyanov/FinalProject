@@ -12,7 +12,7 @@ use model\SubCategory;
 use model\SubCategoryDao;
 
 
-class CategoryController
+class CategoryController extends BaseController
 {
     public function showSubCat(){
         if(isset($_POST["category"])){

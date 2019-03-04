@@ -37,7 +37,13 @@ try{
         throw new NotFoundException();
     }
 
-    $controller->$methodName();
+    $result = $controller->$methodName();
+
+    if ($controller->isJson) {
+        header('Content-Type: application/json');
+
+        echo json_encode($result);
+    }
 }
 catch (Exception $e){
 
