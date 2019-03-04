@@ -15,7 +15,7 @@ function loadNames() {
                 autoComplete.innerHTML = "";
                 autoComplete.style.display = "block";
                 for(var i = 0; i < myJson.length; i++){
-                    autoComplete.innerHTML += "<a href='/profile'>"+myJson[i]+"</a><br>";
+                    autoComplete.innerHTML += "<a href='/profile' style='text-decoration: none'>"+myJson[i]+"</a><br>";
                 }
             })
             .catch(function (e) {
