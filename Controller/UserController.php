@@ -12,30 +12,30 @@ use model\UserInfo;
 class UserController extends BaseController
 {
 
-    public function register_email()
+    public function registerEmail()
     {
         if (strtolower($_SERVER["REQUEST_METHOD"]) !== "post") {
             throw new NotFoundException();
         }
 
         if (! isset($_POST['email']) || ! filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) {
-            throw new InvalidParameterException('Invalid parameter email!');
+            throw new CustomException('Invalid email!','registerEmail');
         }
 
         $email = trim($_POST['email']);
 
         if (UserDao::existUserByEmail($email)) {
-            throw new CustomException('Email already exists!');
+            throw new CustomException('Email already exists!',"registerEmail");
         }
 
         $_SESSION['register_email'] = $email;
 
-        $this->register_user_view();
+        $this->registerUserView();
     }
 
-    public function register_user(){
+    public function registerUser(){
         if(! isset($_SESSION['register_email'])){
-            throw new CustomException('Register email not passed!');
+            $this->registerEmailView();
         }
 
         if (strtolower($_SERVER["REQUEST_METHOD"]) !== "post") {
@@ -43,27 +43,27 @@ class UserController extends BaseController
         }
 
         if (! isset($_POST['first-name']) || strlen($_POST['first-name']) < 2){
-           throw new CustomException('First name must be at least two characters long!');
+           throw new CustomException('First name must be at least two characters long!','registerUser');
         }
 
         if(! isset($_POST['last-name']) || strlen($_POST['last-name']) < 2){
-            throw new CustomException('Last name must be at least two characters long!');
+            throw new CustomException('Last name must be at least two characters long!','registerUser');
         }
 
         if (! isset($_POST['password']) || ! isset($_POST['confirm-password'])){
-            throw new CustomException('You must enter password!');
+            throw new CustomException('You must enter password!','registerUser');
         }
 
         if (strlen($_POST['password']) < 2){
-            throw new CustomException('Password must be at least 3 characters long!');
+            throw new CustomException('Password must be at least 3 characters long!','registerUser');
         }
 
         if (strlen($_POST['confirm-password']) < 2){
-            throw new CustomException('Confirm-Password must be at least 3 characters long!');
+            throw new CustomException('Confirm-Password must be at least 3 characters long!','registerUser');
         }
 
         if($_POST['password'] !== $_POST['confirm-password']){
-            throw new CustomException('Passwords do not match!');
+            throw new CustomException('Passwords do not match!','registerUser');
         }
         $email = $_SESSION['register_email'];
         $password = password_hash($_POST["password"], PASSWORD_BCRYPT, ["cost"=>5]);
@@ -72,7 +72,7 @@ class UserController extends BaseController
         $user = new UserInfo($email, $password, $firstName, $lastName);
         $userId = UserDao::addUser($user);
         if(! $userId) {
-            throw new CustomException('User not added!');
+            throw new CustomException('User not added!','registerUser');
         }
 
         $user->setId($userId);
@@ -88,37 +88,37 @@ class UserController extends BaseController
 
     }
 
-    public function login_email(){
+    public function loginEmail(){
         if (strtolower($_SERVER["REQUEST_METHOD"]) !== "post") {
             throw new NotFoundException();
         }
 
         if(! isset($_POST['email'])) {
-            throw new CustomException('You must enter email!');
+            throw new CustomException('You must enter email!','loginEmail');
         }
 
         if(! UserDao::existUserByEmail($_POST['email'])) {
-            throw new CustomException('Invalid email!');
+            throw new CustomException('Invalid email!User does not exist','loginEmail');
         }
         $_SESSION['login_email'] = $_POST['email'];
-        $this->login_user_view();
+        $this->loginUserView();
 
   }
 
-    public function login_user(){
+    public function loginUser(){
         if(! isset($_SESSION['login_email'])){
-            throw new CustomException('Login email not passed!');
+            header("Location: ?target=user&action=loginEmail");
         }
         if (strtolower($_SERVER["REQUEST_METHOD"]) !== "post") {
             throw new NotFoundException();
         }
 
         if(! isset($_POST['password'])) {
-            throw new CustomException('Please enter your password!');
+            throw new CustomException('Please enter your password!',"loginUser");
         }
         $passwordHash = UserDao::getPasswordByEmail($_SESSION['login_email']);
         if(! password_verify($_POST['password'],$passwordHash)) {
-            throw new CustomException('Invalid password!');
+            throw new CustomException('Invalid password!',"loginUser");
         }
         $user = UserDao::getUserByEmail($_SESSION['login_email']);
         $_SESSION['user']['id'] = $user['id'];
@@ -320,20 +320,20 @@ class UserController extends BaseController
         if (! ProductDao::editProduct($price, $quantity, $productId)){
             throw new CustomException('Product not edited!');
         }
-        throw new CustomException('Bravo');
+        header("Location: ?target=product&action=getProduct&productId=$productId");
 
     }
 
-    public function login_email_view(){
-        require_once "View/login-email.html";
+    public function loginEmailView(){
+        require_once "View/loginEmail.php";
     }
-    public function login_user_view(){
-        require_once "View/login-user.html";
+    public function loginUserView(){
+        require_once "View/loginUser.php";
     }
-    public function register_email_view(){
-        require_once "View/register-email.html";
+    public function registerEmailView(){
+        require_once "View/registerEmail.php";
     }
-    public function register_user_view(){
-        require_once "View/register-user.html";
+    public function registerUserView(){
+        require_once "View/registerUser.php";
     }
 }

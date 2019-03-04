@@ -40,15 +40,30 @@ try{
     $controller->$methodName();
 }
 catch (Exception $e){
-    dd($e);
 
     if ($e instanceof NotFoundException) {
         $nfController = new HomeController();
         $nfController->notfound($e->getMessage());
-    } else if ($e instanceof InvalidParameterException) {
-
     } else if ($e instanceof CustomException) {
-
+        if($e->getField() === 'registerEmail'){
+            $errMsg['errMsg'] = $e->getMessage();
+            require_once "View/registerEmail.php";
+        }
+        elseif($e->getField() === 'registerUser'){
+            $errMsg['errMsg'] = $e->getMessage();
+            require_once "View/registerUser.php";
+        }
+        elseif($e->getField() === 'loginEmail'){
+            $errMsg['errMsg'] = $e->getMessage();
+            require_once "View/loginEmail.php";
+        }
+        elseif($e->getField() === 'loginUser'){
+            $errMsg['errMsg'] = $e->getMessage();
+            require_once "View/loginUser.php";
+        }
+    }
+    else{
+        dd($e);
     }
 }
 die;
