@@ -231,7 +231,9 @@ WHERE p.id = ?");
     {
         /** @var \PDO $pdo */
         $pdo = $GLOBALS["PDO"];
-        $query = "SELECT DISTINCT name FROM models";
+        $query = "SELECT a.id, CONCAT(c.name, ' ',b.name) as name FROM products as a
+                  LEFT JOIN models as b ON b.id = a.modelId
+                  LEFT JOIN brands as c ON c.id = b.brandID";
         $params = [];
         if (isset($_POST["text"])) {
             $query .= " HAVING name LIKE ?";
@@ -240,12 +242,7 @@ WHERE p.id = ?");
         $query .= " LIMIT 5";
         $stmt = $pdo->prepare($query);
         $stmt->execute($params);
-        $rows = $stmt->fetchAll(\PDO::FETCH_ASSOC);
-        $names = [];
-        foreach ($rows as $row) {
-            $names[] = $row["name"];
-        }
-        return $names;
+        return $stmt->fetchAll(\PDO::FETCH_ASSOC);
     }
 
     public static function checkBrandIdExist($brandName, $subCategoryId)
