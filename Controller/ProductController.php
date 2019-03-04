@@ -167,6 +167,7 @@ class ProductController extends BaseController
     public function showAutoLoadNames()
     {
         if(isset($_POST["text"])){
+            header("content-type:application/json");
             echo json_encode(ProductDao::getAutoLoadNames());
         }
     }
