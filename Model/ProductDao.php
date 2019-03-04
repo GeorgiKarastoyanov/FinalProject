@@ -162,15 +162,16 @@ LEFT JOIN brands as c ON c.id = a.subCategoryId";
         /** @var \PDO $pdo */
         $pdo = $GLOBALS["PDO"];
         $query = "SELECT p.id as id, price, quantity, s.name as subCat, c.name as cat,
-m.name as model, b.name as brand FROM products as p
+m.name as model, b.name as brand, pi.img_uri FROM products as p
 JOIN sub_categories as s ON p.subCategoryId = s.id
 JOIN categories as c ON s.categoryId = c.id
 JOIN models as m ON m.id = p.modelId
-JOIN brands as b ON b.id = m.brandId WHERE p.id = ?";
+JOIN brands as b ON b.id = m.brandId
+JOIN products_images as pi ON pi.productId = p.id WHERE p.id = ?";
         $stmt = $pdo->prepare($query);
         $stmt->execute([$productId]);
         $row = $stmt->fetch(\PDO::FETCH_OBJ);
-        $product = new Product($row->id, $row->price, $row->quantity, $row->subCat, $row->cat, $row->model, $row->brand);
+        $product = new Product($row->id, $row->price, $row->quantity, $row->subCat, $row->cat, $row->model, $row->brand, $row->img_uri);
         return $product;
 
     }
