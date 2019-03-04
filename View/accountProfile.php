@@ -2,7 +2,7 @@
 
 ?>
 
-<form action="?target=user&action=edit_profile" method="post" class="form">
+<form action="?target=user&action=editProfile" method="post" class="form">
     <h1>My Profile</h1>
     Password:<input type="password" name="password" ><br>
     Confirm-Pass:<input type="password" name="confirm-password"><br>

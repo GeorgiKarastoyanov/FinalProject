@@ -181,7 +181,7 @@ WHERE p.id = ?");
 
     public static function getOrderDetails($orderId)
     {
-        $query = "SELECT CONCAT(d.name, ' ', c.name) as productName, a.price, a.quantity FROM ordered_products as a 
+        $query = "SELECT b.id, CONCAT(d.name, ' ', c.name) as productName, b.price * a.quantity as price, a.quantity FROM ordered_products as a 
                   LEFT JOIN products as b ON b.id = a.productId
                   LEFT JOIN models as c ON c.id = b.modelId
                   LEFT JOIN brands as d ON c.brandId = d.id
