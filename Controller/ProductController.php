@@ -23,9 +23,13 @@ class ProductController extends BaseController
         $brands = ProductDao::getAllBrands($subCat);
         $selectedOrder = "";
         $selectedBrand = "";
-        $this->renderView(['allProductsView'], ['products' => $products, 'brands' => $brands,
+        $this->renderView(['allProductsView'], [
+            'products' => $products,
+            'brands' => $brands,
             'selectedBrand' => $selectedBrand,
-            'selectedOrder' => $selectedOrder]);
+            'selectedOrder' => $selectedOrder,
+            'subCat' => $subCat
+        ]);
     }
 
     public function addProductView()
@@ -138,24 +142,34 @@ class ProductController extends BaseController
             $page = 1;
         }
         $subCat = $_SESSION["subCat"];
+        $_SESSION['brand'] = $brand;
 
         $products = ProductDao::getAllProducts($subCat, $priceOrder, $brand, $page);
         $brands = ProductDao::getAllBrands($subCat);
         $this->renderView(['allProductsView'], ['products' => $products, 'brands' => $brands, 'page' => $page,
             'priceOrder' => $priceOrder, 'brand' => $brand,
             'selectedBrand' => $selectedBrand,
-            'selectedOrder' => $selectedOrder]);
+            'selectedOrder' => $selectedOrder,
+            'subCat' => $subCat
+        ]);
 
     }
 
 
     public function makePages()
     {
-        $products = ProductDao::countProducts();
+        if(isset($_GET['subCat'])){
+            $brand = '';
+            $products = ProductDao::countProducts($_GET['subCat'], $brand);
+        }else{
+            $products = ProductDao::countProducts($_SESSION["subCat"], $_SESSION['brand']);
+        }
         $arr["totalProducts"] = $products;
-        $arr["productsPerPage"] = 2;
-        header('Content-Type: application/json');
-        echo json_encode($arr);
+        $arr["productsPerPage"] = 5;
+        $this->isJson = true;
+        return $arr;
+        //header('Content-Type: application/json');
+        //echo json_encode($arr);
     }
 
     public function showAllBrandPictures()
@@ -167,8 +181,9 @@ class ProductController extends BaseController
     public function showAutoLoadNames()
     {
         if(isset($_POST["text"])){
-            header("content-type:application/json");
-            echo json_encode(ProductDao::getAutoLoadNames());
+            header("content-type:application/jason");
+            $this->isJson = true;
+            return ProductDao::getAutoLoadNames();
         }
     }
 

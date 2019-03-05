@@ -15,7 +15,6 @@ function loadNames() {
                 autoComplete.innerHTML = "";
                 autoComplete.style.display = "block";
                 for(var i = 0; i < myJson.length; i++){
-                    autoComplete.innerHTML += "<a href='/profile' style='text-decoration: none'>"+myJson[i]+"</a><br>";
                     autoComplete.innerHTML += '<a href="?target=product&action=getProduct&productId=' + myJson[i].id + '">' + myJson[i].name + '</a></br>';
                 }
             })
@@ -31,7 +30,7 @@ function loadNames() {
 }
 
 function loadProducts() {
-    var text = document.getElementById("input-products").value;
+    var text = document.getElementById("input-products2").value;
     if (text.length > 0) {
         fetch('?target=product&action=showAutoLoadNames', {
             method: 'POST',
@@ -42,7 +41,7 @@ function loadProducts() {
                 return response.json();
             })
             .then(function (myJson) {
-                var autoComplete = document.getElementById("autoComplete");
+                var autoComplete = document.getElementById("autoComplete2");
                 autoComplete.innerHTML = "";
                 autoComplete.style.display = "block";
                 for(var i = 0; i < myJson.length; i++){
@@ -54,7 +53,7 @@ function loadProducts() {
             })
     }
     else{
-        var autoComplete = document.getElementById("autoComplete");
+        var autoComplete = document.getElementById("autoComplete2");
         autoComplete.innerHTML = "";
         autoComplete.style.display = "none";
     }

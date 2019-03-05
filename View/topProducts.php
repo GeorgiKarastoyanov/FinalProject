@@ -18,11 +18,11 @@ $topProducts = \model\ProductDao::getTopProducts();
 <div class="card-deck" style="margin-left: 50px">
     <?php foreach ( $topProducts as $favorite) { ?>
     <div class="container, mh-20">
-    <h6><?=$favorite['productName'] ?></h6>
+    <h6 style="margin-left: 20px"><?=$favorite['productName'] ?></h6>
     <div class="card" style="width:180px">
         <img class="card-img-top" src="<?=$favorite['img_uri'] ?>" alt="Card image" style="width:80%">
         <div class="card-body">
-            <a href="?target=product&action=getProduct&productId=<?php echo $favorite['id'];?>" class="btn btn-primary , stretched-link">View product</a>
+            <a href="?target=product&action=getProduct&productId=<?php echo $favorite['id'];?>" class="btn btn-primary , stretched-link">View product</a><br>
             <a> Price : <?=$favorite['price'] ?> $</a>
         </div>
     </div>
