@@ -11,14 +11,15 @@ $brands = \model\ProductDao::getAllPictureBrands();
     <title>Document</title>
 </head>
 <body>
-<h3>Our Brands</h3>
-<div id="table-picture-brand">
+<h1>Top Brands</h1>
+<div id="table-picture-brand" style="">
     <ul id="our_brands-show">
-        <?php foreach ($brands as $brand){ ?>
-        <li><a href=""><img src="View/<?php echo $brand["image"];?>" alt=""></a></li>
+        <?php foreach ($brands as $brand) { ?>
+            <li><a href=""><img src="View/<?php echo $brand["image"]; ?>" alt=""></a></li>
         <?php } ?>
     </ul>
 </div>
+
 </body>
 </html>
 
