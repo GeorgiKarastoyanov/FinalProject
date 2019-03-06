@@ -17,29 +17,19 @@
     <div class="container">
         <div class="row">
             <div class="col-sm-3 myCols">
-                <h5>Get started</h5>
-                <ul>
-                    <li><a href="?target=user&action=register_email_view">Sign up</a></li>
-                    <li><a href="?target=user&action=login_email_view">Log in</a></li>
-                    <li><a href="?target=home&action=account">My Account</a></li>
-                </ul>
-            </div>
-            <div class="col-sm-3 myCols">
                 <h5>About us</h5>
                 <ul>
-                    <li><a href="https://www.emag.bg/info/za-vrazka-s-nas?ref=footer_3_1" target="_blank">Company
-                            Information</a></li>
-                    <li><a href="https://www.emag.bg/info/form/reklamatsii-i-izvestia" target="_blank">Contact us</a>
-                    </li>
-                    <li><a href="#">Reviews</a></li>
+                    <li>Company Information</li>
+                    <li>Contact us</li>
+                    <li>Reviews</li>
                 </ul>
             </div>
             <div class="col-sm-3 myCols">
                 <h5>Support</h5>
                 <ul>
-                    <li><a href="https://www.emag.bg/info/topic/chesto-zadavani-vaprosi" target="_blank">FAQ</a></li>
-                    <li><a href="https://www.emag.bg/info/" target="_blank">Help desk</a></li>
-                    <li><a href="https://www.emag.bg/info/topic/obshta-informatsia">News</a></li>
+                    <li>FAQ</li>
+                    <li>Help desk</li>
+                    <li>News</li>
                 </ul>
             </div>
             <div class="col-sm-3 myCols">

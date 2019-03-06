@@ -4,35 +4,43 @@ namespace controller;
 
 class HomeController extends BaseController
 {
-    public function index() {
-      $this->renderView(['topProducts','topBrands']);
+    public function index()
+    {
+        $this->renderView(['topProducts', 'topBrands']);
     }
 
-    public function favorites() {
+    public function favorites()
+    {
         $this->renderView(['favorites']);
     }
 
-    public function account() {
-        $this->renderView(['account','accountProfile']);
+    public function account()
+    {
+        $this->renderView(['account', 'accountProfile']);
     }
 
-    public function addProduct() {
-        $this->renderView(['account','account_admin_add']);
+    public function addProduct()
+    {
+        $this->renderView(['account', 'account_admin_add']);
     }
 
-    public function editProduct() {
-        $this->renderView(['account','account_admin_edit']);
+    public function editProduct()
+    {
+        $this->renderView(['account', 'account_admin_edit']);
     }
 
-    public function cart() {
+    public function cart()
+    {
         $this->renderView(['cart']);
     }
 
-    public function getAllProducts(){
+    public function getAllProducts()
+    {
         $this->renderView(['getAllProducts']);
     }
 
-    public function notFound($message) {
+    public function notFound($message)
+    {
         require_once "View/not-found.php";
     }
 

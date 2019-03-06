@@ -183,8 +183,49 @@ class ProductController extends BaseController
         if(isset($_POST["text"])){
             header("content-type:application/jason");
             $this->isJson = true;
-            return ProductDao::getAutoLoadNames();
+            $text = $_POST["text"];
+            return ProductDao::getAutoLoadNames($text);
         }
     }
 
+    public function fillCart(){
+        if(isset($_POST['productId'])) {
+            $productId = $_POST['productId'];
+            $_SESSION['user']['cart'][] = $productId;
+            if(isset($_GET['field']) && $_GET['field'] == 'getProduct' ){
+                header("Location:?target=product&action=getProduct&productId=" . $productId);
+            }
+            elseif(isset($_GET['field']) && $_GET['field'] == 'favourites' ){
+                header("Location:?target=user&action=favorites");
+            }
+
+        }
+    }
+
+    public function showCart(){
+        $cartProducts = $_SESSION['user']['cart'];
+        $idList = implode(',' , $cartProducts);
+        $products = ProductDao::showCartProducts($idList);
+        $this->renderView(['cart'], ['products' => $products]);
+    }
+
+    public function addToFavourites()
+    {
+        if (isset($_POST['productId'])) {
+            $productId = $_POST['productId'];
+            $userId = $_SESSION['user']['id'];
+            ProductDao::addToFavourites($userId, $productId);
+        }
+        header("Location:?target=user&action=favorites");
+    }
+
+    public function showTopBrandProducts(){
+        if(isset($_GET['brandName']) && !empty($_GET['brandName'])){
+            $brand = $_GET['brandName'];
+            $products = ProductDao::topBrandsProducts($brand);
+            $this->renderView(['productsFromABrand'], ['products' => $products, 'brand' => $brand]);
+        }else{
+            throw new NotFoundException();
+        }
+    }
 }

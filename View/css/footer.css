@@ -19,6 +19,7 @@
 #myFooter a {
     color: #c5c5c5;
     text-decoration: none;
+
 }
 
 #myFooter a:hover, #myFooter a:focus {
@@ -66,4 +67,7 @@
     #myFooter {
         text-align: center;
     }
+}
+.col-sm-3{
+    margin: auto;
 }

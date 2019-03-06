@@ -7,7 +7,8 @@ class UserDao{
        $password= $user->getPassword();
        $firstName = $user->getFirstName();
        $lastName = $user->getLastName();
-       $query = "INSERT INTO users (email, password, firstName, lastName) VALUES (:email, :password, :firstName, :lastName);";
+       $query = "INSERT INTO users (email, password, firstName, lastName) 
+                 VALUES (:email, :password, :firstName, :lastName);";
        $stmt = $GLOBALS['PDO']->prepare($query);
         try{
         $stmt->execute(array('email' => $email,'password' => $password, 'firstName' => $firstName, 'lastName' => $lastName));
@@ -109,7 +110,7 @@ class UserDao{
     }
 
     public static function getFavorites($userId){
-        $query = "SELECT b.id as productId,CONCAT(e.name, ' ', d.name) as productName, b.price FROM favourites as a 
+        $query = "SELECT DISTINCT(b.id) as productId,CONCAT(e.name, ' ', d.name) as productName, b.price FROM favourites as a 
                   LEFT JOIN products as b ON a.productId = b.id
                   LEFT JOIN models as d ON d.id = b.modelId
                   LEFT JOIN brands as e ON e.id = b.subCategoryId
@@ -121,7 +122,7 @@ class UserDao{
     }
 
     public static function removeFavorite($productId, $userId){
-        $query = "DELETE FROM favourites WHERE userId = :userId AND productId = :productId LIMIT 1;";
+        $query = "DELETE FROM favourites WHERE userId = :userId AND productId = :productId LIMIT 10";
         $stmt = $GLOBALS['PDO']->prepare($query);
 
         try{
@@ -142,7 +143,7 @@ class UserDao{
             //First - subtract stock quantity from order quantity per product
             foreach ($orderProducts as $productId => $quantity) {
                 $query = "UPDATE products SET quantity = quantity - :quantity
-                      WHERE id = :productid ;";
+                      WHERE id = :productId ;";
                 $stmt = $pdo->prepare($query);
                 $stmt->execute(['quantity' => $quantity, 'productId' => $productId]);
             }
@@ -155,7 +156,7 @@ class UserDao{
 
             //Third - insert ordered products in table ordered_products
             foreach ($orderProducts as $productId => $quantity) {
-                $query = "INSERT INTO ordered (orderId,productId,quantity) VALUES (:orderId, :productId, :quantity)";
+                $query = "INSERT INTO ordered_products (orderId,productId,quantity) VALUES (:orderId, :productId, :quantity)";
                 $stmt = $pdo->prepare($query);
                 $stmt->execute(['orderId' => $orderId, 'productId' => $productId, 'quantity' => $quantity]);
             }

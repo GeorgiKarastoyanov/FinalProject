@@ -1,4 +1,4 @@
-<script src="View/js/addToCart.js"></script>
+<script src="View/js/addToCartOrFavourites.js"></script>
 <table>
     <tr>
         <th>Product Name</th>
@@ -11,7 +11,12 @@
             <tr>
                 <td><?=$favorite['productName'] ?></td>
                 <td><?=$favorite['price'] ?></td>
-                <td><input type="submit" onclick="addToCart(<?=$favorite['productId'] ?>)" name="<?=$favorite['productId'] ?>" value="Add to cart"></td>
+                <td>
+                    <form method="post" action="?target=product&action=fillCart&field=favourites">
+                        <input type="hidden" name="productId" value="<?=$favorite['productId']?>">
+                        <input type="submit" onclick="addToCart('<?=$favorite['productName'] ?>')" value="Add to cart">
+                    </form>
+                </td>
                 <td><a href="?target=user&action=removeFavorite&productId=<?=$favorite['productId']?>"><button>Remove</button></a></td>
             </tr>
             <?php } ?>

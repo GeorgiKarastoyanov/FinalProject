@@ -1,4 +1,5 @@
 <?php
+
 namespace controller;
 
 use exception\CustomException;
@@ -18,14 +19,14 @@ class UserController extends BaseController
             throw new NotFoundException();
         }
 
-        if (! isset($_POST['email']) || ! filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) {
-            throw new CustomException('Invalid email!','registerEmail');
+        if (!isset($_POST['email']) || !filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) {
+            throw new CustomException('Invalid email!', 'registerEmail');
         }
 
         $email = trim($_POST['email']);
 
         if (UserDao::existUserByEmail($email)) {
-            throw new CustomException('Email already exists!',"registerEmail");
+            throw new CustomException('Email already exists!', "registerEmail");
         }
 
         $_SESSION['register_email'] = $email;
@@ -33,8 +34,9 @@ class UserController extends BaseController
         $this->registerUserView();
     }
 
-    public function registerUser(){
-        if(! isset($_SESSION['register_email'])){
+    public function registerUser()
+    {
+        if (!isset($_SESSION['register_email'])) {
             $this->registerEmailView();
         }
 
@@ -42,37 +44,37 @@ class UserController extends BaseController
             throw new NotFoundException();
         }
 
-        if (! isset($_POST['first-name']) || strlen($_POST['first-name']) < 2){
-           throw new CustomException('First name must be at least two characters long!','registerUser');
+        if (!isset($_POST['first-name']) || strlen($_POST['first-name']) < 2) {
+            throw new CustomException('First name must be at least two characters long!', 'registerUser');
         }
 
-        if(! isset($_POST['last-name']) || strlen($_POST['last-name']) < 2){
-            throw new CustomException('Last name must be at least two characters long!','registerUser');
+        if (!isset($_POST['last-name']) || strlen($_POST['last-name']) < 2) {
+            throw new CustomException('Last name must be at least two characters long!', 'registerUser');
         }
 
-        if (! isset($_POST['password']) || ! isset($_POST['confirm-password'])){
-            throw new CustomException('You must enter password!','registerUser');
+        if (!isset($_POST['password']) || !isset($_POST['confirm-password'])) {
+            throw new CustomException('You must enter password!', 'registerUser');
         }
 
-        if (strlen($_POST['password']) < 2){
-            throw new CustomException('Password must be at least 3 characters long!','registerUser');
+        if (strlen($_POST['password']) < 2) {
+            throw new CustomException('Password must be at least 3 characters long!', 'registerUser');
         }
 
-        if (strlen($_POST['confirm-password']) < 2){
-            throw new CustomException('Confirm-Password must be at least 3 characters long!','registerUser');
+        if (strlen($_POST['confirm-password']) < 2) {
+            throw new CustomException('Confirm-Password must be at least 3 characters long!', 'registerUser');
         }
 
-        if($_POST['password'] !== $_POST['confirm-password']){
-            throw new CustomException('Passwords do not match!','registerUser');
+        if ($_POST['password'] !== $_POST['confirm-password']) {
+            throw new CustomException('Passwords do not match!', 'registerUser');
         }
         $email = $_SESSION['register_email'];
-        $password = password_hash($_POST["password"], PASSWORD_BCRYPT, ["cost"=>5]);
+        $password = password_hash($_POST["password"], PASSWORD_BCRYPT, ["cost" => 5]);
         $firstName = $_POST['first-name'];
         $lastName = $_POST['last-name'];
         $user = new UserInfo($email, $password, $firstName, $lastName);
         $userId = UserDao::addUser($user);
-        if(! $userId) {
-            throw new CustomException('User not added!','registerUser');
+        if (!$userId) {
+            throw new CustomException('User not added!', 'registerUser');
         }
 
         $user->setId($userId);
@@ -88,37 +90,39 @@ class UserController extends BaseController
 
     }
 
-    public function loginEmail(){
+    public function loginEmail()
+    {
         if (strtolower($_SERVER["REQUEST_METHOD"]) !== "post") {
             throw new NotFoundException();
         }
 
-        if(! isset($_POST['email'])) {
-            throw new CustomException('You must enter email!','loginEmail');
+        if (!isset($_POST['email'])) {
+            throw new CustomException('You must enter email!', 'loginEmail');
         }
 
-        if(! UserDao::existUserByEmail($_POST['email'])) {
-            throw new CustomException('Invalid email!User does not exist','loginEmail');
+        if (!UserDao::existUserByEmail($_POST['email'])) {
+            throw new CustomException('Invalid email!User does not exist', 'loginEmail');
         }
         $_SESSION['login_email'] = $_POST['email'];
         $this->loginUserView();
 
-  }
+    }
 
-    public function loginUser(){
-        if(! isset($_SESSION['login_email'])){
+    public function loginUser()
+    {
+        if (!isset($_SESSION['login_email'])) {
             header("Location: ?target=user&action=loginEmail");
         }
         if (strtolower($_SERVER["REQUEST_METHOD"]) !== "post") {
             throw new NotFoundException();
         }
 
-        if(! isset($_POST['password'])) {
-            throw new CustomException('Please enter your password!',"loginUser");
+        if (!isset($_POST['password'])) {
+            throw new CustomException('Please enter your password!', "loginUser");
         }
         $passwordHash = UserDao::getPasswordByEmail($_SESSION['login_email']);
-        if(! password_verify($_POST['password'],$passwordHash)) {
-            throw new CustomException('Invalid password!',"loginUser");
+        if (!password_verify($_POST['password'], $passwordHash)) {
+            throw new CustomException('Invalid password!', "loginUser");
         }
         $user = UserDao::getUserByEmail($_SESSION['login_email']);
         $_SESSION['user']['id'] = $user['id'];
@@ -131,100 +135,90 @@ class UserController extends BaseController
 
     }
 
-    public function logout(){
+    public function logout()
+    {
         unset($_SESSION['user']);
         header("Location: ?target=home&action=index");
     }
 
-    public function delete(){
-        if(!isset($_SESSION['user']['id'])) {
+    public function delete()
+    {
+        if (!isset($_SESSION['user']['id'])) {
             throw new NotFoundException();
         }
-        if(!UserDao::delete($_SESSION['user']['id'])){
+        if (!UserDao::delete($_SESSION['user']['id'])) {
             throw new CustomException('Account not deleted!');
 
         }
         $this->logout();
     }
 
-    public function editProfile(){
+    public function editProfile()
+    {
         if (strtolower($_SERVER["REQUEST_METHOD"]) !== "post") {
             throw new NotFoundException();
         }
 
-        if(! isset($_POST['edit-profile'])) {
+        if (!isset($_POST['edit-profile'])) {
             throw new NotFoundException();
         }
 
 
         //first name
-        if(! isset($_POST['first-name'])){
+        if (!isset($_POST['first-name'])) {
             throw new CustomException('First name is not set!');
-        }
-        else if(strlen($_POST['first-name']) < 2){
+        } else if (strlen($_POST['first-name']) < 2) {
             throw new CustomException('First name must be at least two characters long!');
-        }
-        else{
+        } else {
             $firstName = $_POST['first-name'];
         }
 
         //last name
-        if(! isset($_POST['last-name'])){
+        if (!isset($_POST['last-name'])) {
             throw new CustomException('Last name is not set!');
-        }
-        else if(strlen($_POST['last-name']) < 2){
+        } else if (strlen($_POST['last-name']) < 2) {
             throw new CustomException('Last name must be at least two characters long!');
-        }
-        else{
+        } else {
             $lastName = $_POST['last-name'];
         }
 
         //email
-        if (! isset($_POST['email'])){
+        if (!isset($_POST['email'])) {
             throw new CustomException('Email is not set!');
-        }
-        else if (! filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) {
+        } else if (!filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) {
             throw new InvalidParameterException('Invalid parameter email!');
-        }
-        else{
+        } else {
             $email = trim($_POST['email']);
         }
 
         //password
-        if (! isset($_POST['password']) && ! isset($_POST['confirm-password']) ||
-            ($_POST['password'] == '' && $_POST['confirm-password'] == '')){
+        if (!isset($_POST['password']) && !isset($_POST['confirm-password']) ||
+            ($_POST['password'] == '' && $_POST['confirm-password'] == '')) {
             $password = false;
-        }
-        else if (strlen($_POST['password']) < 2){
+        } else if (strlen($_POST['password']) < 2) {
             throw new CustomException('Password must be at least 3 characters long!');
-        }
-        else if (strlen($_POST['confirm-password']) < 2){
+        } else if (strlen($_POST['confirm-password']) < 2) {
             throw new CustomException('Confirm-Password must be at least 3 characters long!');
-        }
-        else if($_POST['password'] !== $_POST['confirm-password']){
+        } else if ($_POST['password'] !== $_POST['confirm-password']) {
             throw new CustomException('Passwords do not match!');
-        }
-        else{
-            $password = password_hash($_POST["password"], PASSWORD_BCRYPT, ["cost"=>5]);
+        } else {
+            $password = password_hash($_POST["password"], PASSWORD_BCRYPT, ["cost" => 5]);
         }
 
         //address
-        if (! isset($_POST['address'])){
+        if (!isset($_POST['address'])) {
             throw new CustomException('Address is not set!');
-        }
-        elseif($_POST['address'] == ''){
+        } elseif ($_POST['address'] == '') {
             $address = null;
-        }
-        elseif(strlen($_POST['address']) < 3){
+        } elseif (strlen($_POST['address']) < 3) {
             throw new CustomException('Address must be at least 3 characters long!');
-        }
-        else{
+        } else {
             $address = $_POST['address'];
         }
 
         $user = new UserInfo($email, $password, $firstName, $lastName, $address);
         $user->setId($_SESSION['user']['id']);
-        if(! UserDao::editProfile($user)){
+        if (!UserDao::editProfile($user)) {
             throw new CustomException('Profile not edited!');
         }
 
@@ -234,48 +228,51 @@ class UserController extends BaseController
         $_SESSION['user']['address'] = $address;
 
         header("Location: ?target=home&action=index");
-
-
+        
     }
 
-    public function myOrders(){
-        if(! isset($_SESSION['user']['id'])){
+    public function myOrders()
+    {
+        if (!isset($_SESSION['user']['id'])) {
             throw new CustomException('You are not logged!');
         }
 
         $orders = UserDao::getAllOrders($_SESSION['user']['id']);
 
-        $this->renderView(['account','accountOrders'], ['orders' => $orders]);
+        $this->renderView(['account', 'accountOrders'], ['orders' => $orders]);
 
 
     }
 
-    public function favorites(){
-        if(! isset($_SESSION['user']['id'])){
+    public function favorites()
+    {
+        if (!isset($_SESSION['user']['id'])) {
             throw new CustomException('You are not logged!');
         }
 
         $favorites = UserDao::getFavorites($_SESSION['user']['id']);
-        $this->renderView(['account','favorites'],['favorites' => $favorites]);
+        $this->renderView(['account', 'favorites'], ['favorites' => $favorites]);
     }
 
-    public function addProductStep1View(){
+    public function addProductStep1View()
+    {
         $allSubCategories = SubCategoryDao::getSubCategory();
         $distinctBrands = SubCategoryDao::getAllDistinctBrands();
-        $this->renderView(['account','addProductStep1'],['allSubCategories' => $allSubCategories , 'brands' => $distinctBrands]);
+        $this->renderView(['account', 'addProductStep1'], ['allSubCategories' => $allSubCategories, 'brands' => $distinctBrands]);
     }
 
-    public function addProductStep2View(){
-        if(! isset($_POST['addProductStep1'])){
+    public function addProductStep2View()
+    {
+        if (!isset($_POST['addProductStep1'])) {
             throw new CustomException('First Step Not Complete');
         }
-        if(! isset($_POST['sub-categories'])){
+        if (!isset($_POST['sub-categories'])) {
             throw new CustomException('Sub-categories not set');
         }
-        if(! isset($_POST['brands'])){
+        if (!isset($_POST['brands'])) {
             throw new CustomException('Brands not set');
         }
-        if(! isset($_POST['model'])){
+        if (!isset($_POST['model'])) {
             throw new CustomException('Model not set');
         }
 
@@ -287,57 +284,61 @@ class UserController extends BaseController
         $_SESSION['user']['addProduct']['model'] = $model;
         $_SESSION['user']['addProduct']['subCategoryId'] = $subCategoryId;
 
-        $this->renderView(['account','addProductStep2'],['productSpec' => $productSpec]);
+        $this->renderView(['account', 'addProductStep2'], ['productSpec' => $productSpec]);
 
 
     }
 
-    public function editProductView(){
-        if(! isset($_GET['productId'])){
+    public function editProductView()
+    {
+        if (!isset($_GET['productId'])) {
             throw new NotFoundException();
         }
         $productId = $_GET['productId'];
         $product = ProductDao::getProduct($productId);
-        $this->renderView(['account','account_admin_edit'],['product' => $product]);
+        $this->renderView(['account', 'account_admin_edit'], ['product' => $product]);
     }
 
-    public function editProduct(){
-        if(! isset($_POST['edit-product'])){
+    public function editProduct()
+    {
+        if (!isset($_POST['edit-product'])) {
             throw new CustomException('Form not send!');
         }
-        if(! isset($_POST['quantity'])){
+        if (!isset($_POST['quantity'])) {
             throw new CustomException('Quantity not set!');
         }
-        if(! isset($_POST['price'])){
+        if (!isset($_POST['price'])) {
             throw new CustomException('Price not set!');
         }
-        if(! isset($_POST['productId'])){
+        if (!isset($_POST['productId'])) {
             throw new CustomException('Product ID not set!');
         }
-        $quantity =$_POST['quantity'];
-        $price =$_POST['price'];
-        $productId =$_POST['productId'];
-        if (! ProductDao::editProduct($price, $quantity, $productId)){
+        $quantity = $_POST['quantity'];
+        $price = $_POST['price'];
+        $productId = $_POST['productId'];
+        if (!ProductDao::editProduct($price, $quantity, $productId)) {
             throw new CustomException('Product not edited!');
         }
         header("Location: ?target=product&action=getProduct&productId=$productId");
 
     }
 
-    public function removeFavorite(){
-        if(! isset($_GET['productId'])){
+    public function removeFavorite()
+    {
+        if (!isset($_GET['productId'])) {
             header("Location: ?target=home&action=index");
         }
-        if(! isset($_SESSION['user']['id'])){
+        if (!isset($_SESSION['user']['id'])) {
             header("Location: ?target=home&action=index");
         }
         $userId = $_SESSION['user']['id'];
-        $productId= $_GET['productId'];
-        if(! UserDao::removeFavorite($productId,$userId)){
+        $productId = $_GET['productId'];
+        if (!UserDao::removeFavorite($productId, $userId)) {
             throw new CustomException("Product not removed form favorites");
         }
         header("Location: ?target=user&action=favorites");
     }
+
 
     public function buyAction(){
         if(! isset($_SESSION['user'])){
@@ -345,37 +346,52 @@ class UserController extends BaseController
         }
         if(! isset($_POST['buy'])){
             //todo redirection to cart
+            header("Location: ?target=home&action=index");
         }
-        if(! isset($_POST['productIds'])){
+        if(! isset($_POST['product'])){
             header("Location: ?target=home&action=index");
         }
         //['productId => $quantity]
-        $orderedProducts;
+        $orderedProducts = $_POST['product'];
         //todo check if we have enough quantity
-        $checkIsQtyEnogh = ProductDao::checkQtyAvailabilityPerProduct($orderedProducts);
-
+        $checkIsQtyEnough = ProductDao::checkQtyAvailabilityPerProduct($orderedProducts);
+        if(is_array($checkIsQtyEnough)){
+            $productId = $checkIsQtyEnough['productId'];
+            $quantity = $checkIsQtyEnough['quantity'];
+            throw new CustomException("Product with id=$productId have available quantity of $quantity",'cart');
+        }
         $userId = $_SESSION['user']['id'];
         //make transaction
         if(! UserDao::buyAction($orderedProducts,$userId)){
             throw new CustomException("Transaction failed!","cart");
         }
-        unset($_SESSION['user']['cart']);//check if it is correct
+        unset($_SESSION['user']['cart']);
+        dd("bravo");
         throw new CustomException("Transaction complete your goods will arrive soon :)","cart");
     }
 
     public function loginEmailView(){
+
         require_once "View/loginEmail.php";
     }
-    public function loginUserView(){
+
+    public function loginUserView()
+    {
         require_once "View/loginUser.php";
     }
-    public function registerEmailView(){
+
+    public function registerEmailView()
+    {
         require_once "View/registerEmail.php";
     }
-    public function registerUserView(){
+
+    public function registerUserView()
+    {
         require_once "View/registerUser.php";
     }
-    public function editProductSearch(){
-        $this->renderView(['account','adminSearchProductEdit']);
+
+    public function editProductSearch()
+    {
+        $this->renderView(['account', 'adminSearchProductEdit']);
     }
 }

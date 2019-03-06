@@ -32,7 +32,12 @@ class Product
      * @param $brand
      * @param $img
      */
-    public function __construct($id,$price, $quantity, $subCategory, $category, $model, $brand, $img =  null)
+
+
+
+    public function __construct($id,$price, $quantity, $subCategory, $category, $model, $brand, $img)
+
+
     {
         $this->id = $id;
         $this->price = $price;
@@ -53,20 +58,14 @@ class Product
     }
 
     /**
-     * @return null
+     * @return mixed
      */
     public function getImg()
     {
         return $this->img;
     }
 
-    /**
-     * @param null $img
-     */
-    public function setImg($img)
-    {
-        $this->img = $img;
-    }
+
 
     /**
      * @return mixed
