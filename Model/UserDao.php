@@ -133,5 +133,42 @@ class UserDao{
         }
         return true;
     }
+
+    public static function buyAction(array $orderProducts, $userId ){
+        /** @var \PDO $pdo */
+        $pdo = $GLOBALS["PDO"];
+        $pdo->beginTransaction();
+        try {
+            //First - subtract stock quantity from order quantity per product
+            foreach ($orderProducts as $productId => $quantity) {
+                $query = "UPDATE products SET quantity = quantity - :quantity
+                      WHERE id = :productid ;";
+                $stmt = $pdo->prepare($query);
+                $stmt->execute(['quantity' => $quantity, 'productId' => $productId]);
+            }
+
+            //Second - insert order in table orders (order id, user, and date) and get the order id for last insertion
+            $query = "INSERT INTO orders (userId,date) VALUES (:userId, NOW());";
+            $stmt = $pdo->prepare($query);
+            $stmt->execute(['userId' => $userId]);
+            $orderId = $pdo->lastInsertId();
+
+            //Third - insert ordered products in table ordered_products
+            foreach ($orderProducts as $productId => $quantity) {
+                $query = "INSERT INTO ordered (orderId,productId,quantity) VALUES (:orderId, :productId, :quantity)";
+                $stmt = $pdo->prepare($query);
+                $stmt->execute(['orderId' => $orderId, 'productId' => $productId, 'quantity' => $quantity]);
+            }
+
+            $pdo->commit();
+        } catch (\PDOException $e) {
+            echo "Something went Wrong - " . $e->getMessage();
+            $pdo->rollBack();
+            return false;
+        }
+        return true;
+
+    }
+
 }
 

@@ -30,8 +30,9 @@ class Product
      * @param $category
      * @param $model
      * @param $brand
+     * @param $img
      */
-    public function __construct($id,$price, $quantity, $subCategory, $category, $model, $brand, $img = null)
+    public function __construct($id,$price, $quantity, $subCategory, $category, $model, $brand, $img =  null)
     {
         $this->id = $id;
         $this->price = $price;

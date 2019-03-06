@@ -47,6 +47,7 @@ LEFT JOIN products_images as pi ON pi.productId = p.id";
         $stmt = $pdo->prepare($query);
         $stmt->execute($params);
         $products = [];
+
         while ($row = $stmt->fetch(\PDO::FETCH_OBJ)) {
             $products[] = new Product($row->id, $row->price, $row->quantity, $row->subCat, $row->cat, $row->model, $row->brand, $row->img);
         }
@@ -163,11 +164,11 @@ LEFT JOIN brands as c ON c.id = a.subCategoryId";
         $pdo = $GLOBALS["PDO"];
         $query = "SELECT p.id as id, price, quantity, s.name as subCat, c.name as cat,
 m.name as model, b.name as brand, pi.img_uri FROM products as p
-JOIN sub_categories as s ON p.subCategoryId = s.id
-JOIN categories as c ON s.categoryId = c.id
-JOIN models as m ON m.id = p.modelId
-JOIN brands as b ON b.id = m.brandId
-JOIN products_images as pi ON pi.productId = p.id WHERE p.id = ?";
+LEFT JOIN sub_categories as s ON p.subCategoryId = s.id
+LEFT JOIN categories as c ON s.categoryId = c.id
+LEFT JOIN models as m ON m.id = p.modelId
+LEFT JOIN brands as b ON b.id = m.brandId
+LEFT JOIN products_images as pi ON pi.productId = p.id WHERE p.id = ?";
         $stmt = $pdo->prepare($query);
         $stmt->execute([$productId]);
         $row = $stmt->fetch(\PDO::FETCH_OBJ);
@@ -302,6 +303,30 @@ WHERE p.id = ?");
         $stmt->execute();
         $brands = $stmt->fetchAll(\PDO::FETCH_ASSOC);
         return $brands;
+    }
+
+    public static function checkQtyAvailabilityPerProduct(array $products){
+        //This function check if the product is available for a given product id and quantity ordered.
+        //If quantity ordered is bigger than the quantity in stock the function return assoc array
+        //with the quantity(value) in stock of the given product(key)
+        //The parameter given to this function is assoc array ['productId' => $quantity]
+        //If more than one product/quantity is given and all products are available return true
+        //If one of the given product/quantity is not available return the first occurrences
+
+        /** @var \PDO $pdo */
+        $pdo = $GLOBALS["PDO"];
+        $result = true;
+        foreach ($products as $productId => $quantity) {
+            $query = "SELECT quantity FROM products WHERE id = :id";
+            $stmt = $pdo->prepare($query);
+            $stmt->execute(array('id' => $productId));
+            $quantityResult = $stmt->fetch(\PDO::FETCH_ASSOC);
+            if($quantityResult == 0 || $quantity < $quantity){
+                $result[$productId] = $quantityResult;
+                break;
+            }
+        }
+        return $result;
     }
 
 }

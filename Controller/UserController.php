@@ -339,6 +339,30 @@ class UserController extends BaseController
         header("Location: ?target=user&action=favorites");
     }
 
+    public function buyAction(){
+        if(! isset($_SESSION['user'])){
+            header("Location: ?target=home&action=index");
+        }
+        if(! isset($_POST['buy'])){
+            //todo redirection to cart
+        }
+        if(! isset($_POST['productIds'])){
+            header("Location: ?target=home&action=index");
+        }
+        //['productId => $quantity]
+        $orderedProducts;
+        //todo check if we have enough quantity
+        $checkIsQtyEnogh = ProductDao::checkQtyAvailabilityPerProduct($orderedProducts);
+
+        $userId = $_SESSION['user']['id'];
+        //make transaction
+        if(! UserDao::buyAction($orderedProducts,$userId)){
+            throw new CustomException("Transaction failed!","cart");
+        }
+        unset($_SESSION['user']['cart']);//check if it is correct
+        throw new CustomException("Transaction complete your goods will arrive soon :)","cart");
+    }
+
     public function loginEmailView(){
         require_once "View/loginEmail.php";
     }

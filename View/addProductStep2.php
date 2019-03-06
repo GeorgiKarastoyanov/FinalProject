@@ -1,8 +1,4 @@
-<?php
-if(! isset($_SESSION['user']['addProduct'])){
-    header("?target=home&action=index");
-}
-?>
+
 <form action="?target=product&action=addProduct" method="post" enctype="multipart/form-data">
     <h2>Add Product Specifications for <?=$_SESSION['user']['addProduct']['brandName']. " " . $_SESSION['user']['addProduct']['model'] ?></h2>
     <?php foreach ($params['productSpec'] as $spec) {
