@@ -1,6 +1,4 @@
-<?php
 
-?>
 
     <h2>Your Cart</h2>
     <?php  if(! empty($params['products'])) {?>
@@ -14,7 +12,6 @@
     </tr>
 
     <?php $totalSum = 0;
-    /** var Product*/
     foreach ( $params['products'] as $product) {?>
         <tr>
             <td><a href="?target=product&action=getProduct&productId=<?=$product->getId(); ?>">

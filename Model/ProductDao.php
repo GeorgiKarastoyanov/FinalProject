@@ -120,7 +120,7 @@ class ProductDao{
 
             //now we have productId so we can insert product image_uri and product spec values
             //first we insert img
-            $query = "INSERT INTO product_images (productId, img_uri) 
+            $query = "INSERT INTO products_images (productId, img_uri) 
                            VALUES (:productId, :img_uri);";
             $stmt = $pdo->prepare($query);
             $stmt->execute(['productId' => $productId, 'img_uri' => $product->getImg()]);

@@ -3,7 +3,6 @@
 namespace controller;
 
 use exception\CustomException;
-use exception\InvalidParameterException;
 use exception\NotFoundException;
 use model\ProductDao;
 use model\SubCategoryDao;
@@ -338,7 +337,6 @@ class UserController extends BaseController
         }
         header("Location: ?target=user&action=favorites");
     }
-
 
     public function buyAction(){
         if(! isset($_SESSION['user'])){

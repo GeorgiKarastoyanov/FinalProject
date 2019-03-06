@@ -1,10 +1,5 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Natsi
- * Date: 26.2.2019 г.
- * Time: 16:17
- */
+
 
 namespace controller;
 

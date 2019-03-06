@@ -61,15 +61,15 @@ class ProductController extends BaseController
             throw new CustomException('Img not uploaded');
         }
         $file_name = time().".jpg";
-        if(! move_uploaded_file($tmp_name, "View/images/$file_name")){
+        if(! move_uploaded_file($tmp_name, "View/images/products/$file_name")){
             throw new CustomException('Img not moved');
         }
-        $image_uri = "View/images/$file_name";
+        $image_uri = "View/images/products/$file_name";
 
 
 
         $specIds = $_POST['spec'];
-        $price = $_POST['quantity'];
+        $price = $_POST['price'];
         $quantity = $_POST['quantity'];
         $brandName = $_SESSION['user']['addProduct']['brandName'];
         $modelName = $_SESSION['user']['addProduct']['model'];
