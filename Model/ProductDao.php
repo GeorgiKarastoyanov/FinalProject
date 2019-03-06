@@ -4,32 +4,30 @@
 namespace model;
 
 
-class ProductDao
-{
+class ProductDao{
 
-    public static function getAllProducts($subCat, $priceOrder = "", $brand = "", $page = 1)
-    {
+    public static function getAllProducts($subCat, $priceOrder = "", $brand = "", $page = 1){
         /** @var \PDO $pdo */
         $pdo = $GLOBALS["PDO"];
         $query = "SELECT p.id, p.price, p.quantity, s.name as subCat, c.name as cat, m.name as model, b.name as brand, pi.img_uri as img FROM products as p
-LEFT JOIN sub_categories as s ON p.subCategoryId = s.id
-LEFT JOIN categories as c ON s.categoryId = c.id
-LEFT JOIN models as m ON m.id = p.modelId
-LEFT JOIN brands as b ON b.id = m.brandId
-LEFT JOIN products_images as pi ON pi.productId = p.id";
+                  LEFT JOIN sub_categories as s ON p.subCategoryId = s.id
+                  LEFT JOIN categories as c ON s.categoryId = c.id
+                  LEFT JOIN models as m ON m.id = p.modelId
+                  LEFT JOIN brands as b ON b.id = m.brandId
+                  LEFT JOIN products_images as pi ON pi.productId = p.id";
 
         $params = [];
         if ($brand != "") {
-            $query .= " WHERE b.name = ?";
-            $params[] = $brand;
+            $query .= " WHERE b.name = :subCat";
+            $params = array('subCat' => $subCat);
         }
 
         if ($brand != "") {
-            $query .= " AND s.name = ?";
-            $params[] = $subCat;
+            $query .= " AND s.name = :brand";
+            $params = array('subCat' => $subCat, 'brand' => $brand);
         } else {
-            $query .= " WHERE s.name = ?";
-            $params[] = $subCat;
+            $query .= " WHERE s.name = :subCat";
+            $params = array('subCat' => $subCat);
         }
         if ($priceOrder === "ascending") {
 
@@ -53,34 +51,32 @@ LEFT JOIN products_images as pi ON pi.productId = p.id";
         return $products;
     }
 
-    public static function countProducts($subCat = "",$brand = "")
-    {
+    public static function countProducts($subCat = "", $brand = ""){
         /** @var \PDO $pdo */
         $pdo = $GLOBALS["PDO"];
         $query = "SELECT COUNT(*) as total FROM products as a
-LEFT JOIN sub_categories as b ON a.subCategoryId = b.id
-LEFT JOIN brands as c ON c.id = a.subCategoryId";
-        if(!empty($subCat)){
+                  LEFT JOIN sub_categories as b ON a.subCategoryId = b.id
+                  LEFT JOIN brands as c ON c.id = a.subCategoryId";
+        if (!empty($subCat)) {
             $query .= " WHERE b.name = :subCat";
-             $params = array('subCat' => $subCat);
-             if(!empty($brand)){
-                 $query .= " AND c.name = :brand";
-                 $params = array('subCat' => $subCat, 'brand' => $brand);
-             }
+            $params = array('subCat' => $subCat);
+            if (!empty($brand)) {
+                $query .= " AND c.name = :brand";
+                $params = array('subCat' => $subCat, 'brand' => $brand);
+            }
 
-         }
+        }
         $stmt = $pdo->prepare($query);
         $stmt->execute($params);
         $row = $stmt->fetch(\PDO::FETCH_ASSOC);
         return $row["total"];
     }
 
-    public static function getAllBrands($subCat)
-    {
+    public static function getAllBrands($subCat){
         /** @var \PDO $pdo */
         $pdo = $GLOBALS["PDO"];
         $stmt = $pdo->prepare("SELECT brands.name as brandName FROM brands JOIN
-      sub_categories ON brands.subCategoryId = sub_categories.id WHERE sub_categories.name = :subCat");
+        sub_categories ON brands.subCategoryId = sub_categories.id WHERE sub_categories.name = :subCat");
         $stmt->execute(array('subCat' => $subCat));
         $rows = $stmt->fetchAll(\PDO::FETCH_ASSOC);
         $brands = [];
@@ -90,8 +86,7 @@ LEFT JOIN brands as c ON c.id = a.subCategoryId";
         return $brands;
     }
 
-    public static function addProduct(Product $product, $spec)
-    {
+    public static function addProduct(Product $product, $spec){
         /** @var \PDO $pdo */
         $pdo = $GLOBALS["PDO"];
         $pdo->beginTransaction();
@@ -149,48 +144,45 @@ LEFT JOIN brands as c ON c.id = a.subCategoryId";
         return $productId;
     }
 
-    public static function changePrice($productId, $amount)
-    {
-        /** @var \PDO $pdo */
-        $pdo = $GLOBALS["PDO"];
-        $stmt = $pdo->prepare("UPDATE products SET price = price - ? WHERE id = ?");
-        $stmt->execute([$amount, $productId]);
-    }
+//    public static function changePrice($productId, $amount)
+//    {
+//        /** @var \PDO $pdo */
+//        $pdo = $GLOBALS["PDO"];
+//        $stmt = $pdo->prepare("UPDATE products SET price = price - ? WHERE id = ?");
+//        $stmt->execute([$amount, $productId]);
+//    }
 
-    public static function getProduct($productId)
-    {
+    public static function getProduct($productId){
         /** @var \PDO $pdo */
         $pdo = $GLOBALS["PDO"];
         $query = "SELECT p.id as id, price, quantity, s.name as subCat, c.name as cat,
-m.name as model, b.name as brand, pi.img_uri FROM products as p
-JOIN sub_categories as s ON p.subCategoryId = s.id
-JOIN categories as c ON s.categoryId = c.id
-JOIN models as m ON m.id = p.modelId
-JOIN brands as b ON b.id = m.brandId
-JOIN products_images as pi ON pi.productId = p.id WHERE p.id = ?";
+                  m.name as model, b.name as brand, pi.img_uri FROM products as p
+                  JOIN sub_categories as s ON p.subCategoryId = s.id
+                  JOIN categories as c ON s.categoryId = c.id
+                  JOIN models as m ON m.id = p.modelId
+                  JOIN brands as b ON b.id = m.brandId
+                  JOIN products_images as pi ON pi.productId = p.id WHERE p.id = :productId";
         $stmt = $pdo->prepare($query);
-        $stmt->execute([$productId]);
+        $stmt->execute(array('productId' => $productId));
         $row = $stmt->fetch(\PDO::FETCH_OBJ);
         $product = new Product($row->id, $row->price, $row->quantity, $row->subCat, $row->cat, $row->model, $row->brand, $row->img_uri);
         return $product;
 
     }
 
-    public static function getSpecs($productId)
-    {
+    public static function getSpecs($productId){
         /** @var \PDO $pdo */
         $pdo = $GLOBALS["PDO"];
         $stmt = $pdo->prepare("SELECT ps.name,sv.value FROM products as p
-JOIN spec_values as sv ON sv.productId = p.id
-JOIN product_spec as ps ON sv.specID = ps.Id
-WHERE p.id = ?");
-        $stmt->execute([$productId]);
+                                         JOIN spec_values as sv ON sv.productId = p.id
+                                         JOIN product_spec as ps ON sv.specID = ps.Id
+                                         WHERE p.id = :productId");
+        $stmt->execute(array('productId' => $productId));
         $specs = $stmt->fetchAll(\PDO::FETCH_ASSOC);
         return $specs;
     }
 
-    public static function getOrderDetails($orderId)
-    {
+    public static function getOrderDetails($orderId){
         $query = "SELECT b.id, CONCAT(d.name, ' ', c.name) as productName, b.price * a.quantity as price, a.quantity FROM ordered_products as a 
                   LEFT JOIN products as b ON b.id = a.productId
                   LEFT JOIN models as c ON c.id = b.modelId
@@ -202,8 +194,7 @@ WHERE p.id = ?");
         return $orderDetails;
     }
 
-    public static function getTopProducts()
-    {
+    public static function getTopProducts(){
         $query = "SELECT d.price,d.id,CONCAT(c.name, ' ', b.name) as productName, SUM(a.quantity) as totalSells, e.img_uri FROM ordered_products as a
                   LEFT JOIN products as d ON d.id = a.productId
                   LEFT JOIN models as b ON b.id = d.modelId
@@ -216,15 +207,14 @@ WHERE p.id = ?");
         return $topProducts;
     }
 
-     public static function getAllPictureBrands()
-    {
+    public static function getAllPictureBrands(){
         /** @var \PDO $pdo */
         $pdo = $GLOBALS["PDO"];
         $stmt = $pdo->prepare("SELECT DISTINCT SUM(a.quantity) AS totalQuantity, d.name,d.image_uri  FROM ordered_products as a
-                  LEFT JOIN products AS b ON b.id = a.productId
-                  LEFT JOIN sub_categories AS c ON c.id = b.subCategoryId
-                  LEFT JOIN brands AS d ON c.id = d.subCategoryId
-                  GROUP BY d.name ORDER BY totalQuantity DESC LIMIT 5");
+                                         LEFT JOIN products AS b ON b.id = a.productId
+                                         LEFT JOIN sub_categories AS c ON c.id = b.subCategoryId
+                                         LEFT JOIN brands AS d ON c.id = d.subCategoryId
+                                         GROUP BY d.name ORDER BY totalQuantity DESC LIMIT 5");
         $stmt->execute();
         $rows = $stmt->fetchAll(\PDO::FETCH_ASSOC);
         $brands = [];
@@ -237,17 +227,16 @@ WHERE p.id = ?");
     }
 
 
-    public static function getAutoLoadNames()
-    {
+    public static function getAutoLoadNames($text){
         /** @var \PDO $pdo */
         $pdo = $GLOBALS["PDO"];
         $query = "SELECT a.id, CONCAT(c.name, ' ',b.name) as name FROM products as a
                   LEFT JOIN models as b ON b.id = a.modelId
-                  LEFT JOIN brands as c ON c.id = b.brandID";
+                  LEFT JOIN brands as c ON c.id = b.brandId";
         $params = [];
-        if (isset($_POST["text"])) {
+        if (!empty($text)) {
             $query .= " HAVING name LIKE ?";
-            $params[] = "%" . $_POST["text"] . "%";
+            $params[] = "%" . $text. "%";
         }
         $query .= " LIMIT 5";
         $stmt = $pdo->prepare($query);
@@ -255,8 +244,7 @@ WHERE p.id = ?");
         return $stmt->fetchAll(\PDO::FETCH_ASSOC);
     }
 
-    public static function checkBrandIdExist($brandName, $subCategoryId)
-    {
+    public static function checkBrandIdExist($brandName, $subCategoryId){
         /** @var \PDO $pdo */
         $pdo = $GLOBALS["PDO"];
         $query = "SELECT id FROM brands WHERE subCategoryId = :subCategoryId AND name = :brandName;";
@@ -266,8 +254,7 @@ WHERE p.id = ?");
         return $brandId;
     }
 
-    public static function checkModelIdExist($brandId, $modelName)
-    {
+    public static function checkModelIdExist($brandId, $modelName){
         /** @var \PDO $pdo */
         $pdo = $GLOBALS["PDO"];
         $query = "SELECT id FROM models WHERE brandId = :brandId AND name = :modelName;";
@@ -283,10 +270,9 @@ WHERE p.id = ?");
         $query = "UPDATE products SET price = :price, quantity = :quantity
                   WHERE id = :id;";
         $stmt = $pdo->prepare($query);
-        try{
+        try {
             $stmt->execute(['id' => $productId, 'price' => $price, 'quantity' => $quantity]);
-        }
-        catch (\PDOException $e){
+        } catch (\PDOException $e) {
             echo "Something went Wrong - " . $e->getMessage();
             return false;
         }
@@ -303,5 +289,4 @@ WHERE p.id = ?");
         $brands = $stmt->fetchAll(\PDO::FETCH_ASSOC);
         return $brands;
     }
-
 }

@@ -183,7 +183,8 @@ class ProductController extends BaseController
         if(isset($_POST["text"])){
             header("content-type:application/jason");
             $this->isJson = true;
-            return ProductDao::getAutoLoadNames();
+            $text = $_POST["text"];
+            return ProductDao::getAutoLoadNames($text);
         }
     }
 

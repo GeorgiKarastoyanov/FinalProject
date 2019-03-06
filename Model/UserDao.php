@@ -7,7 +7,8 @@ class UserDao{
        $password= $user->getPassword();
        $firstName = $user->getFirstName();
        $lastName = $user->getLastName();
-       $query = "INSERT INTO users (email, password, firstName, lastName) VALUES (:email, :password, :firstName, :lastName);";
+       $query = "INSERT INTO users (email, password, firstName, lastName) 
+                 VALUES (:email, :password, :firstName, :lastName);";
        $stmt = $GLOBALS['PDO']->prepare($query);
         try{
         $stmt->execute(array('email' => $email,'password' => $password, 'firstName' => $firstName, 'lastName' => $lastName));

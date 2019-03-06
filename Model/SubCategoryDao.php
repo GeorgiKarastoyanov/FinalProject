@@ -20,8 +20,8 @@ class SubCategoryDao
                   JOIN  categories AS c ON (c.id = s.categoryId)";
         $params = [];
         if ($name != "") {
-            $query .= " WHERE c.name = ?";
-            $params[] = $name;
+            $query .= " WHERE c.name = :name";
+            $params = array('name' => $name);
         }
         $stmt = $pdo->prepare($query);
         $stmt->execute($params);
