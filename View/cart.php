@@ -1,2 +1,2 @@
 <?php
-echo 'cart';
+dd($params['products']);

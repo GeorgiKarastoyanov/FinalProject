@@ -15,7 +15,7 @@ $brands = \model\ProductDao::getAllPictureBrands();
 <div id="table-picture-brand" style="">
     <ul id="our_brands-show">
         <?php foreach ($brands as $brand) { ?>
-            <li><a href=""><img src="View/<?php echo $brand["image"]; ?>" alt=""></a></li>
+            <li><a href="?target=product&action=showTopBrandProducts&brandName=<?php echo $brand["name"]; ?>"><img src="View/<?php echo $brand["image"]; ?>"></a></li>
         <?php } ?>
     </ul>
 </div>
