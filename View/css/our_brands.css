@@ -1,20 +1,20 @@
-/*#table-picture-brand{*/
-    /*border-top: 1px solid gainsboro;*/
-    /*border-bottom: 1px solid gainsboro;*/
+#table-picture-brand{
+    border-top: 1px solid gainsboro;
+    border-bottom: 1px solid gainsboro;
 
-/*}*/
-/*#table-picture-brand img {*/
-    /*border-right: 1px solid #e8e4d4;*/
+}
+#table-picture-brand img {
+    border-right: 1px solid #e8e4d4;
 
-/*}*/
+}
 img{
     width: 100px;
     height: 100px;
 }
 
-/*#table-picture-brand ul li {*/
-    /*display: inline;*/
-/*}*/
+#table-picture-brand ul li {
+    display: inline;
+}
 
 .row { width: 100%; margin: auto; }
 /*.row > div { margin: 0 0 50px 0; min-width: 500px; width: 100%; }*/
@@ -26,13 +26,4 @@ img{
     /*clear: both;*/
     /*height: 0;*/
 /*}*/
-/*#our_brands-show{ display: inline-block; }*/
-.row{
-    margin-top: 2%;
-    margin-bottom: 2%;
-}
-#top_brands {
-    font-family: inherit;
-    color: inherit;
-    font-size: 2em;
-}
+#our_brands-show{ display: inline-block; }

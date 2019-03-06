@@ -110,7 +110,7 @@ class UserDao{
     }
 
     public static function getFavorites($userId){
-        $query = "SELECT b.id as productId,CONCAT(e.name, ' ', d.name) as productName, b.price FROM favourites as a 
+        $query = "SELECT DISTINCT(b.id) as productId,CONCAT(e.name, ' ', d.name) as productName, b.price FROM favourites as a 
                   LEFT JOIN products as b ON a.productId = b.id
                   LEFT JOIN models as d ON d.id = b.modelId
                   LEFT JOIN brands as e ON e.id = b.subCategoryId
@@ -122,7 +122,7 @@ class UserDao{
     }
 
     public static function removeFavorite($productId, $userId){
-        $query = "DELETE FROM favourites WHERE userId = :userId AND productId = :productId LIMIT 1;";
+        $query = "DELETE FROM favourites WHERE userId = :userId AND productId = :productId LIMIT 10";
         $stmt = $GLOBALS['PDO']->prepare($query);
 
         try{

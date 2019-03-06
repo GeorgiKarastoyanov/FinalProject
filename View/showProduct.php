@@ -2,6 +2,7 @@
 <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
 <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+<script src="View/js/addToCartOrFavourites.js"></script>
 <link href="View/css/showProduct.css">
 
 
@@ -33,8 +34,16 @@
                 </div>
             </div>
             <div class="section" style="padding-bottom:20px;">
-                <button class="btn btn-success"><span style="margin-right:20px" class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span> Add to cart</button>
-                <h6><a href="#"><span class="glyphicon glyphicon-heart-empty" style="cursor:pointer;"></span> Add to favourites</a></h6>
+                <form method="post" action="?target=product&action=fillCart&field=getProduct">
+                    <input type="hidden" name="productId" value="<?php echo $params['product']->getId(); ?>"">
+                    <button onclick="addToCart('<?php echo $params['product']->getBrand(). ' ' . $params['product']->getModel(); ?>')"
+                            class="btn btn-success"><span style="margin-right:20px" class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span> Add to cart</button>
+                </form>
+                <form method="post" action="?target=product&action=addToFavourites">
+                    <input type="hidden" name="productId" value="<?php echo $params['product']->getId(); ?>">
+                    <button onclick="addToFavourites('<?php echo $params['product']->getBrand(). ' ' . $params['product']->getModel(); ?>')"
+                            style="width: 130px"><h6><span class="glyphicon glyphicon-heart-empty" style="cursor:pointer;"></span> Add to favourites</h6></button>
+                </form>
             </div>
         </div>
 

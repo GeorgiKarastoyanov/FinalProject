@@ -221,6 +221,7 @@ class ProductDao{
         foreach ($rows as $row) {
             $brand = [];
             $brand ["image"] = $row["image_uri"];
+            $brand ["name"] = $row["name"];
             $brands[] = $brand;
         }
         return $brands;
@@ -288,5 +289,53 @@ class ProductDao{
         $stmt->execute();
         $brands = $stmt->fetchAll(\PDO::FETCH_ASSOC);
         return $brands;
+    }
+
+
+    public static function showCartProducts($idList){
+        /** @var \PDO $pdo */
+        $pdo = $GLOBALS["PDO"];
+        $query = "SELECT p.id as id, price, quantity, s.name as subCat, c.name as cat,
+                  m.name as model, b.name as brand, pi.img_uri as img FROM products as p
+                  JOIN sub_categories as s ON p.subCategoryId = s.id
+                  JOIN categories as c ON s.categoryId = c.id
+                  JOIN models as m ON m.id = p.modelId
+                  JOIN brands as b ON b.id = m.brandId
+                  JOIN products_images as pi ON pi.productId = p.id 
+                  WHERE p.id IN ($idList)";
+        $stmt = $pdo->prepare($query);
+        $stmt->execute();
+        $products = [];
+        while ($row = $stmt->fetch(\PDO::FETCH_OBJ)) {
+            $products[] = new Product($row->id, $row->price, $row->quantity, $row->subCat, $row->cat, $row->model, $row->brand, $row->img);
+        }
+        return $products;
+    }
+
+    public static  function addToFavourites($userId, $productId){
+        /** @var \PDO $pdo */
+        $pdo = $GLOBALS["PDO"];
+        $query = "INSERT INTO favourites (userId, productId) VALUES (:userId , :productId)";
+        $stmt = $pdo->prepare($query);
+        $stmt ->execute(['userId' => $userId, 'productId' => $productId]);
+    }
+
+    public static function topBrandsProducts($brand){
+        /** @var \PDO $pdo */
+        $pdo = $GLOBALS["PDO"];
+        $query = "SELECT p.id as id, price, quantity, s.name as subCat, c.name as cat,
+                  m.name as model, b.name as brand, pi.img_uri as img FROM products as p
+                  JOIN sub_categories as s ON p.subCategoryId = s.id
+                  JOIN categories as c ON s.categoryId = c.id
+                  JOIN models as m ON m.id = p.modelId
+                  JOIN brands as b ON b.id = m.brandId
+                  JOIN products_images as pi ON pi.productId = p.id WHERE b.name = :brand";
+        $stmt = $pdo->prepare($query);
+        $stmt->execute(['brand' => $brand]);
+        $products = [];
+        while ($row = $stmt->fetch(\PDO::FETCH_OBJ)) {
+            $products[] = new Product($row->id, $row->price, $row->quantity, $row->subCat, $row->cat, $row->model, $row->brand, $row->img);
+        }
+        return $products;
     }
 }

@@ -25,7 +25,7 @@ $brands = \model\ProductDao::getAllCategories();
 
 <?= isset($_SESSION['user']) ? '<a href="?target=user&action=favorites">Favorites</a>' : ''?>
 
-<a href="?target=user&action=cart">Cart</a>
+<a href="?target=product&action=showCart">Cart</a>
 <br>
 
 <script src="View/js/show_sub_category.js"></script>
