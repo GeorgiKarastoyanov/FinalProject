@@ -6,7 +6,6 @@ namespace controller;
 use model\Product;
 use model\ProductDao;
 use exception\CustomException;
-use exception\InvalidParameterException;
 use exception\NotFoundException;
 
 class ProductController extends BaseController
@@ -95,7 +94,6 @@ class ProductController extends BaseController
         header("Location: ?target=product&action=getProduct&productId=$productId");
     }
 
-
     public function getProduct()
     {
         if (isset($_GET["productId"]) && !empty($_GET["productId"])) {
@@ -155,7 +153,6 @@ class ProductController extends BaseController
 
     }
 
-
     public function makePages()
     {
         if(isset($_GET['subCat'])){
@@ -203,10 +200,13 @@ class ProductController extends BaseController
     }
 
     public function showCart(){
-        $cartProducts = $_SESSION['user']['cart'];
-        $idList = implode(',' , $cartProducts);
-        $products = ProductDao::showCartProducts($idList);
-        $this->renderView(['cart'], ['products' => $products]);
+        if(isset($_SESSION['user']['cart'])){
+            $cartProducts = $_SESSION['user']['cart'];
+            $idList = implode(',' , $cartProducts);
+            $products = ProductDao::showCartProducts($idList);
+            $this->renderView(['cart'], ['products' => $products]);
+        }
+        $this->renderView(['cart']);
     }
 
     public function addToFavourites()
@@ -226,6 +226,17 @@ class ProductController extends BaseController
             $this->renderView(['productsFromABrand'], ['products' => $products, 'brand' => $brand]);
         }else{
             throw new NotFoundException();
+        }
+    }
+
+    public function removeFromCart()
+    {
+        if (isset($_GET['productId'])) {
+            $productId = $_GET['productId'];
+            unset($_SESSION['user']['cart'][$productId]);
+        }
+        else{
+            header("Location: ?target=product&action=showCart");
         }
     }
 }
