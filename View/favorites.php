@@ -12,7 +12,7 @@
 <body>
 <div id="favorites">
     <table id="favorite-product">
-        <h1 id="fav_text">My favourites products</h1>
+        <h2 id="fav_text">My favourites products</h2>
         <tr>
             <th>Product Name</th>
             <th>Price</th>
@@ -26,7 +26,8 @@
                 <td>
                     <form method="post" action="?target=product&action=fillCart&field=favourites">
                         <input type="hidden" name="productId" value="<?= $favorite['productId'] ?>">
-                        <input type="submit" id="submit" onclick="addToCart('<?= $favorite['productName'] ?>')" value="Add to cart">
+                        <input type="submit" id="submit" onclick="addToCart('<?= $favorite['productName'] ?>')"
+                               value="Add to cart">
                     </form>
                 </td>
                 <td><a href="?target=user&action=removeFavorite&productId=<?= $favorite['productId'] ?>">
