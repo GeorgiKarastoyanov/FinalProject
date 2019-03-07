@@ -20,14 +20,14 @@ $brands = \model\ProductDao::getAllCategories();
 
         <ul id="UL_6" style="margin-left: 300px">
             <li id="LI_7">
-                <a href="<?= isset($_SESSION['user']) ? '?target=home&action=account' : '?target=user&action=loginEmailView'?>" id="A_8">
-                    <?= isset($_SESSION['user']) ? 'Account' : 'LogIn'?><span id="SPAN_9"></span></a>
+                <a href="<?= isset($_SESSION['user']['id']) ? '?target=home&action=account' : '?target=user&action=loginEmailView'?>" id="A_8">
+                    <?= isset($_SESSION['user']['id']) ? 'Account' : 'LogIn'?><span id="SPAN_9"></span></a>
             </li>
             <li id="LI_10" style="margin-left: 35px">
-                <a href="<?= isset($_SESSION['user']) ? '?target=product&action=showCart' : '?target=user&action=loginEmailView'?>" id="A_11">Cart</a>
+                <a href="<?= isset($_SESSION['user']['id']) ? '?target=product&action=showCart' : '?target=user&action=loginEmailView'?>" id="A_11">Cart</a>
             </li>
             <li id="LI_12">
-                <a href="<?= isset($_SESSION['user']) ? '?target=user&action=favorites' : '?target=user&action=loginEmailView'?>" id="A_13">Favourites</a>
+                <a href="<?= isset($_SESSION['user']['id']) ? '?target=user&action=favorites' : '?target=user&action=loginEmailView'?>" id="A_13">Favourites</a>
             </li>
         </ul>
     </div>
@@ -39,7 +39,7 @@ $brands = \model\ProductDao::getAllCategories();
 <div id="subCategories" >
 </div>
 
-<?php if(!isset($_SESSION['user'])){?>
+<?php if(!isset($_SESSION['user']['id'])){?>
 <div id="notLogged">
     <div style="float: left">
         Welcome to eMag!<br>

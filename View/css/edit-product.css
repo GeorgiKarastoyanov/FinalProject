@@ -70,3 +70,6 @@ table, tr, th, td {
     width: 15%;
     height: 8vh;
 }
+#err {
+    color: #ff2d1f;
+}

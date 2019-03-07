@@ -7,6 +7,7 @@ use model\Product;
 use model\ProductDao;
 use exception\CustomException;
 use exception\NotFoundException;
+use model\UserDao;
 
 class ProductController extends BaseController
 {
@@ -20,6 +21,8 @@ class ProductController extends BaseController
         $_SESSION["subCat"] = $subCat;
         $products = ProductDao::getAllProducts($subCat);
         $brands = ProductDao::getAllBrands($subCat);
+        $count = ProductDao::countProducts($_SESSION["subCat"]);
+        $pages = $count/5;
         $selectedOrder = "";
         $selectedBrand = "";
         $this->renderView(['allProductsView'], [
@@ -27,7 +30,8 @@ class ProductController extends BaseController
             'brands' => $brands,
             'selectedBrand' => $selectedBrand,
             'selectedOrder' => $selectedOrder,
-            'subCat' => $subCat
+            'subCat' => $subCat,
+            'pages' => $pages
         ]);
     }
 
@@ -37,17 +41,18 @@ class ProductController extends BaseController
     }
 
     public function addProduct(){
+        //todo need a lot of improvements...
         if(! isset($_SESSION['user']['addProduct'])){
             throw new CustomException('First Step input not submit');
         }
         if(! isset($_POST['addProduct'])){
             throw new CustomException('Second Step input not submit');
         }
-        if(! isset($_POST['price'])){
-            throw new CustomException('Price not set');
+        if(! isset($_POST['price']) || $_POST['price'] < 0){
+            throw new CustomException('Invalid price!');
         }
-        if(! isset($_POST['quantity'])){
-            throw new CustomException('Price not set');
+        if(! isset($_POST['quantity']) || $_POST['quantity'] < 0){
+            throw new CustomException('Invalid quantity!');
         }
         if(! isset($_POST['spec'])){
             throw new CustomException('Product spec not set');
@@ -74,18 +79,8 @@ class ProductController extends BaseController
         $brandName = $_SESSION['user']['addProduct']['brandName'];
         $modelName = $_SESSION['user']['addProduct']['model'];
         $subCategoryId = $_SESSION['user']['addProduct']['subCategoryId'];
-        $brandId = ProductDao::checkBrandIdExist($brandName,$subCategoryId);
         $productId = null;
         $category = null;
-        $modelId = null;
-        if($brandId != false){
-            $brandName = $brandId['id'];
-            $modelId = ProductDao::checkModelIdExist($brandId['id'],$modelName);
-            //todo product exist
-        }
-        if($modelId != false){
-            $modelName = $modelId;
-        }
         $addProduct = new Product($productId, $price, $quantity,$subCategoryId, $category, $modelName,$brandName, $image_uri);
         $productId = ProductDao::addProduct($addProduct,$specIds);
         if(!is_numeric($productId)){
@@ -143,31 +138,19 @@ class ProductController extends BaseController
         $subCat = $_SESSION["subCat"];
         $_SESSION['brand'] = $brand;
 
+        $count = ProductDao::countProducts($_SESSION["subCat"], $_SESSION['brand']);
+        $pages = $count/5;
+
         $products = ProductDao::getAllProducts($subCat, $priceOrder, $brand, $page);
         $brands = ProductDao::getAllBrands($subCat);
         $this->renderView(['allProductsView'], ['products' => $products, 'brands' => $brands, 'page' => $page,
             'priceOrder' => $priceOrder, 'brand' => $brand,
             'selectedBrand' => $selectedBrand,
             'selectedOrder' => $selectedOrder,
-            'subCat' => $subCat
+            'subCat' => $subCat,
+            'pages' => $pages
         ]);
 
-    }
-
-    public function makePages()
-    {
-        if(isset($_GET['subCat'])){
-            $brand = '';
-            $products = ProductDao::countProducts($_GET['subCat'], $brand);
-        }else{
-            $products = ProductDao::countProducts($_SESSION["subCat"], $_SESSION['brand']);
-        }
-        $arr["totalProducts"] = $products;
-        $arr["productsPerPage"] = 5;
-        $this->isJson = true;
-        return $arr;
-        //header('Content-Type: application/json');
-        //echo json_encode($arr);
     }
 
     public function showAllBrandPictures()

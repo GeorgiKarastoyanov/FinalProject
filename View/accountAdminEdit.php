@@ -1,12 +1,8 @@
 <?php
 
-if (!isset($_SESSION['user']['id']) || $_SESSION['user']['id'] != 1) {
-    header('target=home&action=index');
-}
-
-
 $product = $params['product'];
 ?>
+
 <!doctype html>
 <html lang="en">
 <head>
@@ -43,6 +39,8 @@ $product = $params['product'];
         <input type="hidden" name="productId" value="<?= $product->getId(); ?>">
         <input type="submit" class="submit-edit" name="edit-product" value="Save Changes">
     </form>
+    <div id="err" <?= isset($params['errMsg']) ? "" : "style='display: none'"; ?>><?= isset($params['errMsg']) ? $params['errMsg'] : ""; ?></div>
 </div>
 </body>
 </html>
+

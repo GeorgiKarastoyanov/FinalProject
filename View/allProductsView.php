@@ -6,9 +6,14 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Products</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="View/css/our_brands.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="View/css/styles.css">
 </head>
-<body onload="pager()">
+<body>
 <input id="hiddenPage" type="hidden" value="<?php echo $params['page']; ?>">
 <select id="priceFilter" onchange="filter()">
     <option value="all" <?php echo $params['selectedOrder'] == "" ? "selected" : "" ?>>Sort by price</option>
@@ -21,38 +26,31 @@
     <option value="<?php echo $brand;  ?>" <?php echo  $params['selectedBrand'] == $brand ? "selected" : "" ?> > <?php echo $brand;  ?></option>
     <?php } ?>
 </select>
-<table>
-    <tr>
-        <th>Price</th>
-        <th>Quantity</th>
-        <th>Sub Category</th>
-        <th>Category</th>
-        <th>Brand</th>
-        <th>Model</th>
-        <th>Image</th>
-        <th>View Product</th>
-    </tr>
+<div class="card-deck" style="margin-left: 50px">
     <?php foreach ( $params['products'] as $product) {?>
-        <tr>
-            <td><?php echo $product->getPrice(); ?></td>
-            <td><?php echo $product->getQuantity(); ?></td>
-            <td><?php echo $product->getSubCategory(); ?></td>
-            <td><?php echo $product->getCategory();?></td>
-            <td><?php echo $product->getBrand(); ?></td>
-            <td><?php echo $product->getModel(); ?></td>
-            <td><img src="<?= $product->getImg();?>" width="20px" height="20px"></td>
-            <td>
-                <a href="?target=product&action=getProduct&productId=<?php echo $product->getId();?>"><button>View details</button></a>
-            </td>
-            <?php if(isset($_SESSION['user']['id']) && $_SESSION['user']['id'] == 1){ ?>
-            <td>
-                <button>Edit product</button>
-            </td>
-            <?php } ?>
-        </tr>
+        <div class="container, mh-20">
+            <h6 style="margin-left: 20px"><?php echo $product->getBrand() . ' ' . $product->getModel(); ?></h6>
+            <div id="table-picture-brand" class="card" style="width:180px">
+                <img class="card-img-top" src="<?= $product->getImg();?>" alt="Card image" style="width:80%">
+                <div class="card-body">
+                    <a href="?target=product&action=getProduct&productId=<?php echo $product->getId();?>" class="btn btn-primary , stretched-link">View product</a><br>
+                    <a> Price : <?php echo $product->getPrice(); ?> $</a>
+                </div>
+            </div>
+        </div>
     <?php } ?>
-</table>
-<div id="pager" ></div>
+</div>
+<nav aria-label="Page navigation example" style="margin-left: 100px">
+    <ul class="pagination justify-content-center">
+        <li class="page-item disabled" ><a class="page-link" href="">Previous</a></li>
+        <?php  for($i = 0; $i < $params['pages']; $i++){?>
+        <li class="page-item" >
+            <a class="page-link" href="?target=product&action=filter&priceOrder=all&brand=iphone&page=<?= $i + 1; ?>"><?= $i+1; ?></a>
+        </li>
+        <?php } ?>
+        <li class="page-item disabled"><a class="page-link" href="">Next</a></li>
+    </ul>
+</nav>
 </body>
 <script type="text/javascript">
 
@@ -61,37 +59,6 @@
         var brand = document.getElementById("brandFilter").value;
         window.location = "?target=product&action=filter&priceOrder=" +priceOrder+"&brand="+brand + "&page=" +page;
     }
-    function pager() {
-        fetch("index.php?target=product&action=makePages&subCat=" + '<?= $params['subCat']; ?>' + "&brand=" + '<?= $params['selectedBrand']; ?>')
-            .then(function (response) {
-                return response.json();
-            })
-            .then(function (myJson) {
-                var total = myJson.totalProducts;
-                var perPage = myJson.productsPerPage;
-                var buttons = Math.ceil(total / perPage);
-                var pagera = document.getElementById("pager");
-                for (var i = 1; i <= buttons; i++) {
-                    var button = document.createElement("button");
-                    button.value = i;
-                    if(document.getElementById("hiddenPage").value == i){
-                        button.style.backgroundColor = 'blue';
-                    }
-                    button.style.height = '20px';
-                    button.style.width = '20px';
-                    button.style.margin = '5px';
-                    button.innerHTML = i;
-                    button.addEventListener('click', function (i) {
-                        return function () {
-                            filter(i);
-                        }
-                    }(i));
-                    pagera.appendChild(button);
-                }
-
-            });
-    }
-
-
+    
 </script>
 </html>

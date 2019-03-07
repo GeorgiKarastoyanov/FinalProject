@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="View/css/registerUser.css">
 </head>
 <body>
-<img src="View/images/logo-login.png" id="register-img" alt="eMAG">
+<a href="?target=home&action=index"><img src="View/images/logo-login.png" id="register-img" alt="eMAG"></a>
 <div id="register_user">
     <form action="?target=user&action=registerUser" method="post" class="form">
         <h1 id="reg_text_user">Registration</h1>
@@ -23,7 +23,7 @@
         <input type="password" class="reg_input"  name="confirm-password" placeholder="Confirm password" required><br>
         <input type="submit" class="reg_submit-button" name="register-mail" value="Register"> <br>
         <a href="?target=user&action=registerEmailView">Go Back</a>
-        <div id="err" <?= isset($errMsg['errMsg']) ? "" : "style='display: none'"; ?>><?= isset($errMsg['errMsg']) ? $errMsg['errMsg'] : ""; ?></div>
+        <div id="err" <?= isset($errMsg) ? "" : "style='display: none'"; ?>><?= isset($errMsg) ? $errMsg : ""; ?></div>
     </form>
 </div>
 </body>
