@@ -286,11 +286,21 @@ class UserController extends BaseController
         }
 
         $subCategoryId = $_POST['sub-categories'];
-        $brand = $_POST['brands'];
-        $model = $_POST['model'];
+        $brandName = $_POST['brands'];
+        $modelName = $_POST['model'];
+        $brandId = ProductDao::checkBrandIdExist($brandName,$subCategoryId);
+        if($brandId != false){
+            $brandName = $brandId['id'];
+            $modelId = ProductDao::checkModelIdExist($brandId['id'],$modelName);
+            if($modelId['id'] != false){
+                $productId =ProductDao::getProductIdByModelId($modelId['id']);
+                $productId = $productId['id'];
+                header("Location: ?target=user&action=editProductView&productId=$productId");
+            }
+        }
         $productSpec = SubCategoryDao::getAllSpecForCategory($subCategoryId);
-        $_SESSION['user']['addProduct']['brandName'] = $brand;
-        $_SESSION['user']['addProduct']['model'] = $model;
+        $_SESSION['user']['addProduct']['brandName'] = $brandName;
+        $_SESSION['user']['addProduct']['model'] = $modelName;
         $_SESSION['user']['addProduct']['subCategoryId'] = $subCategoryId;
 
         $this->renderView(['account', 'addProductStep2'], ['productSpec' => $productSpec]);

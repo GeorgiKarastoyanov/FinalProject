@@ -7,6 +7,7 @@ use model\Product;
 use model\ProductDao;
 use exception\CustomException;
 use exception\NotFoundException;
+use model\UserDao;
 
 class ProductController extends BaseController
 {
@@ -40,17 +41,18 @@ class ProductController extends BaseController
     }
 
     public function addProduct(){
+        //todo need a lot of improvements...
         if(! isset($_SESSION['user']['addProduct'])){
             throw new CustomException('First Step input not submit');
         }
         if(! isset($_POST['addProduct'])){
             throw new CustomException('Second Step input not submit');
         }
-        if(! isset($_POST['price'])){
-            throw new CustomException('Price not set');
+        if(! isset($_POST['price']) || $_POST['price'] < 0){
+            throw new CustomException('Invalid price!');
         }
-        if(! isset($_POST['quantity'])){
-            throw new CustomException('Price not set');
+        if(! isset($_POST['quantity']) || $_POST['quantity'] < 0){
+            throw new CustomException('Invalid quantity!');
         }
         if(! isset($_POST['spec'])){
             throw new CustomException('Product spec not set');
@@ -77,18 +79,8 @@ class ProductController extends BaseController
         $brandName = $_SESSION['user']['addProduct']['brandName'];
         $modelName = $_SESSION['user']['addProduct']['model'];
         $subCategoryId = $_SESSION['user']['addProduct']['subCategoryId'];
-        $brandId = ProductDao::checkBrandIdExist($brandName,$subCategoryId);
         $productId = null;
         $category = null;
-        $modelId = null;
-        if($brandId != false){
-            $brandName = $brandId['id'];
-            $modelId = ProductDao::checkModelIdExist($brandId['id'],$modelName);
-            //todo product exist
-        }
-        if($modelId != false){
-            $modelName = $modelId;
-        }
         $addProduct = new Product($productId, $price, $quantity,$subCategoryId, $category, $modelName,$brandName, $image_uri);
         $productId = ProductDao::addProduct($addProduct,$specIds);
         if(!is_numeric($productId)){

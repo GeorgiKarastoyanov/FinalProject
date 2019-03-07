@@ -101,15 +101,14 @@ class ProductDao{
                 $brandId = $pdo->lastInsertId();
             }
             // Next we inset the model because we have brandId
-            //if $product->getModel(); is numeric it means that the brandId/modelName pair exist and no need to insert (we have modelId)
-            //else we need to insert the modelName with brandId and take the new modelId
-            if (!is_numeric($product->getModel())) {
-                $query = "INSERT INTO models (brandId, name) 
-                           VALUES (:brandId, :modelName);";
-                $stmt = $pdo->prepare($query);
-                $stmt->execute(['brandId' => $brandId, 'modelName' => $product->getModel()]);
-                $modelId = $pdo->lastInsertId();
-            }
+            //earlier we checked if the model exist and since we are here the model doesnt exist so we need to insert it
+            //and take the new modelId
+            $query = "INSERT INTO models (brandId, name) 
+                      VALUES (:brandId, :modelName);";
+            $stmt = $pdo->prepare($query);
+            $stmt->execute(['brandId' => $brandId, 'modelName' => $product->getModel()]);
+            $modelId = $pdo->lastInsertId();
+
             // now we have modelId and we can insert product price and quantity
             $query = "INSERT INTO products (subCategoryId, modelId, price, quantity) 
                            VALUES (:subCategoryId, :modelId, :price, :quantity);";
@@ -349,6 +348,16 @@ class ProductDao{
             $products[] = new Product($row->id, $row->price, $row->quantity, $row->subCat, $row->cat, $row->model, $row->brand, $row->img);
         }
         return $products;
+    }
+
+    public static function getProductIdByModelId($modelId){
+        /** @var \PDO $pdo */
+        $pdo = $GLOBALS["PDO"];
+        $query = "SELECT id FROM products WHERE modelId = :modelId;";
+        $stmt = $pdo->prepare($query);
+        $stmt->execute(array('modelId' => $modelId));
+        $modelId = $stmt->fetch(\PDO::FETCH_ASSOC);
+        return $modelId;
     }
 
 }
