@@ -259,8 +259,8 @@ class UserController extends BaseController
 
     public function addProductStep1View()
     {
-        if(! isset($_SESSION['user']) && $_SESSION['user']['isAdmin'] == false){
-            header('target=home&action=index');
+        if(! isset($_SESSION['user']) || $_SESSION['user']['isAdmin'] == false){
+            header('Location: ?target=home&action=index');
         }
         $allSubCategories = SubCategoryDao::getSubCategory();
         $distinctBrands = SubCategoryDao::getAllDistinctBrands();
@@ -269,8 +269,8 @@ class UserController extends BaseController
 
     public function addProductStep2View()
     {
-        if(! isset($_SESSION['user']) && $_SESSION['user']['isAdmin'] == false){
-            header('target=home&action=index');
+        if(! isset($_SESSION['user']) || $_SESSION['user']['isAdmin'] == false){
+            header('Location: ?target=home&action=index');
         }
         if (!isset($_POST['addProductStep1'])) {
             throw new CustomException('First Step Not Complete');
@@ -300,8 +300,8 @@ class UserController extends BaseController
 
     public function editProductView()
     {
-        if(! isset($_SESSION['user']) && $_SESSION['user']['isAdmin'] == false){
-            header('target=home&action=index');
+        if(! isset($_SESSION['user']['isAdmin']) || $_SESSION['user']['isAdmin'] == false){
+            header('Location: ?target=home&action=index');
         }
         if (!isset($_GET['productId'])) {
             throw new NotFoundException();

@@ -110,10 +110,10 @@ class UserDao{
     }
 
     public static function getFavorites($userId){
-        $query = "SELECT DISTINCT(b.id) as productId,CONCAT(e.name, ' ', d.name) as productName, b.price FROM favourites as a 
+        $query = "SELECT b.id as productId,CONCAT(e.name, ' ', d.name) as productName, b.price FROM favourites as a 
                   LEFT JOIN products as b ON a.productId = b.id
                   LEFT JOIN models as d ON d.id = b.modelId
-                  LEFT JOIN brands as e ON e.id = b.subCategoryId
+                  LEFT JOIN brands as e ON e.id = d.brandId
                   WHERE a.userId = :id;";
         $stmt = $GLOBALS['PDO']->prepare($query);
         $stmt->execute(array('id' => $userId));

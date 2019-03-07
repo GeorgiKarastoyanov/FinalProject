@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="View/css/registerEmail.css">
 </head>
 <body>
-<img src="View/images/logo-login.png" id="register-img" alt="eMAG">
+<a href="?target=home&action=index"><img src="View/images/logo-login.png" id="register-img" alt="eMAG"></a>
 <div class="reg_mail_container">
     <form action="?target=user&action=loginEmail" method="post" class="form">
         <h1 class="reg-text">Welcome!</h1>
