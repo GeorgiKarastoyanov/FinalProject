@@ -1,0 +1,26 @@
+#account-logo-img {
+    width: 12%;
+    height: 10vh;
+}
+
+#my-profile-account {
+    width: 60%;
+    height: 50vh;
+    text-align: center;
+    margin: auto;
+    background-color: rgba(147, 147, 147,0.5);
+    border-radius: 10px;
+}
+#my-prof-text{
+    color: #171717;
+}
+#table-my-profile{
+    margin: auto;
+}
+#submit-my-profile{
+    margin-top: 1%;
+    width: 20%;
+    height: 5vh;
+    background-color: #185fa9;
+    color: white;
+}
