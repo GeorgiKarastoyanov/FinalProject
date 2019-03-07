@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="View/css/registerUser.css">
 </head>
 <body>
-<img src="View/images/logo-login.png" id="register-img" alt="">
+<img src="View/images/logo-login.png" id="register-img" alt="eMAG">
 <div id="register_user">
     <form action="?target=user&action=registerUser" method="post" class="form">
         <h1 id="reg_text_user">Registration</h1>

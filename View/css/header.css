@@ -37,7 +37,7 @@
     caret-color: rgb(33, 37, 41);
     border: 0px none rgb(33, 37, 41);
     font: normal normal 400 normal 16px / 24px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
-    outline: rgb(33, 37, 41) none 0px;
+    outline: rgb(33, 37, 41) none 0bpx;
 }/*#NAV_1:after*/
 
 #NAV_1:before {
@@ -658,8 +658,10 @@
     height: 5vh;
     width: 166px;
     text-align: center;
+    margin-bottom: 5%;
 }
 .button2{
+    margin-bottom: 5%;
     background-color: white;
     border: 1px solid #10aced;
     color: #10aced;

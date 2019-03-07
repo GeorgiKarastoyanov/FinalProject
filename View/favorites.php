@@ -12,6 +12,7 @@
 <body>
 <div id="favorites">
     <table id="favorite-product">
+        <img src="View/images/logo-login.png" id="logo-img" alt="eMAG">
         <h2 id="fav_text">My favourites products</h2>
         <tr>
             <th>Product Name</th>

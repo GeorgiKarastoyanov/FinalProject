@@ -19,7 +19,7 @@
 </head>
 <body>
 <div class="search-edit">
-    <img src="View/images/logo-login.png" id="logo" alt="">
+    <img src="View/images/logo-login.png" id="logo" alt="eMAG">
     <h3 class="search-box">Search product</h3>
     <input id="input-products2" class="search-box-field" onkeyup="loadProducts()" type="text"
            placeholder="Enter product">

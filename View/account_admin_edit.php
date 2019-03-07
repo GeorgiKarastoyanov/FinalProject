@@ -16,9 +16,9 @@ $product = $params['product'];
 </head>
 <body>
 <div class="edit-products">
-    <img src="View/images/logo-login.png" id="register-img" alt="">
+    <img src="View/images/logo-login.png" id="register-img" alt="eMAG">
     <form action="?target=user&action=editProduct" method="post" class="form">
-        <h2 id="edit-product-text">Edit Product</h2>
+        <h2 id="edit-product-text"> Edit Product</h2>
         <table class="edit-products-table">
             <tr>
                 <th>Price</th>

@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="View/css/login-user.css">
 </head>
 <body>
-<img src="View/images/logo-login.png" id="register-img" alt="">
+<img src="View/images/logo-login.png" id="register-img" alt="eMAG">
 <div class="reg_mail_container">
     <form action="?target=user&action=loginUser" method="post" class="form">
         <h3 class="reg-text">Please enter your password</h3>
