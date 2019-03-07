@@ -34,7 +34,9 @@ class Product
      */
 
 
+
     public function __construct($id,$price, $quantity, $subCategory, $category, $model, $brand, $img)
+
 
     {
         $this->id = $id;

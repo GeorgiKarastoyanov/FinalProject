@@ -14,20 +14,16 @@ class ProductDao{
                   LEFT JOIN categories as c ON s.categoryId = c.id
                   LEFT JOIN models as m ON m.id = p.modelId
                   LEFT JOIN brands as b ON b.id = m.brandId
-                  LEFT JOIN products_images as pi ON pi.productId = p.id";
+                  LEFT JOIN products_images as pi ON pi.productId = p.id
+                  WHERE s.name = :subCat";
 
         $params = [];
-        if ($brand != "") {
-            $query .= " WHERE b.name = :subCat";
-            $params = array('subCat' => $subCat);
-        }
+        $params['subCat'] = $subCat;
+
 
         if ($brand != "") {
-            $query .= " AND s.name = :brand";
-            $params = array('subCat' => $subCat, 'brand' => $brand);
-        } else {
-            $query .= " WHERE s.name = :subCat";
-            $params = array('subCat' => $subCat);
+            $query .= " AND b.name = :brand";
+            $params['brand'] = $brand;
         }
         if ($priceOrder === "ascending") {
 
@@ -45,6 +41,7 @@ class ProductDao{
         $stmt = $pdo->prepare($query);
         $stmt->execute($params);
         $products = [];
+
         while ($row = $stmt->fetch(\PDO::FETCH_OBJ)) {
             $products[] = new Product($row->id, $row->price, $row->quantity, $row->subCat, $row->cat, $row->model, $row->brand, $row->img);
         }
@@ -54,9 +51,10 @@ class ProductDao{
     public static function countProducts($subCat = "", $brand = ""){
         /** @var \PDO $pdo */
         $pdo = $GLOBALS["PDO"];
-        $query = "SELECT COUNT(*) as total FROM products as a
-                  LEFT JOIN sub_categories as b ON a.subCategoryId = b.id
-                  LEFT JOIN brands as c ON c.id = a.subCategoryId";
+        $query = "SELECT (COUNT(*)) as total FROM products as a
+                  LEFT JOIN sub_categories as b ON b.id = a.subCategoryId
+                  LEFT JOIN models as d ON d.id = a.modelId
+                  LEFT JOIN brands as c ON c.id = d.brandId";
         if (!empty($subCat)) {
             $query .= " WHERE b.name = :subCat";
             $params = array('subCat' => $subCat);
@@ -122,7 +120,7 @@ class ProductDao{
 
             //now we have productId so we can insert product image_uri and product spec values
             //first we insert img
-            $query = "INSERT INTO product_images (productId, img_uri) 
+            $query = "INSERT INTO products_images (productId, img_uri) 
                            VALUES (:productId, :img_uri);";
             $stmt = $pdo->prepare($query);
             $stmt->execute(['productId' => $productId, 'img_uri' => $product->getImg()]);
@@ -143,14 +141,6 @@ class ProductDao{
         }
         return $productId;
     }
-
-//    public static function changePrice($productId, $amount)
-//    {
-//        /** @var \PDO $pdo */
-//        $pdo = $GLOBALS["PDO"];
-//        $stmt = $pdo->prepare("UPDATE products SET price = price - ? WHERE id = ?");
-//        $stmt->execute([$amount, $productId]);
-//    }
 
     public static function getProduct($productId){
         /** @var \PDO $pdo */
@@ -227,7 +217,6 @@ class ProductDao{
         return $brands;
     }
 
-
     public static function getAutoLoadNames($text){
         /** @var \PDO $pdo */
         $pdo = $GLOBALS["PDO"];
@@ -291,6 +280,29 @@ class ProductDao{
         return $brands;
     }
 
+    public static function checkQtyAvailabilityPerProduct(array $products){
+        //This function check if the product is available for a given product id and quantity ordered.
+        //If quantity ordered is bigger than the quantity in stock the function return assoc array
+        //with the quantity(value) in stock of the given product(key)
+        //The parameter given to this function is assoc array ['productId' => $quantity]
+        //If more than one product/quantity is given and all products are available return true
+        //If one of the given product/quantity is not available return the first occurrences
+
+        /** @var \PDO $pdo */
+        $pdo = $GLOBALS["PDO"];
+        foreach ($products as $productId => $quantity) {
+            $query = "SELECT quantity FROM products WHERE id = :id";
+            $stmt = $pdo->prepare($query);
+            $stmt->execute(array('id' => $productId));
+            $quantityResult = $stmt->fetch(\PDO::FETCH_ASSOC);
+            if($quantityResult['quantity'] == 0 || $quantityResult['quantity'] < $quantity){
+                $result['productId'] = $productId;
+                $result['quantity'] = $quantityResult['quantity'];
+                return $result;
+            }
+        }
+        return true;
+    }
 
     public static function showCartProducts($idList){
         /** @var \PDO $pdo */
@@ -338,4 +350,5 @@ class ProductDao{
         }
         return $products;
     }
+
 }

@@ -16,7 +16,7 @@
         </div>
         <div class="col-xs-5" style="border:0px solid gray">
 
-            <h1><?php echo $params['product']->getBrand(). '' . $params['product']->getModel(); ?></h1>
+            <h1><?php echo $params['product']->getBrand(). ' ' . $params['product']->getModel(); ?></h1>
 
             <h2 class="title-price"><small>Price</small></h2>
             <h3 style="margin-top:0px;"><?php echo $params['product']->getPrice(); ?> $</h3>

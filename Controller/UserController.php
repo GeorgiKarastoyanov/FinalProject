@@ -3,7 +3,6 @@
 namespace controller;
 
 use exception\CustomException;
-use exception\InvalidParameterException;
 use exception\NotFoundException;
 use model\ProductDao;
 use model\SubCategoryDao;
@@ -339,8 +338,38 @@ class UserController extends BaseController
         header("Location: ?target=user&action=favorites");
     }
 
-    public function loginEmailView()
-    {
+    public function buyAction(){
+        if(! isset($_SESSION['user'])){
+            header("Location: ?target=home&action=index");
+        }
+        if(! isset($_POST['buy'])){
+            //todo redirection to cart
+            header("Location: ?target=home&action=index");
+        }
+        if(! isset($_POST['product'])){
+            header("Location: ?target=home&action=index");
+        }
+        //['productId => $quantity]
+        $orderedProducts = $_POST['product'];
+        //todo check if we have enough quantity
+        $checkIsQtyEnough = ProductDao::checkQtyAvailabilityPerProduct($orderedProducts);
+        if(is_array($checkIsQtyEnough)){
+            $productId = $checkIsQtyEnough['productId'];
+            $quantity = $checkIsQtyEnough['quantity'];
+            throw new CustomException("Product with id=$productId have available quantity of $quantity",'cart');
+        }
+        $userId = $_SESSION['user']['id'];
+        //make transaction
+        if(! UserDao::buyAction($orderedProducts,$userId)){
+            throw new CustomException("Transaction failed!","cart");
+        }
+        unset($_SESSION['user']['cart']);
+        dd("bravo");
+        throw new CustomException("Transaction complete your goods will arrive soon :)","cart");
+    }
+
+    public function loginEmailView(){
+
         require_once "View/loginEmail.php";
     }
 

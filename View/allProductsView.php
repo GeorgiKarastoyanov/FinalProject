@@ -40,7 +40,7 @@
             <td><?php echo $product->getCategory();?></td>
             <td><?php echo $product->getBrand(); ?></td>
             <td><?php echo $product->getModel(); ?></td>
-            <td><img src="<?php $product->getImg()?>" width="20px" height="20px"></td>
+            <td><img src="<?= $product->getImg();?>" width="20px" height="20px"></td>
             <td>
                 <a href="?target=product&action=getProduct&productId=<?php echo $product->getId();?>"><button>View details</button></a>
             </td>

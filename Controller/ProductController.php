@@ -6,7 +6,6 @@ namespace controller;
 use model\Product;
 use model\ProductDao;
 use exception\CustomException;
-use exception\InvalidParameterException;
 use exception\NotFoundException;
 
 class ProductController extends BaseController
@@ -62,15 +61,15 @@ class ProductController extends BaseController
             throw new CustomException('Img not uploaded');
         }
         $file_name = time().".jpg";
-        if(! move_uploaded_file($tmp_name, "View/images/$file_name")){
+        if(! move_uploaded_file($tmp_name, "View/images/products/$file_name")){
             throw new CustomException('Img not moved');
         }
-        $image_uri = "View/images/$file_name";
+        $image_uri = "View/images/products/$file_name";
 
 
 
         $specIds = $_POST['spec'];
-        $price = $_POST['quantity'];
+        $price = $_POST['price'];
         $quantity = $_POST['quantity'];
         $brandName = $_SESSION['user']['addProduct']['brandName'];
         $modelName = $_SESSION['user']['addProduct']['model'];
@@ -94,7 +93,6 @@ class ProductController extends BaseController
         unset($_SESSION['user']['addProduct']);
         header("Location: ?target=product&action=getProduct&productId=$productId");
     }
-
 
     public function getProduct()
     {
@@ -155,7 +153,6 @@ class ProductController extends BaseController
 
     }
 
-
     public function makePages()
     {
         if(isset($_GET['subCat'])){
@@ -203,10 +200,13 @@ class ProductController extends BaseController
     }
 
     public function showCart(){
-        $cartProducts = $_SESSION['user']['cart'];
-        $idList = implode(',' , $cartProducts);
-        $products = ProductDao::showCartProducts($idList);
-        $this->renderView(['cart'], ['products' => $products]);
+        if(isset($_SESSION['user']['cart'])){
+            $cartProducts = $_SESSION['user']['cart'];
+            $idList = implode(',' , $cartProducts);
+            $products = ProductDao::showCartProducts($idList);
+            $this->renderView(['cart'], ['products' => $products]);
+        }
+        $this->renderView(['cart']);
     }
 
     public function addToFavourites()
@@ -226,6 +226,17 @@ class ProductController extends BaseController
             $this->renderView(['productsFromABrand'], ['products' => $products, 'brand' => $brand]);
         }else{
             throw new NotFoundException();
+        }
+    }
+
+    public function removeFromCart()
+    {
+        if (isset($_GET['productId'])) {
+            $productId = $_GET['productId'];
+            unset($_SESSION['user']['cart'][$productId]);
+        }
+        else{
+            header("Location: ?target=product&action=showCart");
         }
     }
 }
