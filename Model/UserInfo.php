@@ -12,8 +12,25 @@ namespace model;
 class UserInfo extends User
 {
     protected $firstName;
-    protected  $lastName;
-    protected  $address;
+    protected $lastName;
+    protected $address;
+    protected $isAdmin;
+
+    /**
+     * @return bool
+     */
+    public function isAdmin()
+    {
+        return $this->isAdmin;
+    }
+
+    /**
+     * @param bool $isAdmin
+     */
+    public function setIsAdmin($isAdmin)
+    {
+        $this->isAdmin = $isAdmin;
+    }
 
     /**
      * UserInfo constructor.
@@ -21,12 +38,13 @@ class UserInfo extends User
      * @param $lastName
      * @param $address
      */
-    public function __construct($email,$password,$firstName, $lastName, $address = null)
+    public function __construct($email,$password,$firstName, $lastName, $address = null, $isAdmin = false)
     {
         parent::__construct($email, $password);
         $this->firstName = $firstName;
         $this->lastName = $lastName;
         $this->address = $address;
+        $this->isAdmin =  $isAdmin;
     }
 
 

@@ -24,7 +24,7 @@ class UserDao{
 
     public static function getUserByEmail($email){
 
-        $query = "SELECT id, email, firstName, lastName, address FROM users WHERE email = :email;";
+        $query = "SELECT id, email, firstName, lastName, address, isAdmin FROM users WHERE email = :email;";
         $stmt = $GLOBALS['PDO']->prepare($query);
         $stmt->execute(array('email' => $email));
         $user = $stmt->fetch(\PDO::FETCH_ASSOC);

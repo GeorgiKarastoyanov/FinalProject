@@ -54,13 +54,10 @@ class UserController extends BaseController
         if (!isset($_POST['password']) || !isset($_POST['confirm-password'])) {
             throw new CustomException('You must enter password!', 'registerUser');
         }
-
-        if (strlen($_POST['password']) < 2) {
-            throw new CustomException('Password must be at least 3 characters long!', 'registerUser');
-        }
-
-        if (strlen($_POST['confirm-password']) < 2) {
-            throw new CustomException('Confirm-Password must be at least 3 characters long!', 'registerUser');
+        trim($_POST['password']);
+        trim($_POST['confirm-password']);
+        if (strlen($_POST['password']) < 6) {
+            throw new CustomException('Password must be at least 6 characters long!', 'registerUser');
         }
 
         if ($_POST['password'] !== $_POST['confirm-password']) {
@@ -82,6 +79,7 @@ class UserController extends BaseController
         $_SESSION['user']['firstName'] = $firstName;
         $_SESSION['user']['lastName'] = $lastName;
         $_SESSION['user']['address'] = $user->getAddress();
+        $_SESSION['user']['isAdmin'] = false;
 
         unset($_SESSION['register_email']);
 
@@ -129,6 +127,7 @@ class UserController extends BaseController
         $_SESSION['user']['firstName'] = $user['firstName'];
         $_SESSION['user']['lastName'] = $user['lastName'];
         $_SESSION['user']['address'] = $user['address'];
+        $_SESSION['user']['isAdmin'] = $user['isAdmin'];
         unset($_SESSION['login_email']);
         header("Location: ?target=home&action=index");
 
@@ -184,10 +183,10 @@ class UserController extends BaseController
         //email
         if (!isset($_POST['email'])) {
             throw new CustomException('Email is not set!');
-        } else if (!filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) {
-            throw new InvalidParameterException('Invalid parameter email!');
-        } else {
-            $email = trim($_POST['email']);
+        }
+        $email = trim($_POST['email']);
+        if (!filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) {
+            throw new CustomException('Invalid input for email!');
         }
 
         //password
@@ -255,6 +254,9 @@ class UserController extends BaseController
 
     public function addProductStep1View()
     {
+        if(! isset($_SESSION['user']) && $_SESSION['user']['isAdmin'] == false){
+            header('target=home&action=index');
+        }
         $allSubCategories = SubCategoryDao::getSubCategory();
         $distinctBrands = SubCategoryDao::getAllDistinctBrands();
         $this->renderView(['account', 'addProductStep1'], ['allSubCategories' => $allSubCategories, 'brands' => $distinctBrands]);
@@ -262,6 +264,9 @@ class UserController extends BaseController
 
     public function addProductStep2View()
     {
+        if(! isset($_SESSION['user']) && $_SESSION['user']['isAdmin'] == false){
+            header('target=home&action=index');
+        }
         if (!isset($_POST['addProductStep1'])) {
             throw new CustomException('First Step Not Complete');
         }
@@ -290,6 +295,9 @@ class UserController extends BaseController
 
     public function editProductView()
     {
+        if(! isset($_SESSION['user']) && $_SESSION['user']['isAdmin'] == false){
+            header('target=home&action=index');
+        }
         if (!isset($_GET['productId'])) {
             throw new NotFoundException();
         }
@@ -343,7 +351,6 @@ class UserController extends BaseController
             header("Location: ?target=home&action=index");
         }
         if(! isset($_POST['buy'])){
-            //todo redirection to cart
             header("Location: ?target=home&action=index");
         }
         if(! isset($_POST['product'])){
@@ -351,7 +358,6 @@ class UserController extends BaseController
         }
         //['productId => $quantity]
         $orderedProducts = $_POST['product'];
-        //todo check if we have enough quantity
         $checkIsQtyEnough = ProductDao::checkQtyAvailabilityPerProduct($orderedProducts);
         if(is_array($checkIsQtyEnough)){
             $productId = $checkIsQtyEnough['productId'];

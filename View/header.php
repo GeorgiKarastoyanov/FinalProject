@@ -38,6 +38,7 @@ $brands = \model\ProductDao::getAllCategories();
 <?php } ?><br>
 <div id="subCategories" >
 </div>
+
 <?php if(!isset($_SESSION['user'])){?>
 <div id="notLogged">
     <div style="float: left">
@@ -50,3 +51,4 @@ $brands = \model\ProductDao::getAllCategories();
 <?php } ?>
 </body>
 <script src="View/js/show_sub_category.js"></script>
+

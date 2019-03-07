@@ -1,5 +1,5 @@
 <?php
-$topProducts = \model\ProductDao::getTopProducts();
+$topProducts = $params['topProducts'];
 ?>
 
 <!DOCTYPE html>
