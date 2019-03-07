@@ -17,7 +17,7 @@
         <input type="email" class="reg_mail" name="email" placeholder="email" required><br>
         <input type="submit" class="reg_submit-button" name="continue" value="Continue"> <br>
         <p class="text-login-reg">You are new here? <a href="?target=user&action=registerEmailView">Register</a></p>
-        <div id="err" <?= isset($errMsg['errMsg']) ? "" : "style='display: none'"; ?>><?= isset($errMsg['errMsg']) ? $errMsg['errMsg'] : ""; ?></div>
+        <div id="err" <?= isset($errMsg) ? "" : "style='display: none'"; ?>><?= isset($errMsg) ? $errMsg : ""; ?></div>
     </form>
 </div>
 </body>

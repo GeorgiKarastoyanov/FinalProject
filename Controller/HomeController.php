@@ -13,6 +13,9 @@ class HomeController extends BaseController
 
     public function account()
     {
+        if(! isset($_SESSION['user'])){
+            header("Lcation: ?target=home&action=index");
+        }
         $this->renderView(['account', 'accountProfile']);
     }
 

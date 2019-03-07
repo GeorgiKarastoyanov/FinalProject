@@ -23,7 +23,7 @@
         <input type="password" class="reg_input"  name="confirm-password" placeholder="Confirm password" required><br>
         <input type="submit" class="reg_submit-button" name="register-mail" value="Register"> <br>
         <a href="?target=user&action=registerEmailView">Go Back</a>
-        <div id="err" <?= isset($errMsg['errMsg']) ? "" : "style='display: none'"; ?>><?= isset($errMsg['errMsg']) ? $errMsg['errMsg'] : ""; ?></div>
+        <div id="err" <?= isset($errMsg) ? "" : "style='display: none'"; ?>><?= isset($errMsg) ? $errMsg : ""; ?></div>
     </form>
 </div>
 </body>

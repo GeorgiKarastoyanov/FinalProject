@@ -145,8 +145,7 @@ class UserController extends BaseController
             throw new NotFoundException();
         }
         if (!UserDao::delete($_SESSION['user']['id'])) {
-            throw new CustomException('Account not deleted!');
-
+            throw new CustomException('Account not deleted!','accountProfile');
         }
         $this->logout();
     }
@@ -164,52 +163,58 @@ class UserController extends BaseController
 
         //first name
         if (!isset($_POST['first-name'])) {
-            throw new CustomException('First name is not set!');
+            throw new CustomException('First name is not set!','accountProfile');
         } else if (strlen($_POST['first-name']) < 2) {
-            throw new CustomException('First name must be at least two characters long!');
+            throw new CustomException('First name must be at least two characters long!','accountProfile');
         } else {
             $firstName = $_POST['first-name'];
         }
 
         //last name
         if (!isset($_POST['last-name'])) {
-            throw new CustomException('Last name is not set!');
+            throw new CustomException('Last name is not set!','accountProfile');
         } else if (strlen($_POST['last-name']) < 2) {
-            throw new CustomException('Last name must be at least two characters long!');
+            throw new CustomException('Last name must be at least two characters long!','accountProfile');
         } else {
             $lastName = $_POST['last-name'];
         }
 
         //email
         if (!isset($_POST['email'])) {
-            throw new CustomException('Email is not set!');
+            throw new CustomException('Email is not set!','accountProfile');
         }
         $email = trim($_POST['email']);
         if (!filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) {
-            throw new CustomException('Invalid input for email!');
+            throw new CustomException('Invalid input for email!','accountProfile');
+        }
+        if(UserDao::existUserByEmail($email) && $_POST['email'] !== $_SESSION['user']['email']){
+            throw new CustomException('This email already exist!','accountProfile');
         }
 
         //password
-        if (!isset($_POST['password']) && !isset($_POST['confirm-password']) ||
+        if ((!isset($_POST['password']) || !isset($_POST['confirm-password'])) ||
             ($_POST['password'] == '' && $_POST['confirm-password'] == '')) {
             $password = false;
-        } else if (strlen($_POST['password']) < 2) {
-            throw new CustomException('Password must be at least 3 characters long!');
-        } else if (strlen($_POST['confirm-password']) < 2) {
-            throw new CustomException('Confirm-Password must be at least 3 characters long!');
-        } else if ($_POST['password'] !== $_POST['confirm-password']) {
-            throw new CustomException('Passwords do not match!');
-        } else {
+        }
+        else{
+            trim($_POST['password']);
+
+            if (strlen($_POST['password']) < 6) {
+                throw new CustomException('Password must be at least 6 characters long!Spaces forbidden!', 'accountProfile');
+            }
+            if ($_POST['password'] !== $_POST['confirm-password']) {
+                throw new CustomException('Passwords do not match!','accountProfile');
+            }
             $password = password_hash($_POST["password"], PASSWORD_BCRYPT, ["cost" => 5]);
         }
 
         //address
         if (!isset($_POST['address'])) {
-            throw new CustomException('Address is not set!');
+            throw new CustomException('Address is not set!','accountProfile');
         } elseif ($_POST['address'] == '') {
             $address = null;
-        } elseif (strlen($_POST['address']) < 3) {
-            throw new CustomException('Address must be at least 3 characters long!');
+        } elseif (strlen($_POST['address']) < 6) {
+            throw new CustomException('Address must be at least 6 characters long!','accountProfile');
         } else {
             $address = $_POST['address'];
         }
@@ -217,7 +222,7 @@ class UserController extends BaseController
         $user = new UserInfo($email, $password, $firstName, $lastName, $address);
         $user->setId($_SESSION['user']['id']);
         if (!UserDao::editProfile($user)) {
-            throw new CustomException('Profile not edited!');
+            throw new CustomException('Profile not edited!','accountProfile');
         }
 
         $_SESSION['user']['email'] = $email;
@@ -225,7 +230,7 @@ class UserController extends BaseController
         $_SESSION['user']['lastName'] = $lastName;
         $_SESSION['user']['address'] = $address;
 
-        header("Location: ?target=home&action=index");
+        throw new CustomException('Profile updated!','accountProfile');
 
     }
 
@@ -303,29 +308,33 @@ class UserController extends BaseController
         }
         $productId = $_GET['productId'];
         $product = ProductDao::getProduct($productId);
-        $this->renderView(['account', 'account_admin_edit'], ['product' => $product]);
+        $this->renderView(['account', 'accountAdminEdit'], ['product' => $product]);
     }
 
     public function editProduct()
     {
-        if (!isset($_POST['edit-product'])) {
-            throw new CustomException('Form not send!');
-        }
-        if (!isset($_POST['quantity'])) {
-            throw new CustomException('Quantity not set!');
-        }
-        if (!isset($_POST['price'])) {
-            throw new CustomException('Price not set!');
-        }
         if (!isset($_POST['productId'])) {
-            throw new CustomException('Product ID not set!');
+            throw new NotFoundException();
         }
+        //We need this in case of Custom Exception
+        $_SESSION['editProductId'] = $_POST['productId'];
+        if (!isset($_POST['edit-product'])) {
+            throw new CustomException('Form not send!','accountAdminEdit');
+        }
+        if (!isset($_POST['quantity']) || $_POST['quantity'] < 0) {
+            throw new CustomException('Invalid quantity!','accountAdminEdit');
+        }
+        if (!isset($_POST['price']) || $_POST['price'] < 0) {
+            throw new CustomException('Invalid price!','accountAdminEdit');
+        }
+
         $quantity = $_POST['quantity'];
         $price = $_POST['price'];
         $productId = $_POST['productId'];
         if (!ProductDao::editProduct($price, $quantity, $productId)) {
-            throw new CustomException('Product not edited!');
+            throw new CustomException('Product not edited!','accountAdminEdit');
         }
+        unset($_SESSION['editProductId']);
         header("Location: ?target=product&action=getProduct&productId=$productId");
 
     }

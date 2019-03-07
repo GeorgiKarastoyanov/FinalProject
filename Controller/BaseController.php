@@ -14,5 +14,4 @@ abstract class BaseController
         require_once "View/footer.php";
     }
 
-
 }

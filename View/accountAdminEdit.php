@@ -24,4 +24,5 @@ $product = $params['product'];
     </table>
     <input type="hidden" name="productId" value="<?= $product->getId(); ?>">
     <input type="submit" name="edit-product" value="Save Changes">
+    <div id="err" <?= isset($params['errMsg']) ? "" : "style='display: none'"; ?>><?= isset($params['errMsg']) ? $params['errMsg'] : ""; ?></div>
 </form>

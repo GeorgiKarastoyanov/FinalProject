@@ -17,7 +17,7 @@
         <input type="password" class="reg_mail" name="password" placeholder="Password" required><br>
         <input type="submit" class="reg_submit-button" name="login" value="Log In"> <br>
         <p class="text-login-reg"><a href="?target=user&action=login_email_view">Go Back</a></p>
-        <div id="err" <?= isset($errMsg['errMsg']) ? "" : "style='display: none'"; ?>><?= isset($errMsg['errMsg']) ? $errMsg['errMsg'] : ""; ?></div>
+        <div id="err" <?= isset($errMsg) ? "" : "style='display: none'"; ?>><?= isset($errMsg) ? $errMsg : ""; ?></div>
     </form>
 </div>
 </body>

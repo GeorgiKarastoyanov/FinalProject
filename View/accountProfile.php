@@ -11,5 +11,6 @@
     Last Name:<input type="text" name="last-name" value="<?=isset($_SESSION['user']['lastName']) ? $_SESSION['user']['lastName'] : ""?>"><br>
     Address:<input type="text" name="address" value="<?=isset($_SESSION['user']['address']) ? $_SESSION['user']['address'] : ""?>"><br>
     <input type="submit" name="edit-profile" value="Save Edit">
-    <?= $_SESSION['user']['id'] != 1 ? "<a href=?target=user&action=delete'>Delete Account</a>" : "" ?>
+    <?= $_SESSION['user']['isAdmin'] != true ? "<a href=?target=user&action=delete'>Delete Account</a><br>" : "" ?>
+    <div id="err" <?= isset($params['errMsg']) ? "" : "style='display: none'"; ?>><?= isset($params['errMsg']) ? $params['errMsg'] : ""; ?></div>
 </form>
