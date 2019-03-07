@@ -5,7 +5,7 @@
     margin-top: 2%;
 }
 
-#register_user{
+#register_user {
     width: 30%;
     height: 60vh;
     text-align: center;
@@ -13,17 +13,21 @@
     background-color: white;
     border-radius: 10px;
 }
-body{
+
+body {
     background-color: rgba(197, 197, 197, 0.3);
 }
-#reg_text_user{
-     color: #919191;
- }
-.reg_user{
+
+#reg_text_user {
+    color: #919191;
+}
+
+.reg_user {
     font-size: 1.2em;
     color: #808080;
 }
-.reg_input{
+
+.reg_input {
     width: 70%;
     height: 5vh;
     border-radius: 5px;
@@ -31,7 +35,8 @@ body{
     background-color: #e8e4d4;
     border: #c5c5c5;
 }
-.reg_submit-button{
+
+.reg_submit-button {
     margin-top: 2%;
     width: 70%;
     height: 5vh;

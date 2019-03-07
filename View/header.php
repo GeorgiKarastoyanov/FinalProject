@@ -13,7 +13,7 @@ $brands = \model\ProductDao::getAllCategories();
 </head>
 <body>
 <nav id="NAV_1">
-    <a href="?target=home&action=index" id="A_2"><img src="https://s12emagst.akamaized.net/layout/bg/images/logo//12/17641.png" alt="eMAG"></a>
+    <a href="?target=home&action=index" id="A_2"><img src="https://s12emagst.akamaized.net/layout/bg/images/logo//12/17641.png" width="138px" height="38px" alt="eMAG"></a>
     <div id="DIV_5">
         <input  style="width: 504px; margin-left: 100px; height: 41px;"
                 id="input-products" onkeyup="loadNames()" type="text" placeholder="Enter product">

@@ -1,0 +1,50 @@
+#addProduct-1{
+    width: 80%;
+    height: 50vh;
+    background-color: rgba(147, 147, 147, 0.3);
+    margin: auto;
+    border-radius: 10px;
+}
+#logo-img {
+    width: 15%;
+    height: 10vh;
+    margin-left: 42%;
+}
+.form{
+    margin-top: 1%;
+    text-align: center;
+}
+.submit-addStep1{
+    margin-top: 1%;
+    width: 20%;
+    height: 5vh;
+    background-color: #185fa9;
+    color: white;
+}
+#addProduct-2{
+    width: 80%;
+    height: 50vh;
+    background-color: rgba(147, 147, 147, 0.3);
+    margin: auto;
+    border-radius: 10px;
+}
+#form-add-product2{
+    text-align: center;
+}
+#file-upl{
+    margin-left: 45%;
+}
+#text-add2{
+    color: #444444;
+}
+#submit-button-step2{
+    margin-top: 1%;
+    width: 20%;
+    height: 5vh;
+    background-color: #185fa9;
+    color: white;
+}
+#add-product1{
+    text-align: center;
+    color: #444444;
+}

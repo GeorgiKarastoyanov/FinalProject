@@ -1,29 +1,41 @@
-#favorites{
-width: 60%;
-height: 60vh;
-background-color: rgba(25, 97, 168, 0.3);
-border: 1px solid skyblue ;
-margin: auto;
-border-radius: 25px;
+#favorites {
+    width: 60%;
+    height: 60vh;
+    background-color: rgba(128, 128, 128, 0.3);
+    margin: auto;
+    border-radius: 25px;
 }
-tr,th,td {
-border: 1px solid black;
+
+tr, th, td {
+    border: 1px solid black;
 }
+
 table {
-margin: auto;
+    margin: auto;
 }
-#favorite-product{
+
+#favorite-product {
     margin-top: 1%;
 }
-#favorite-product th,td{
+
+#favorite-product th, td {
     text-align: center;
 }
-#submit{
+
+#submit {
     color: #841ced;
 }
-#fav_text{
+
+#fav_text {
     text-align: center;
 }
-#fav_remove{
+
+#fav_remove {
     color: red;
+}
+
+#logo-img {
+    width: 15%;
+    height: 8vh;
+    margin-left: 40%;
 }
