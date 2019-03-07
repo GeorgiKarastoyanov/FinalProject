@@ -13,7 +13,7 @@ $topBrands = $params['topBrands'];
 </head>
 <body>
 <h1>Top Brands</h1>
-<div id="table-picture-brand" style="">
+<div id="table-picture-brand" class="pic">
     <ul id="our_brands-show">
         <?php foreach ($topBrands as $brand) { ?>
             <li><a href="?target=product&action=showTopBrandProducts&brandName=<?php echo $brand["name"]; ?>"><img

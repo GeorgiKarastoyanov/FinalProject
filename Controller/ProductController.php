@@ -20,6 +20,8 @@ class ProductController extends BaseController
         $_SESSION["subCat"] = $subCat;
         $products = ProductDao::getAllProducts($subCat);
         $brands = ProductDao::getAllBrands($subCat);
+        $count = ProductDao::countProducts($_SESSION["subCat"]);
+        $pages = $count/5;
         $selectedOrder = "";
         $selectedBrand = "";
         $this->renderView(['allProductsView'], [
@@ -27,7 +29,8 @@ class ProductController extends BaseController
             'brands' => $brands,
             'selectedBrand' => $selectedBrand,
             'selectedOrder' => $selectedOrder,
-            'subCat' => $subCat
+            'subCat' => $subCat,
+            'pages' => $pages
         ]);
     }
 
@@ -143,31 +146,19 @@ class ProductController extends BaseController
         $subCat = $_SESSION["subCat"];
         $_SESSION['brand'] = $brand;
 
+        $count = ProductDao::countProducts($_SESSION["subCat"], $_SESSION['brand']);
+        $pages = $count/5;
+
         $products = ProductDao::getAllProducts($subCat, $priceOrder, $brand, $page);
         $brands = ProductDao::getAllBrands($subCat);
         $this->renderView(['allProductsView'], ['products' => $products, 'brands' => $brands, 'page' => $page,
             'priceOrder' => $priceOrder, 'brand' => $brand,
             'selectedBrand' => $selectedBrand,
             'selectedOrder' => $selectedOrder,
-            'subCat' => $subCat
+            'subCat' => $subCat,
+            'pages' => $pages
         ]);
 
-    }
-
-    public function makePages()
-    {
-        if(isset($_GET['subCat'])){
-            $brand = '';
-            $products = ProductDao::countProducts($_GET['subCat'], $brand);
-        }else{
-            $products = ProductDao::countProducts($_SESSION["subCat"], $_SESSION['brand']);
-        }
-        $arr["totalProducts"] = $products;
-        $arr["productsPerPage"] = 5;
-        $this->isJson = true;
-        return $arr;
-        //header('Content-Type: application/json');
-        //echo json_encode($arr);
     }
 
     public function showAllBrandPictures()
