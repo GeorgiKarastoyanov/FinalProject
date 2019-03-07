@@ -1,5 +1,5 @@
 <?php
-$brands = \model\ProductDao::getAllPictureBrands();
+$topBrands = $params['topBrands'];
 ?>
 <!doctype html>
 <html lang="en">
@@ -14,7 +14,7 @@ $brands = \model\ProductDao::getAllPictureBrands();
 <h1>Top Brands</h1>
 <div id="table-picture-brand" style="">
     <ul id="our_brands-show">
-        <?php foreach ($brands as $brand) { ?>
+        <?php foreach ($topBrands as $brand) { ?>
             <li><a href="?target=product&action=showTopBrandProducts&brandName=<?php echo $brand["name"]; ?>"><img
                             src="View/<?php echo $brand["image"]; ?>"></a></li>
         <?php } ?>

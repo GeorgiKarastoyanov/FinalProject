@@ -81,6 +81,7 @@ class ProductController extends BaseController
         if($brandId != false){
             $brandName = $brandId['id'];
             $modelId = ProductDao::checkModelIdExist($brandId['id'],$modelName);
+            //todo product exist
         }
         if($modelId != false){
             $modelName = $modelId;

@@ -6,7 +6,9 @@ class HomeController extends BaseController
 {
     public function index()
     {
-        $this->renderView(['topProducts', 'topBrands']);
+        $topProducts = \model\ProductDao::getTopProducts();
+        $topBrands = \model\ProductDao::getAllPictureBrands();
+        $this->renderView(['topProducts', 'topBrands'],['topProducts' => $topProducts,'topBrands' => $topBrands]);
     }
 
     public function account()

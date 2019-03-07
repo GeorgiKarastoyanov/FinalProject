@@ -1,7 +1,4 @@
 <?php
-if(!isset($_SESSION['user']['id']) || $_SESSION['user']['id'] != 1 ){
-    header('target=home&action=index');
-}
 $product = $params['product'];
 ?>
 

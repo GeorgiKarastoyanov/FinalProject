@@ -5,7 +5,7 @@
                 <li><a href="?target=home&action=account">Profile</a></li>
                 <li><a href="?target=user&action=myOrders">My Orders</a></li>
                 <li><a href="?target=user&action=favorites">Favorites</a></li>
-                <?php if(isset($_SESSION['user']['id']) && $_SESSION['user']['id'] == 1){ ?>
+                <?php if(isset($_SESSION['user']['isAdmin']) && $_SESSION['user']['isAdmin'] == true){ ?>
                     <li><a href='?target=user&action=addProductStep1View'>Add Product</a></li>
                     <li><a href='?target=user&action=editProductSearch'>Edit Product</a></li>
                  <?php } ?>
