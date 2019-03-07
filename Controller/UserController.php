@@ -228,7 +228,7 @@ class UserController extends BaseController
         $_SESSION['user']['address'] = $address;
 
         header("Location: ?target=home&action=index");
-        
+
     }
 
     public function myOrders()
