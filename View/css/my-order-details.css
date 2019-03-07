@@ -1,0 +1,23 @@
+#my-acc-logo-img2{
+    width: 12%;
+    height: 10vh;
+}
+
+#my-order-details-account {
+    width: 60%;
+    height: 50vh;
+    text-align: center;
+    margin: auto;
+    background-color: rgba(147, 147, 147,0.5);
+    border-radius: 10px;
+}
+#table-my-order-details{
+    margin: auto;
+}
+
+tr,th,td{
+    border: 1px solid black;
+}
+tr,th{
+    text-align: center;
+}
