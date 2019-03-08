@@ -42,6 +42,9 @@ class ProductController extends BaseController
 
     public function addProduct(){
         //todo need a lot of improvements...
+        if(! isset($_SESSION['user']['isAdmin']) || $_SESSION['user']['isAdmin'] == false){
+            header("Location: ?target=home&action=index");
+        }
         if(! isset($_SESSION['user']['addProduct'])){
             throw new CustomException('First Step input not submit');
         }
@@ -49,10 +52,10 @@ class ProductController extends BaseController
             throw new CustomException('Second Step input not submit');
         }
         if(! isset($_POST['price']) || $_POST['price'] < 0){
-            throw new CustomException('Invalid price!');
+            throw new CustomException('Invalid price!','addProduct');
         }
         if(! isset($_POST['quantity']) || $_POST['quantity'] < 0){
-            throw new CustomException('Invalid quantity!');
+            throw new CustomException('Invalid quantity!','addProduct');
         }
         if(! isset($_POST['spec'])){
             throw new CustomException('Product spec not set');

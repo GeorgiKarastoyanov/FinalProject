@@ -29,6 +29,7 @@
         <label for="" class="add-product-input">Model:</label> <input type="text" name="model" required>
         <br>
         <input type="submit" class="submit-addStep1" name="addProductStep1" value="Go next">
+        <div id="err" <?= isset($params['errMsg']) ? "" : "style='display: none'"; ?>><?= isset($params['errMsg']) ? $params['errMsg'] : ""; ?></div>
     </form>
 </div>
 </body>

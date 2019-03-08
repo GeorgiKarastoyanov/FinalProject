@@ -18,7 +18,6 @@
             <th>Date</th>
             <th>Details</th>
         </tr>
-
         <?php foreach ($params['orders'] as $order) { ?>
             <tr>
                 <td class="td-favorites"><?= $order['id'] ?></td>
@@ -30,6 +29,7 @@
             </tr>
         <?php } ?>
     </table>
+    <div id="err" <?= isset($params['errMsg']) ? "" : "style='display: none'"; ?>><?= isset($params['errMsg']) ? $params['errMsg'] : ""; ?></div>
 </div>
 </body>
 </html>

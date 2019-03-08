@@ -3,6 +3,8 @@
 
 namespace controller;
 use model\ProductDao;
+use model\SubCategoryDao;
+use model\UserDao;
 
 
 class ExceptionController extends BaseController
@@ -44,5 +46,40 @@ class ExceptionController extends BaseController
         unset($_SESSION['errMsg']);
         $this->renderView(['account','accountAdminEdit'],['product' => $product,'errMsg' => $errMsg]);
     }
+
+    public function addProduct(){
+        if(! isset($_SESSION['errMsg'])){
+            header("Location: ?target=home&action=index");
+        }
+        $errMsg = $_SESSION['errMsg'];
+        unset($_SESSION['errMsg']);
+        $allSubCategories = SubCategoryDao::getSubCategory();
+        $distinctBrands = SubCategoryDao::getAllDistinctBrands();
+        $this->renderView(['account', 'addProductStep1'], ['allSubCategories' => $allSubCategories, 'brands' => $distinctBrands,'errMsg' => $errMsg]);
+    }
+
+    public function cart(){
+        if(! isset($_SESSION['errMsg'])){
+            header("Location: ?target=home&action=index");
+        }
+        $errMsg = $_SESSION['errMsg'];
+        unset($_SESSION['errMsg']);
+        $cartProducts = $_SESSION['user']['cart'];
+        $idList = implode(',' , $cartProducts);
+        $products = ProductDao::showCartProducts($idList);
+        $this->renderView(['cart'], ['products' => $products,'errMsg' => $errMsg]);
+    }
+
+    public function orders(){
+        if(! isset($_SESSION['errMsg'])){
+            header("Location: ?target=home&action=index");
+        }
+        $errMsg = $_SESSION['errMsg'];
+        unset($_SESSION['errMsg']);
+        $orders = UserDao::getAllOrders($_SESSION['user']['id']);
+        $this->renderView(['account', 'accountOrders'], ['orders' => $orders, 'errMsg' => $errMsg]);
+    }
+
+
 
 }
