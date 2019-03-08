@@ -28,12 +28,12 @@ $product = $params['product'];
                 <th>Model</th>
             </tr>
             <tr>
-                <td><input type="number" name="price" value="<?= $product->getPrice(); ?>"></td>
-                <td><input type="number" name="quantity" value="<?= $product->getQuantity(); ?>"></td>
-                <td><?= $product->getSubCategory(); ?></td>
-                <td><?= $product->getCategory(); ?></td>
-                <td><?= $product->getBrand(); ?></td>
-                <td><?= $product->getModel(); ?></td>
+                <td class="td-favorites"><input type="number" name="price" value="<?= $product->getPrice(); ?>"></td>
+                <td class="td-favorites"><input type="number" name="quantity" value="<?= $product->getQuantity(); ?>"></td>
+                <td class="td-favorites"><?= $product->getSubCategory(); ?></td>
+                <td class="td-favorites"><?= $product->getCategory(); ?></td>
+                <td class="td-favorites"><?= $product->getBrand(); ?></td>
+                <td class="td-favorites"><?= $product->getModel(); ?></td>
             </tr>
         </table>
         <input type="hidden" name="productId" value="<?= $product->getId(); ?>">

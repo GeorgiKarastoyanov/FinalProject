@@ -1,0 +1,11 @@
+#acc-navi{
+    width: 20%;
+    height: 65vh;
+    background-color: #919191;
+    float: left;
+    margin-left: 3.5%;
+}
+.label-acc {
+    padding-left: 1%;
+    color: #292929;
+}

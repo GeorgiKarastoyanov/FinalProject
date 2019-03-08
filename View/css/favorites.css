@@ -1,24 +1,26 @@
 #favorites {
-    width: 60%;
-    height: 60vh;
+    width: 65%;
+    height: 65vh;
     background-color: rgba(128, 128, 128, 0.3);
     margin: auto;
-    border-radius: 25px;
+    border-radius: 10px;
+    float: left;
 }
 
-tr, th, td {
+.td-favorites{
     border: 1px solid black;
 }
 
-table {
+#favorite-product {
     margin: auto;
+
 }
 
 #favorite-product {
     margin-top: 1%;
 }
 
-#favorite-product th, td {
+.td-favorites{
     text-align: center;
 }
 

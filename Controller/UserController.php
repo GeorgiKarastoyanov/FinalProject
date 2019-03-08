@@ -57,7 +57,8 @@ class UserController extends BaseController
         trim($_POST['password']);
         trim($_POST['confirm-password']);
         if (strlen($_POST['password']) < 6) {
-            throw new CustomException('Password must be at least 6 characters long!', 'registerUser');
+            throw new CustomException('Password must be at least 6 c 
+            0haracters long!', 'registerUser');
         }
 
         if ($_POST['password'] !== $_POST['confirm-password']) {

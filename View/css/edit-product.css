@@ -6,19 +6,20 @@
 }
 
 .edit-products {
-    width: 80%;
-    height: 50vh;
+    width: 65%;
+    height: 65vh;
     text-align: center;
     margin: auto;
     background-color: rgba(147, 147, 147, 0.3);
     border-radius: 10px;
+    float: left;
 }
 
-.edit-products table {
+.edit-products-table {
     margin: auto;
 }
 
-table, tr, th, td {
+.td-favorites{
     border: 1px solid #6a6a6a;
     text-align: center;
     color: #444444;
@@ -37,11 +38,12 @@ table, tr, th, td {
 }
 
 .search-edit {
-    width: 50%;
-    height: 40vh;
+    width: 65%;
+    height: 65vh;
     background-color: #c5c5c5;
     margin: auto;
     border-radius: 10px;
+    float: left;
 }
 
 .search-box-field {
@@ -55,7 +57,7 @@ table, tr, th, td {
 }
 
 #autoComplete2 {
-    margin-left: 30%;
+    margin-left: 40%;
 }
 
 #edit-product-text {

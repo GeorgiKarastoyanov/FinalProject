@@ -15,23 +15,23 @@
         <img src="View/images/logo-login.png" id="logo-img" alt="eMAG">
         <h2 id="fav_text">My favourites products</h2>
         <tr>
-            <th>Product Name</th>
-            <th>Price</th>
-            <th>AddCart</th>
-            <th>Remove</th>
+            <th class="td-favorites">Product Name</th>
+            <th class="td-favorites">Price</th>
+            <th class="td-favorites">AddCart</th>
+            <th class="td-favorites">Remove</th>
         </tr>
         <?php foreach ($params['favorites'] as $favorite) { ?>
             <tr>
-                <td><?= $favorite['productName'] ?></td>
-                <td><?= $favorite['price'] ?></td>
-                <td>
+                <td class="td-favorites"><?= $favorite['productName'] ?></td>
+                <td class="td-favorites"><?= $favorite['price'] ?></td>
+                <td class="td-favorites">
                     <form method="post" action="?target=product&action=fillCart&field=favourites">
                         <input type="hidden" name="productId" value="<?= $favorite['productId'] ?>">
                         <input type="submit" id="submit" onclick="addToCart('<?= $favorite['productName'] ?>')"
                                value="Add to cart">
                     </form>
                 </td>
-                <td><a href="?target=user&action=removeFavorite&productId=<?= $favorite['productId'] ?>">
+                <td class="td-favorites"><a href="?target=user&action=removeFavorite&productId=<?= $favorite['productId'] ?>">
                         <button id="fav_remove">Remove</button>
                     </a></td>
             </tr>
