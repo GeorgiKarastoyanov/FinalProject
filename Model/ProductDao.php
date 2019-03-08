@@ -25,6 +25,9 @@ class ProductDao{
             $query .= " AND b.name = :brand";
             $params['brand'] = $brand;
         }
+
+        $query .= " AND p.quantity > 0";
+
         if ($priceOrder === "ascending") {
 
             $query .= " ORDER BY price";
@@ -58,11 +61,11 @@ class ProductDao{
         if (!empty($subCat)) {
             $query .= " WHERE b.name = :subCat";
             $params = array('subCat' => $subCat);
+            $query .= " AND a.quantity > 0";
             if (!empty($brand)) {
                 $query .= " AND c.name = :brand";
                 $params = array('subCat' => $subCat, 'brand' => $brand);
             }
-
         }
         $stmt = $pdo->prepare($query);
         $stmt->execute($params);

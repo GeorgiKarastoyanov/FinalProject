@@ -30,11 +30,8 @@
             </div>
             <div class="section" style="padding-bottom:20px;">
                 <h2 class="title-attr">
-                    <small>Quantity (available <?php echo $params['product']->getQuantity(); ?>)</small>
+                    <small>Quantity available <?php echo $params['product']->getQuantity(); ?></small>
                 </h2>
-                <div>
-                    <input value="1"/>
-                </div>
             </div>
             <div class="section" style="padding-bottom:20px;">
                 <form method="post" action="?target=product&action=fillCart&field=getProduct">
