@@ -24,6 +24,7 @@
     } ?>
 
 </table>
+        <div id="err" <?= isset($params['errMsg']) ? "" : "style='display: none'"; ?>><?= isset($params['errMsg']) ? $params['errMsg'] : ""; ?></div>
 <h3>Total sum is: <?=$totalSum ?></h3>
     <input type="submit" name="buy" value="Buy">
 </form>

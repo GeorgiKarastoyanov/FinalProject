@@ -198,6 +198,7 @@ class UserController extends BaseController
         }
         else{
             trim($_POST['password']);
+            trim($_POST['confirm-password']);
 
             if (strlen($_POST['password']) < 6) {
                 throw new CustomException('Password must be at least 6 characters long!Spaces forbidden!', 'accountProfile');
@@ -375,6 +376,11 @@ class UserController extends BaseController
         if(! isset($_POST['product'])){
             header("Location: ?target=home&action=index");
         }
+        foreach ($_POST['product'] as $quantity) {
+            if($quantity < 0){
+                throw new CustomException("Quantity must be a positive number!","cart");
+            }
+        }
         //['productId => $quantity]
         $orderedProducts = $_POST['product'];
         $checkIsQtyEnough = ProductDao::checkQtyAvailabilityPerProduct($orderedProducts);
@@ -389,8 +395,7 @@ class UserController extends BaseController
             throw new CustomException("Transaction failed!","cart");
         }
         unset($_SESSION['user']['cart']);
-        dd("bravo");
-        throw new CustomException("Transaction complete your goods will arrive soon :)","cart");
+        throw new CustomException("Transaction complete your goods will arrive soon :)","orders");
     }
 
     public function loginEmailView(){

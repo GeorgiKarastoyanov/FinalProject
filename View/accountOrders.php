@@ -13,3 +13,4 @@
     </tr>
    <?php } ?>
 </table>
+<div id="err" <?= isset($params['errMsg']) ? "" : "style='display: none'"; ?>><?= isset($params['errMsg']) ? $params['errMsg'] : ""; ?></div>
