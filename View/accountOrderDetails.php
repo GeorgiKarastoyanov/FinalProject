@@ -26,7 +26,7 @@
             <td><?= $orderDetail['singlePrice'] ?>$</td>
             <td><?= $orderDetail['quantity'] ?></td>
             <td><a href="?target=product&action=getProduct&productId=<?= $orderDetail['id'] ?>">
-                    <button>See Product</button>
+                    See Product
                 </a></td>
         </tr>
         <?php $totalSum += $orderDetail['singlePrice'] * $orderDetail['quantity'];

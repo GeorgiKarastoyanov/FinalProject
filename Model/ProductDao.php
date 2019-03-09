@@ -319,7 +319,7 @@ class ProductDao{
                   JOIN products_images as pi ON pi.productId = p.id 
                   WHERE p.id IN (:idList)";
         $stmt = $pdo->prepare($query);
-        $stmt->execute(array('idList' => $idList));
+        $stmt->execute(['idList' => $idList]);
         $products = [];
         while ($row = $stmt->fetch(\PDO::FETCH_OBJ)) {
             $products[] = new Product($row->id, $row->price, $row->quantity, $row->subCat, $row->cat, $row->model, $row->brand, $row->img);
