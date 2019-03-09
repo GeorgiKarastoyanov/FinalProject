@@ -18,7 +18,10 @@ $brands = \model\ProductDao::getAllCategories();
         <input  style="width: 504px; margin-left: 100px; height: 41px;"
                 id="input-products" onkeyup="loadNames()" type="text" placeholder="Enter product">
 
-        <ul id="UL_6" style="margin-left: 300px">
+        <ul id="UL_6">
+            <li>
+                <div id="welcome"> <?= isset($_SESSION['user']['id']) ? "Welcome, ".$_SESSION['user']['firstName'] : ''?></div>
+            </li>
             <li id="LI_7">
                 <a href="<?= isset($_SESSION['user']['id']) ? '?target=home&action=account' : '?target=user&action=loginEmailView'?>" id="A_8">
                     <?= isset($_SESSION['user']['id']) ? 'Account' : 'LogIn'?><span id="SPAN_9"></span></a>
