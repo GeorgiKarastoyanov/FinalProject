@@ -35,12 +35,16 @@ $brands = \model\ProductDao::getAllCategories();
         </ul>
     </div>
 </nav>
-<div id="autoComplete" style="margin-left: 250px"></div>
-<?php foreach ($brands as $brand){ ?>
-    <input id="categories" type="submit" onclick="getSubCategory('<?= $brand['name'];?>')" name='<?= $brand['name'];?>' value='<?= $brand['name'];?>'>
-<?php } ?><br>
+<div id="autoComplete"></div>
+<div id="categoriesNav">
+    <?php foreach ($brands as $brand){ ?>
+        <input id="categories" type="submit" onclick="getSubCategory('<?= $brand['name'];?>')" name='<?= $brand['name'];?>' value='<?= $brand['name'];?>'>
+    <?php } ?>
+</div>
 <div id="subCategories" >
 </div>
+
+<div id="autoComplete"></div>
 
 <?php if(!isset($_SESSION['user']['id'])){?>
 <div id="notLogged">

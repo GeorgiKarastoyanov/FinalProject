@@ -582,6 +582,20 @@
     outline: rgb(73, 80, 87) none 0px;
 }/*#INPUT_17:before*/
 
+#categoriesNav{
+    margin-left: 10%;
+    width:80%;
+    height: 40px;
+    background-color: #faffe7;
+}
+#autoComplete{
+    z-index: 1;
+    margin-left: 20%;
+    width: 504px;
+    background-color: #faffe7;
+    color: #302cff;
+    position:absolute;
+}
 #notLogged{
     margin-top: 30px;
     margin-left: 50px;
@@ -595,13 +609,15 @@
     margin-left: 50px;
 }
 #categories{
-    margin-left: 48px;
-    width: 20%;
-    background-color: #10aced;
+    width: 24.805%;
+    height: 100%;
+    background-color: #bcbcbc;
+    border-width: 1px;
+    border-color: #020102;
+    font-size: 25px;
 }
 .button {
     background-color: blue;
-    border: none;
     color: white;
     padding: 15px 32px;
     text-decoration: none;
