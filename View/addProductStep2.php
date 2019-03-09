@@ -17,8 +17,8 @@
     <?php foreach ($params['productSpec'] as $spec) {
         echo $spec['name'] ?> <input type="text" name="spec[<?= $spec['id'] ?>]" required><br>
     <?php } ?>
-        <label for="">Price:</label> <input type="number" name="price" required>
-        <label for="">Quantity:</label> <input type="number" name="quantity" required> <br>
+        <label for="">Price:</label> <input type="number" name="price" min="1" max="5000" required>
+        <label for="">Quantity:</label> <input type="number" name="quantity" min="0" max="5000" required> <br>
         <label for="">Product Image:</label> <input type="file" name="img" id="file-upl">
     <input type="submit" id ="submit-button-step2" name="addProduct" value="AddProduct">
 </form>

@@ -57,8 +57,7 @@ class UserController extends BaseController
         trim($_POST['password']);
         trim($_POST['confirm-password']);
         if (strlen($_POST['password']) < 6) {
-            throw new CustomException('Password must be at least 6 c 
-            0haracters long!', 'registerUser');
+            throw new CustomException('Password must be at least 6 characters long!', 'registerUser');
         }
 
         if ($_POST['password'] !== $_POST['confirm-password']) {
@@ -333,12 +332,16 @@ class UserController extends BaseController
         if (!isset($_POST['edit-product'])) {
             throw new CustomException('Form not send!','accountAdminEdit');
         }
-        if (!isset($_POST['quantity']) || $_POST['quantity'] < 0) {
+        if (!isset($_POST['quantity']) || $_POST['quantity'] < 0 || $_POST['quantity'] > 5000) {
             throw new CustomException('Invalid quantity!','accountAdminEdit');
         }
         if (!isset($_POST['price']) || $_POST['price'] < 0) {
-            throw new CustomException('Invalid price!','accountAdminEdit');
+            throw new CustomException('Price must be a positive number!','accountAdminEdit');
         }
+        if (!isset($_POST['price']) ||  $_POST['price'] > 5000) {
+            throw new CustomException('Max price is 5000!','accountAdminEdit');
+        }
+
 
         $quantity = $_POST['quantity'];
         $price = $_POST['price'];

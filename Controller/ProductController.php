@@ -52,9 +52,12 @@ class ProductController extends BaseController
             throw new CustomException('Second Step input not submit');
         }
         if(! isset($_POST['price']) || $_POST['price'] < 0){
-            throw new CustomException('Invalid price!','addProduct');
+            throw new CustomException('Price must be a positive number!','addProduct');
         }
-        if(! isset($_POST['quantity']) || $_POST['quantity'] < 0){
+        if(! isset($_POST['price']) || $_POST['price'] > 5000){
+            throw new CustomException('Max price is 5000!','addProduct');
+        }
+        if(! isset($_POST['quantity']) || $_POST['quantity'] < 0 || $_POST['quantity'] > 5000){
             throw new CustomException('Invalid quantity!','addProduct');
         }
         if(! isset($_POST['spec'])){
@@ -175,7 +178,7 @@ class ProductController extends BaseController
     public function fillCart(){
         if(isset($_POST['productId'])) {
             $productId = $_POST['productId'];
-            $_SESSION['user']['cart'][] = $productId;
+            $_SESSION['user']['cart'][$productId] = $productId;
             if(isset($_GET['field']) && $_GET['field'] == 'getProduct' ){
                 header("Location:?target=product&action=getProduct&productId=" . $productId);
             }
@@ -221,6 +224,7 @@ class ProductController extends BaseController
         if (isset($_GET['productId'])) {
             $productId = $_GET['productId'];
             unset($_SESSION['user']['cart'][$productId]);
+            header("Location: ?target=product&action=showCart");
         }
         else{
             header("Location: ?target=product&action=showCart");
