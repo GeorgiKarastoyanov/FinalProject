@@ -31,7 +31,7 @@
                                value="Add to cart">
                     </form>
                 </td>
-                <td class="td-favorites"><a href="?target=user&action=removeFavorite&productId=<?= $favorite['productId'] ?>">
+                <td class="td-favorites"><a href="?target=product&action=favourites&productId=<?= $favorite['productId'] ?>&field=favourites">
                         <button id="fav_remove">Remove</button>
                     </a></td>
             </tr>

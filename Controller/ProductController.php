@@ -99,10 +99,17 @@ class ProductController extends BaseController
     public function getProduct()
     {
         if (isset($_GET["productId"]) && !empty($_GET["productId"])) {
+            $existsInFavourites = 'disabled';
             $productId = $_GET["productId"];
             $product = ProductDao::getProduct($productId);
             $specifications = ProductDao::getSpecs($productId);
-            $this->renderView(['showProduct'], ['product' => $product, 'specifications' => $specifications]);
+            if(isset($_SESSION['user']['id'])){
+                $userId = $_SESSION['user']['id'];
+                $existsInFavourites = ProductDao::checkIfExist($userId, $productId);
+
+            }
+            $this->renderView(['showProduct'],
+                ['product' => $product, 'specifications' => $specifications, 'existsInFavourites' => $existsInFavourites]);
         }
         else{
             throw new NotFoundException();
@@ -199,14 +206,23 @@ class ProductController extends BaseController
         $this->renderView(['cart']);
     }
 
-    public function addToFavourites()
+    public function favourites()
     {
-        if (isset($_POST['productId'])) {
-            $productId = $_POST['productId'];
+        if (isset($_GET['productId'])) {
+            $productId = $_GET['productId'];
             $userId = $_SESSION['user']['id'];
-            ProductDao::addToFavourites($userId, $productId);
+            $exists = ProductDao::checkIfExist($userId, $productId);
+            if($exists){
+                UserDao::removeFavorite($productId, $userId);
+            }else{
+                ProductDao::addToFavourites($userId, $productId);
+            }
         }
-        header("Location:?target=user&action=favorites");
+        if(isset($_GET['field']) && $_GET['field'] == 'favourites'){
+            header("Location:?target=user&action=favorites");
+        }else{
+            header("Location:?target=product&action=getProduct&productId=$productId");
+        }
     }
 
     public function showTopBrandProducts(){

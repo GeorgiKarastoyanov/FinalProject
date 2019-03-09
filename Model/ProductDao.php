@@ -363,4 +363,17 @@ class ProductDao{
         return $modelId;
     }
 
+    public static function checkIfExist($userId, $productId){
+        /** @var \PDO $pdo */
+        $pdo = $GLOBALS["PDO"];
+        $query = "SELECT COUNT(*) as matches from favourites as f WHERE userId = :userId AND productId = :productId";
+        $stmt = $pdo->prepare($query);
+        $stmt->execute(array('userId' => $userId, 'productId' => $productId));
+        $count = $stmt->fetch(\PDO::FETCH_ASSOC);
+        if($count['matches'] == 0){
+            return false;
+        }else{
+            return true;
+        }
+    }
 }

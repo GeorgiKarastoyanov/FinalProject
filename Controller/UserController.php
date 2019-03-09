@@ -364,10 +364,8 @@ class UserController extends BaseController
         }
         $userId = $_SESSION['user']['id'];
         $productId = $_GET['productId'];
-        if (!UserDao::removeFavorite($productId, $userId)) {
-            throw new CustomException("Product not removed form favorites");
-        }
-        header("Location: ?target=user&action=favorites");
+
+        header("Location: ?target=product&action=getProduct&productId=$productId");
     }
 
     public function buyAction(){
