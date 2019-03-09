@@ -12,7 +12,7 @@ li.active {
     display: flex;
     justify-content: center;
     align-items: center;
-    border-right: 1px solid #f6f6f6;
+    border: 1px solid black;
 }
 
 .menu-items {
@@ -104,10 +104,6 @@ div.section > div > input {
 }
 
 @media (max-width: 426px) {
-    .container {
-        margin-top: 0px !important;
-    }
-
     .container > .row {
         padding: 0 !important;
     }
