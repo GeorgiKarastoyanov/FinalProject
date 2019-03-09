@@ -7,6 +7,7 @@ $brands = \model\ProductDao::getAllCategories();
     <meta charset="UTF-8">
     <title>Emag</title>
     <script src="View/js/autoComplete.js"></script>
+    <link rel="shortcut icon" sizes="any" type="image/png" href="https://s12emagst.akamaized.net/assets/bg/css/icons/favicon.ico?v=1a">
     <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <link rel="stylesheet" href="View/css/header.css">
