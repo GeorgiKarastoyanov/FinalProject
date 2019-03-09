@@ -24,7 +24,7 @@ $brands = \model\ProductDao::getAllCategories();
             </li>
             <li id="LI_7">
                 <a href="<?= isset($_SESSION['user']['id']) ? '?target=home&action=account' : '?target=user&action=loginEmailView'?>" id="A_8">
-                    <?= isset($_SESSION['user']['id']) ? 'Account' : 'LogIn'?><span id="SPAN_9"></span></a>
+                    <?= isset($_SESSION['user']['id']) ? 'Account' : 'LogIn'?></a>
             </li>
             <li id="LI_10" style="margin-left: 35px">
                 <a href="<?= isset($_SESSION['user']['id']) ? '?target=product&action=showCart' : '?target=user&action=loginEmailView'?>" id="A_11">Cart</a>

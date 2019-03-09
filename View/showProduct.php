@@ -8,7 +8,7 @@
 <!DOCTYPE html>
 <html>
 <body>
-<div class="container" style="margin-top: 85px; margin-bottom:60px; ">
+<div class="container" style="margin-top: 91px; margin-bottom:147px; ">
     <div class="row">
         <div class="col-xs-4 item-photo" style="border: 1px solid black">
             <img style="width: 350px;height: 300px" src="<?php echo $params['product']->getImg(); ?>"/>

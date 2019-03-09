@@ -23,8 +23,7 @@
                 <td class="td-favorites"><?= $order['id'] ?></td>
                 <td class="td-favorites"><?= $order['date'] ?></td>
                 <td class="td-favorites">
-                    <button><a href='?target=product&action=orderDetails&order=<?= $order['id'] ?>'>Order Details</a>
-                    </button>
+                    <a href='?target=product&action=orderDetails&order=<?= $order['id'] ?>'>Order Details</a>
                 </td>
             </tr>
         <?php } ?>

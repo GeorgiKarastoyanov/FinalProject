@@ -23,7 +23,7 @@
         <?php foreach ($params['favorites'] as $favorite) { ?>
             <tr>
                 <td class="td-favorites"><?= $favorite['productName'] ?></td>
-                <td class="td-favorites"><?= $favorite['price'] ?></td>
+                <td class="td-favorites"><?= $favorite['price'] ?> $</td>
                 <td class="td-favorites">
                     <form method="post" action="?target=product&action=fillCart&field=favourites">
                         <input type="hidden" name="productId" value="<?= $favorite['productId'] ?>">
@@ -32,7 +32,7 @@
                     </form>
                 </td>
                 <td class="td-favorites"><a href="?target=user&action=removeFavorite&productId=<?= $favorite['productId'] ?>">
-                        <button id="fav_remove">Remove</button>
+                        Remove
                     </a></td>
             </tr>
         <?php } ?>

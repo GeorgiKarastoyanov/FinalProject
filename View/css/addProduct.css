@@ -1,15 +1,16 @@
 #addProduct-1{
-    width: 65%;
-    height: 65vh;
-    background-color: rgba(128, 128, 128, 0.3);
-    margin: auto;
+    margin-top: 5vh;
+    margin-left:20%;
+    height:60vh;
+    width: 70%;
+    text-align: center;
+    background-color: rgba(147, 147, 147,0.5);
     border-radius: 10px;
-    float: left;
 }
 #logo-img {
     width: 15%;
     height: 10vh;
-    margin-left: 42%;
+    margin:auto;
 }
 .form{
     margin-top: 1%;
@@ -23,10 +24,12 @@
     color: white;
 }
 #addProduct-2{
-    width: 65%;
-    height: 65vh;
-    background-color: rgba(128, 128, 128, 0.3);
-    margin: auto;
+    margin-top: 5vh;
+    margin-left:20%;
+    height:60vh;
+    width: 70%;
+    text-align: center;
+    background-color: rgba(147, 147, 147,0.5);
     border-radius: 10px;
 }
 #form-add-product2{
