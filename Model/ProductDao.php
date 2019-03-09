@@ -192,7 +192,7 @@ class ProductDao{
                   LEFT JOIN models as b ON b.id = d.modelId
                   LEFT JOIN brands as c ON c.id = b.brandId
                   LEFT JOIN products_images as e ON b.id = e.productId
-                  GROUP BY a.productId ORDER BY totalSells DESC LIMIT 5;";
+                  GROUP BY a.productId ORDER BY totalSells DESC LIMIT 3;";
         $stmt = $GLOBALS['PDO']->prepare($query);
         $stmt->execute();
         $topProducts = $stmt->fetchAll(\PDO::FETCH_ASSOC);
@@ -206,7 +206,7 @@ class ProductDao{
                                          LEFT JOIN products AS b ON b.id = a.productId
                                          LEFT JOIN sub_categories AS c ON c.id = b.subCategoryId
                                          LEFT JOIN brands AS d ON c.id = d.subCategoryId
-                                         GROUP BY d.name ORDER BY totalQuantity DESC LIMIT 5");
+                                         GROUP BY d.name ORDER BY totalQuantity DESC LIMIT 3");
         $stmt->execute();
         $rows = $stmt->fetchAll(\PDO::FETCH_ASSOC);
         $brands = [];

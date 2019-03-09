@@ -1,10 +1,5 @@
-#table-picture-brand{
-    border-top: 1px solid gainsboro;
-    border-bottom: 1px solid gainsboro;
 
-}
 #table-picture-brand img {
-    border: 1px solid #e8e4d4;
     width: 100px;
     height: 100px;
 }

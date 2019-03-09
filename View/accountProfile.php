@@ -44,8 +44,10 @@
             </tr>
         </table>
         <input type="submit" id="submit-my-profile" name="edit-profile" value="Save Edit">
-        <a href=?target=user&action=delete'>Delete Account</a>
+
         <div id="err" <?= isset($params['errMsg']) ? "" : "style='display: none'"; ?>><?= isset($params['errMsg']) ? $params['errMsg'] : ""; ?></div>
+        <a href='?target=user&action=delete' onclick="return confirm('Do you really want to delete your profile?')">Delete Account</a>
+
 
     </form>
 </div>

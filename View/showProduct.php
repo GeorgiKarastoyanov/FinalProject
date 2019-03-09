@@ -8,12 +8,12 @@
 <!DOCTYPE html>
 <html>
 <body>
-<div class="container">
+<div class="container" style="margin-top: 85px; margin-bottom:60px; ">
     <div class="row">
-        <div class="col-xs-4 item-photo">
-            <img style="width: 400px;height: 300px" src="<?php echo $params['product']->getImg(); ?>"/>
+        <div class="col-xs-4 item-photo" style="border: 1px solid black">
+            <img style="width: 350px;height: 300px" src="<?php echo $params['product']->getImg(); ?>"/>
         </div>
-        <div class="col-xs-5" style="border:0px solid gray">
+        <div class="col-xs-5" style="margin-left: 250px">
 
             <h1><?php echo $params['product']->getBrand() . ' ' . $params['product']->getModel(); ?></h1>
 
@@ -52,7 +52,8 @@
             </div>
         </div>
 
-        <div class="col-xs-9">
+        <div class="col-xs-9" style="margin-top: 10px">
+            <h3>Specifications</h3>
             <ul class="menu-items">
                 <?php foreach ($params['specifications'] as $specification) { ?>
                     <li class="active"><?php echo $specification["name"] . ' : ' . $specification["value"]; ?> </li>

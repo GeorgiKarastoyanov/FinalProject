@@ -11,7 +11,7 @@
 </head>
 
 <body>
-<div class="content">
+<div class="content" style="border-top: 1px solid black; margin-top: 10px">
 </div>
 <footer id="myFooter">
     <div class="container">

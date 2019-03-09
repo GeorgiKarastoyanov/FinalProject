@@ -28,8 +28,8 @@ $product = $params['product'];
                 <th>Model</th>
             </tr>
             <tr>
-                <td class="td-favorites"><input type="number" name="price" value="<?= $product->getPrice(); ?>"></td>
-                <td class="td-favorites"><input type="number" name="quantity" value="<?= $product->getQuantity(); ?>"></td>
+                <td class="td-favorites"><input type="number" min="1" max="5000" name="price" required value="<?= $product->getPrice(); ?>"></td>
+                <td class="td-favorites"><input type="number" min="0" max="5000" name="quantity" required value="<?= $product->getQuantity(); ?>"></td>
                 <td class="td-favorites"><?= $product->getSubCategory(); ?></td>
                 <td class="td-favorites"><?= $product->getCategory(); ?></td>
                 <td class="td-favorites"><?= $product->getBrand(); ?></td>
