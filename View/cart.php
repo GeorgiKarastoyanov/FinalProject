@@ -12,8 +12,10 @@
                             <img class="card-img-top" src="<?= $product->getImg(); ?>" alt="Card image" style="width:80%">
                             <div class="card-body">
                             <a href="?target=product&action=getProduct&productId=<?=$product->getId(); ?>" class="btn btn-primary , stretched-link">View product</a><br>
-                                Price :<?= $product->getPrice(); ?> $<br>
-                                Quantity(<?=$product->getQuantity(); ?>)<input type="number" name="product[<?=$product->getId(); ?>]" value="1" required>
+                                Price :<?= $product->getPrice(); ?> $ <br>
+                                Quantity(<?=$product->getQuantity(); ?>)
+                                <input type="number" name="product[<?=$product->getId(); ?>][quantity]" value="1" max="<?=$product->getQuantity(); ?>" required>
+                                <input type="hidden" name="product[<?=$product->getId(); ?>][price]" value="<?= $product->getPrice(); ?>">
                                 <a href="?target=product&action=removeFromCart&productId=<?=$product->getId(); ?>"
                                    class="btn btn-primary , streched-link" style="color: white; background-color: grey">Remove from cart</a>
                             </div>

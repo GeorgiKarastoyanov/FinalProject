@@ -4,6 +4,10 @@ use exception\NotFoundException;
 use exception\CustomException;
 use controller\HomeController;
 
+//ini_set('display_errors', 1);
+//ini_set('display_startup_errors', 1);
+//error_reporting(E_ALL);
+
 try{
     require_once __DIR__ . DIRECTORY_SEPARATOR . 'helpers.php';
     //register autoload

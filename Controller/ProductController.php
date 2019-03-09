@@ -41,7 +41,6 @@ class ProductController extends BaseController
     }
 
     public function addProduct(){
-        //todo need a lot of improvements...
         if(! isset($_SESSION['user']['isAdmin']) || $_SESSION['user']['isAdmin'] == false){
             header("Location: ?target=home&action=index");
         }
@@ -90,6 +89,7 @@ class ProductController extends BaseController
             throw new CustomException('Product not added');
         }
         unset($_SESSION['user']['addProduct']);
+        unset($_SESSION['exceptionParam']);
         header("Location: ?target=product&action=getProduct&productId=$productId");
     }
 

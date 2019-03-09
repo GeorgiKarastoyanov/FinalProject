@@ -19,7 +19,7 @@
                 <option value="<?= $category['id'] ?>"><?= $category['name'] ?></option>"
             <?php } ?>
         </select>
-        <label for="" class="add-product-input">Brands:</label> <input type="text" name="brands" list="brands" required>
+        <label for="" class="add-product-input">Brands:</label> <input type="text" name="brand" list="brands" required>
         <datalist id="brands">
             <?php foreach ($params['brands'] as $brand) { ?>
                 "

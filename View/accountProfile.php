@@ -44,7 +44,8 @@
             </tr>
         </table>
         <input type="submit" id="submit-my-profile" name="edit-profile" value="Save Edit">
-        <?= $_SESSION['user']['id'] != 1 ? "<a href=?target=user&action=delete'>Delete Account</a>" : "" ?>
+        <a href=?target=user&action=delete'>Delete Account</a>
+        <div id="err" <?= isset($params['errMsg']) ? "" : "style='display: none'"; ?>><?= isset($params['errMsg']) ? $params['errMsg'] : ""; ?></div>
 
     </form>
 </div>

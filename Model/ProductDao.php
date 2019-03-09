@@ -175,11 +175,11 @@ class ProductDao{
     }
 
     public static function getOrderDetails($orderId){
-        $query = "SELECT b.id, CONCAT(d.name, ' ', c.name) as productName, b.price * a.quantity as price, a.quantity FROM ordered_products as a 
+        $query = "SELECT b.id, CONCAT(d.name, ' ', c.name) as productName, a.singlePrice, a.quantity FROM ordered_products as a 
                   LEFT JOIN products as b ON b.id = a.productId
                   LEFT JOIN models as c ON c.id = b.modelId
                   LEFT JOIN brands as d ON c.brandId = d.id
-                  WHERE orderId = :orderId;";
+                  WHERE orderId = 25;";
         $stmt = $GLOBALS['PDO']->prepare($query);
         $stmt->execute(array('orderId' => $orderId));
         $orderDetails = $stmt->fetchAll(\PDO::FETCH_ASSOC);
@@ -286,18 +286,17 @@ class ProductDao{
         //This function check if the product is available for a given product id and quantity ordered.
         //If quantity ordered is bigger than the quantity in stock the function return assoc array
         //with the quantity(value) in stock of the given product(key)
-        //The parameter given to this function is assoc array ['productId' => $quantity]
         //If more than one product/quantity is given and all products are available return true
         //If one of the given product/quantity is not available return the first occurrences
 
         /** @var \PDO $pdo */
         $pdo = $GLOBALS["PDO"];
-        foreach ($products as $productId => $quantity) {
+        foreach ($products as $productId => $product) {
             $query = "SELECT quantity FROM products WHERE id = :id";
             $stmt = $pdo->prepare($query);
             $stmt->execute(array('id' => $productId));
             $quantityResult = $stmt->fetch(\PDO::FETCH_ASSOC);
-            if($quantityResult['quantity'] == 0 || $quantityResult['quantity'] < $quantity){
+            if($quantityResult['quantity'] == 0 || $quantityResult['quantity'] < $product['quantity']){
                 $result['productId'] = $productId;
                 $result['quantity'] = $quantityResult['quantity'];
                 return $result;
