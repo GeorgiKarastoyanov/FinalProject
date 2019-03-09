@@ -141,11 +141,11 @@ class UserDao{
         $pdo->beginTransaction();
         try {
             //First - subtract stock quantity from order quantity per product
-            foreach ($orderProducts as $productId => $quantity) {
+            foreach ($orderProducts as $productId => $product) {
                 $query = "UPDATE products SET quantity = quantity - :quantity
                       WHERE id = :productId ;";
                 $stmt = $pdo->prepare($query);
-                $stmt->execute(['quantity' => $quantity, 'productId' => $productId]);
+                $stmt->execute(['quantity' => $product['quantity'], 'productId' => $productId]);
             }
 
             //Second - insert order in table orders (order id, user, and date) and get the order id for last insertion
@@ -153,12 +153,12 @@ class UserDao{
             $stmt = $pdo->prepare($query);
             $stmt->execute(['userId' => $userId]);
             $orderId = $pdo->lastInsertId();
-
             //Third - insert ordered products in table ordered_products
-            foreach ($orderProducts as $productId => $quantity) {
-                $query = "INSERT INTO ordered_products (orderId,productId,quantity) VALUES (:orderId, :productId, :quantity)";
+            foreach ($orderProducts as $productId => $product){
+                $query = "INSERT INTO ordered_products (orderId,productId,quantity,singlePrice) VALUES (:orderId, :productId, :quantity, :singlePrice);";
                 $stmt = $pdo->prepare($query);
-                $stmt->execute(['orderId' => $orderId, 'productId' => $productId, 'quantity' => $quantity]);
+                $stmt->execute(['orderId' => $orderId, 'productId' => $productId, 'quantity' => $product['quantity'],
+                                'singlePrice' => $product['price']]);
             }
 
             $pdo->commit();

@@ -19,7 +19,10 @@ $brands = \model\ProductDao::getAllCategories();
         <input  style="width: 504px; margin-left: 100px; height: 41px;"
                 id="input-products" onkeyup="loadNames()" type="text" placeholder="Enter product">
 
-        <ul id="UL_6" style="margin-left: 300px">
+        <ul id="UL_6">
+            <li>
+                <div id="welcome"> <?= isset($_SESSION['user']['id']) ? "Welcome, ".$_SESSION['user']['firstName'] : ''?></div>
+            </li>
             <li id="LI_7">
                 <a href="<?= isset($_SESSION['user']['id']) ? '?target=home&action=account' : '?target=user&action=loginEmailView'?>" id="A_8">
                     <?= isset($_SESSION['user']['id']) ? 'Account' : 'LogIn'?><span id="SPAN_9"></span></a>
@@ -33,12 +36,16 @@ $brands = \model\ProductDao::getAllCategories();
         </ul>
     </div>
 </nav>
-<div id="autoComplete" style="margin-left: 250px"></div>
-<?php foreach ($brands as $brand){ ?>
-    <input id="categories" type="submit" onclick="getSubCategory('<?= $brand['name'];?>')" name='<?= $brand['name'];?>' value='<?= $brand['name'];?>'>
-<?php } ?><br>
+<div id="autoComplete"></div>
+<div id="categoriesNav">
+    <?php foreach ($brands as $brand){ ?>
+        <input id="categories" type="submit" onclick="getSubCategory('<?= $brand['name'];?>')" name='<?= $brand['name'];?>' value='<?= $brand['name'];?>'>
+    <?php } ?>
+</div>
 <div id="subCategories" >
 </div>
+
+<div id="autoComplete"></div>
 
 <?php if(!isset($_SESSION['user']['id'])){?>
 <div id="notLogged">

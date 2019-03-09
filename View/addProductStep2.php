@@ -13,7 +13,7 @@
     <img src="View/images/logo-login.png" id="logo-img" alt="eMAG">
     <form action="?target=product&action=addProduct" method="post" enctype="multipart/form-data" id="form-add-product2">
     <h3 id="text-add2">Add Product Specifications
-        for <?= $_SESSION['user']['addProduct']['brandName'] . " " . $_SESSION['user']['addProduct']['model'] ?></h3>
+        for <?= $_SESSION['user']['addProduct']['brandNameView'] . " " . $_SESSION['user']['addProduct']['model'] ?></h3>
     <?php foreach ($params['productSpec'] as $spec) {
         echo $spec['name'] ?> <input type="text" name="spec[<?= $spec['id'] ?>]" required><br>
     <?php } ?>
@@ -21,7 +21,9 @@
         <label for="">Quantity:</label> <input type="number" name="quantity" min="0" max="5000" required> <br>
         <label for="">Product Image:</label> <input type="file" name="img" id="file-upl">
     <input type="submit" id ="submit-button-step2" name="addProduct" value="AddProduct">
+        <div id="err" <?= isset($params['errMsg']) ? "" : "style='display: none'"; ?>><?= isset($params['errMsg']) ? $params['errMsg'] : ""; ?></div>
 </form>
+
 </div>
 </body>
 </html>

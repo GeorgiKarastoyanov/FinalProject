@@ -12,17 +12,15 @@ $topBrands = $params['topBrands'];
     <link rel="stylesheet" href="View/css/our_brands.css">
 </head>
 <body>
-<h1>Top Brands</h1>
-<div id="table-picture-brand" class="pic" style="height: 180px">
-    <div id="our_brands-show" style="width: 80%; height: 100%; margin: auto; border: 1px solid black" >
+<h1 id="header2">Top Brands</h1>
+<div id="table-brand" class="pic" >
         <?php foreach ($topBrands as $brand) { ?>
-            <div style="width: 20%; height: 98%; display: inline-block; margin-left: 10%;">
+            <div style="width: 19.6%; height: 100%; display: inline-block;">
                 <a href="?target=product&action=showTopBrandProducts&brandName=<?php echo $brand["name"]; ?>">
-                    <img style="width: 100%; height: 98%" src="View/<?php echo $brand["image"]; ?>">
+                    <img class="pic1" src="View/<?php echo $brand["image"]; ?>">
                 </a>
             </div>
         <?php } ?>
-    </div>
 </div>
 
 </body>

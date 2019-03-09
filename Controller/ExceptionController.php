@@ -55,7 +55,8 @@ class ExceptionController extends BaseController
         unset($_SESSION['errMsg']);
         $allSubCategories = SubCategoryDao::getSubCategory();
         $distinctBrands = SubCategoryDao::getAllDistinctBrands();
-        $this->renderView(['account', 'addProductStep1'], ['allSubCategories' => $allSubCategories, 'brands' => $distinctBrands,'errMsg' => $errMsg]);
+        $productSpec =  $_SESSION['exceptionParam'];
+        $this->renderView(['account', 'addProductStep2'], ['productSpec' => $productSpec, 'errMsg' => $errMsg]);
     }
 
     public function cart(){
@@ -79,7 +80,5 @@ class ExceptionController extends BaseController
         $orders = UserDao::getAllOrders($_SESSION['user']['id']);
         $this->renderView(['account', 'accountOrders'], ['orders' => $orders, 'errMsg' => $errMsg]);
     }
-
-
 
 }

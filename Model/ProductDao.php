@@ -175,7 +175,7 @@ class ProductDao{
     }
 
     public static function getOrderDetails($orderId){
-        $query = "SELECT b.id, CONCAT(d.name, ' ', c.name) as productName, b.price * a.quantity as price, a.quantity FROM ordered_products as a 
+        $query = "SELECT b.id, CONCAT(d.name, ' ', c.name) as productName, a.singlePrice, a.quantity FROM ordered_products as a 
                   LEFT JOIN products as b ON b.id = a.productId
                   LEFT JOIN models as c ON c.id = b.modelId
                   LEFT JOIN brands as d ON c.brandId = d.id
@@ -191,9 +191,11 @@ class ProductDao{
                   LEFT JOIN products as d ON d.id = a.productId
                   LEFT JOIN models as b ON b.id = d.modelId
                   LEFT JOIN brands as c ON c.id = b.brandId
-                  LEFT JOIN products_images as e ON b.id = e.productId
-                  GROUP BY a.productId ORDER BY totalSells DESC LIMIT 3;";
-        $stmt = $GLOBALS['PDO']->prepare($query);
+                  LEFT JOIN products_images as e ON d.id = e.productId
+                  WHERE d.quantity > 0
+                  GROUP BY a.productId ORDER BY totalSells DESC LIMIT 6;";
+        $stmt = $GLOBALS["PDO"]->prepare($query);
+
         $stmt->execute();
         $topProducts = $stmt->fetchAll(\PDO::FETCH_ASSOC);
         return $topProducts;
@@ -206,7 +208,7 @@ class ProductDao{
                                          LEFT JOIN products AS b ON b.id = a.productId
                                          LEFT JOIN sub_categories AS c ON c.id = b.subCategoryId
                                          LEFT JOIN brands AS d ON c.id = d.subCategoryId
-                                         GROUP BY d.name ORDER BY totalQuantity DESC LIMIT 3");
+                                         GROUP BY d.name ORDER BY totalQuantity DESC LIMIT 5");
         $stmt->execute();
         $rows = $stmt->fetchAll(\PDO::FETCH_ASSOC);
         $brands = [];
@@ -286,18 +288,17 @@ class ProductDao{
         //This function check if the product is available for a given product id and quantity ordered.
         //If quantity ordered is bigger than the quantity in stock the function return assoc array
         //with the quantity(value) in stock of the given product(key)
-        //The parameter given to this function is assoc array ['productId' => $quantity]
         //If more than one product/quantity is given and all products are available return true
         //If one of the given product/quantity is not available return the first occurrences
 
         /** @var \PDO $pdo */
         $pdo = $GLOBALS["PDO"];
-        foreach ($products as $productId => $quantity) {
+        foreach ($products as $productId => $product) {
             $query = "SELECT quantity FROM products WHERE id = :id";
             $stmt = $pdo->prepare($query);
             $stmt->execute(array('id' => $productId));
             $quantityResult = $stmt->fetch(\PDO::FETCH_ASSOC);
-            if($quantityResult['quantity'] == 0 || $quantityResult['quantity'] < $quantity){
+            if($quantityResult['quantity'] == 0 || $quantityResult['quantity'] < $product['quantity']){
                 $result['productId'] = $productId;
                 $result['quantity'] = $quantityResult['quantity'];
                 return $result;
