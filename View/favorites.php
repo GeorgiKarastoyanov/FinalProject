@@ -14,6 +14,9 @@
     <table id="favorite-product">
         <img src="View/images/logo-login.png" id="logo-img" alt="eMAG">
         <h2 id="fav_text">My favourites products</h2>
+        <?php if(empty($params['favorites'])){
+            echo "<h1>You dont have favourites products</h1>";
+        } else {?>
         <tr>
             <th class="td-favorites">Product Name</th>
             <th class="td-favorites">Price</th>
@@ -36,7 +39,7 @@
                        Remove
                     </a></td>
             </tr>
-        <?php } ?>
+        <?php } }?>
     </table>
 </div>
 </body>
