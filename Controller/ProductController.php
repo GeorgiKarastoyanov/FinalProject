@@ -3,6 +3,7 @@
 
 namespace controller;
 
+use Couchbase\Exception;
 use model\Product;
 use model\ProductDao;
 use exception\CustomException;
@@ -245,5 +246,34 @@ class ProductController extends BaseController
         else{
             header("Location: ?target=product&action=showCart");
         }
+    }
+
+    public function finalBuy(){
+        if(! isset($_SESSION['user'])){
+            header("Location: ?target=home&action=index");
+        }
+        $userId = $_SESSION['user']['id'];
+        if(! isset($_POST['buy'])){
+            throw new NotFoundException();
+        }
+        if($_SESSION['user']['address'] == null){
+            if(! isset($_POST['address'])){
+                throw new CustomException("You must enter address!","buy");
+            }
+            if(strlen($_POST['address']) < 3){
+                throw new CustomException("You must be at lest 3 characters long!","buy");
+            }
+            if(! UserDao::addUserAddress($userId,$_POST["address"])) {
+                throw new CustomException("Address not inserted!", "buy");
+            }
+            $_SESSION['user']['address'] = $_POST["address"];
+        }
+        $orderedProducts = $_SESSION['user']['orderedProducts'];
+        if(! UserDao::buyAction($orderedProducts,$userId)){
+            throw new CustomException("Transaction failed!","buy");
+        }
+        unset($_SESSION['user']['cart']);
+        unset($_SESSION['user']['orderedProducts']);
+        throw new CustomException("Transaction complete your goods will arrive soon :)","orders");
     }
 }

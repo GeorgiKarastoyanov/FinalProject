@@ -171,5 +171,19 @@ class UserDao{
 
     }
 
+    public static function addUserAddress($userId,$address){
+        $query = "UPDATE users SET address = :address WHERE id = :id;";
+        $stmt = $GLOBALS['PDO']->prepare($query);
+        try{
+            $stmt->execute(array('address' => $address, 'id' => $userId));
+        }
+        catch (\Exception $e){
+            echo $e->getMessage();
+            return false;
+
+        }
+        return true;
+    }
+
 }
 
