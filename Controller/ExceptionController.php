@@ -81,4 +81,20 @@ class ExceptionController extends BaseController
         $this->renderView(['account', 'accountOrders'], ['orders' => $orders, 'errMsg' => $errMsg]);
     }
 
+    public function buy(){
+        if(! isset($_SESSION['errMsg'])){
+            header("Location: ?target=home&action=index");
+        }
+        $errMsg = $_SESSION['errMsg'];
+        unset($_SESSION['errMsg']);
+         $orderedProducts = $_SESSION['user']['orderedProducts'];
+        $totalSum = 0;
+        $totalProducts = 0;
+        foreach ($orderedProducts as $product) {
+            $totalSum += $product['price'] * $product['quantity'];
+            $totalProducts += $product['quantity'];
+        }
+        $this->renderView(['buy'],['totalSum' => $totalSum,'totalProducts' => $totalProducts,'errMsg' => $errMsg]);
+    }
+
 }

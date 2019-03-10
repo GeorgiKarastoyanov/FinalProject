@@ -14,45 +14,55 @@
     <link rel="stylesheet" href="View/css/styles.css">
 </head>
 <body>
+<?php if(count($params['products']) > 0){ ?>
 <input id="hiddenPage" type="hidden" value="<?php echo $params['page']; ?>">
-<select id="priceFilter" onchange="filter()">
-    <option value="all" <?php echo $params['selectedOrder'] == "" ? "selected" : "" ?>>Sort by price</option>
-    <option value="ascending" <?php echo  $params['selectedOrder'] == "ascending" ? "selected" : ""?>>Ascending</option>
-    <option value="descending" <?php echo  $params['selectedOrder'] == "descending" ? "selected" : ""?>>Descending</option>
-</select>
-<select id="brandFilter" onchange="filter()">
-    <option value="all" <?php echo  $params['selectedBrand'] == "" ? "selected" : "" ?>>Sort by brand</option>
-    <?php foreach ( $params['brands'] as $brand) {?>
-    <option value="<?php echo $brand;  ?>" <?php echo  $params['selectedBrand'] == $brand ? "selected" : "" ?> > <?php echo $brand;  ?></option>
-    <?php } ?>
-</select>
-<div class="card-deck" style="margin-left: 50px">
+<div id="filters">
+    <select id="priceFilter" class="selects" onchange="filter()">
+        <option value="all" <?php echo $params['selectedOrder'] == "" ? "selected" : "" ?>>Sort by price</option>
+        <option value="ascending" <?php echo  $params['selectedOrder'] == "ascending" ? "selected" : ""?>>Ascending</option>
+        <option value="descending" <?php echo  $params['selectedOrder'] == "descending" ? "selected" : ""?>>Descending</option>
+    </select>
+    <select id="brandFilter" class="selects" onchange="filter()">
+        <option value="all" <?php echo  $params['selectedBrand'] == "" ? "selected" : "" ?>>Sort by brand</option>
+        <?php foreach ( $params['brands'] as $brand) {?>
+            <option value="<?php echo $brand;  ?>" <?php echo  $params['selectedBrand'] == $brand ? "selected" : "" ?> > <?php echo $brand;  ?></option>
+        <?php } ?>
+    </select>
+</div>
+<div class="card-deck" style="margin-top:2%; margin-left: 10%; width: 80%; margin-bottom: 4.6% ">
     <?php foreach ( $params['products'] as $product) {?>
         <div class="container, mh-20">
-            <h6 style="margin-left: 20px"><?php echo $product->getBrand() . ' ' . $product->getModel(); ?></h6>
-            <div id="table-picture-brand" class="card" style="width:180px">
-                <img class="card-img-top" src="<?= $product->getImg();?>" alt="Card image" style="width:80%">
-                <div class="card-body">
-                    <a href="?target=product&action=getProduct&productId=<?php echo $product->getId();?>" class="btn btn-primary , stretched-link">View product</a><br>
-                    <a> Price : <?php echo $product->getPrice(); ?> $</a>
+            <h2 style="margin-left: 20px"><?php echo $product->getBrand() . ' ' . $product->getModel(); ?></h2>
+            <div id="table-picture-brand" class="card" style="width:250px; height: 270px">
+                <img class="card-img-top" src="<?= $product->getImg();?>" alt="Card image" style="width:250px; height: 210px" >
+                <div class="card-body" style="text-align: center; background-color: lightgray">
+                    <a href="?target=product&action=getProduct&productId=<?php echo $product->getId();?>"
+                       class="btn btn-primary , stretched-link" style="width:200px; font-size:25px">View product</a><br>
+                    <a style="font-size: 33px"> Price : <?php echo $product->getPrice(); ?> $</a>
                 </div>
             </div>
         </div>
     <?php } ?>
 </div>
-<nav aria-label="Page navigation example" style="margin-left: 100px">
-    <ul class="pagination justify-content-center">
+<nav aria-label="Page navigation example" style="margin-left: 40%" >
+    <ul class="pagination justify-content-center" >
         <li class="page-item disabled" ><a class="page-link" href="">Previous</a></li>
         <?php  for($i = 0; $i < $params['pages']; $i++){?>
         <li class="page-item" >
-
             <a class="page-link" href="?target=product&action=filter&priceOrder=all&brand=all&page=<?= $i + 1; ?>"><?= $i+1; ?></a>
             <a class="page-link" href="?target=product&action=filter&priceOrder=<?= $params['selectedOrder']; ?>&page=<?= $i + 1; ?>"><?= $i+1; ?></a>
+        <li class="page-item" style="height: 100%; width: 20%" >
+            <a class="page-link" href="?target=product&action=filter&priceOrder=<?= $params['selectedOrder']; ?>&brand=<?= $params['selectedBrand']?>&page=<?= $i + 1; ?>"><?= $i+1; ?></a>
         </li>
         <?php } ?>
         <li class="page-item disabled"><a class="page-link" href="">Next</a></li>
     </ul>
 </nav>
+<?php } else { ?>
+    <div id="empty">
+        <h1>No data available</h1>
+    </div>
+<?php } ?>
 </body>
 <script type="text/javascript">
 

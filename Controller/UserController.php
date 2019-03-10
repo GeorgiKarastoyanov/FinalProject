@@ -408,13 +408,14 @@ class UserController extends BaseController
             $quantity = $checkIsQtyEnough['quantity'];
             throw new CustomException("Product with id=$productId have available quantity of $quantity",'cart');
         }
-        $userId = $_SESSION['user']['id'];
-        //make transaction
-        if(! UserDao::buyAction($orderedProducts,$userId)){
-            throw new CustomException("Transaction failed!","cart");
+        $totalSum = 0;
+        $totalProducts = 0;
+        foreach ($orderedProducts as $product) {
+            $totalSum += $product['price'] * $product['quantity'];
+            $totalProducts += $product['quantity'];
         }
-        unset($_SESSION['user']['cart']);
-        throw new CustomException("Transaction complete your goods will arrive soon :)","orders");
+        $_SESSION['user']['orderedProducts'] = $orderedProducts;
+        $this->renderView(['buy'],['totalSum' => $totalSum,'totalProducts' => $totalProducts]);
     }
 
     public function loginEmailView(){
