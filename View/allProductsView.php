@@ -48,9 +48,6 @@
     <ul class="pagination justify-content-center" >
         <li class="page-item disabled" ><a class="page-link" href="">Previous</a></li>
         <?php  for($i = 0; $i < $params['pages']; $i++){?>
-        <li class="page-item" >
-            <a class="page-link" href="?target=product&action=filter&priceOrder=all&brand=all&page=<?= $i + 1; ?>"><?= $i+1; ?></a>
-            <a class="page-link" href="?target=product&action=filter&priceOrder=<?= $params['selectedOrder']; ?>&page=<?= $i + 1; ?>"><?= $i+1; ?></a>
         <li class="page-item" style="height: 100%; width: 20%" >
             <a class="page-link" href="?target=product&action=filter&priceOrder=<?= $params['selectedOrder']; ?>&brand=<?= $params['selectedBrand']?>&page=<?= $i + 1; ?>"><?= $i+1; ?></a>
         </li>

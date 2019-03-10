@@ -193,7 +193,7 @@ class ProductDao{
                   LEFT JOIN brands as c ON c.id = b.brandId
                   LEFT JOIN products_images as e ON d.id = e.productId
                   WHERE d.quantity > 0
-                  GROUP BY a.productId ORDER BY totalSells DESC LIMIT 6;";
+                  GROUP BY a.productId ORDER BY totalSells DESC LIMIT 8;";
         $stmt = $GLOBALS["PDO"]->prepare($query);
 
         $stmt->execute();
@@ -343,7 +343,7 @@ class ProductDao{
         $stmt ->execute(['userId' => $userId, 'productId' => $productId]);
     }
 
-    public static function topBrandsProducts($brand){
+    public static function topBrandsProducts($brand, $page = 1){
         /** @var \PDO $pdo */
         $pdo = $GLOBALS["PDO"];
         $query = "SELECT p.id as id, price, quantity, s.name as subCat, c.name as cat,
@@ -353,6 +353,11 @@ class ProductDao{
                   JOIN models as m ON m.id = p.modelId
                   JOIN brands as b ON b.id = m.brandId
                   JOIN products_images as pi ON pi.productId = p.id WHERE b.name = :brand";
+
+        $perPage = 5;
+        $offset = ($page - 1) * $perPage;
+
+        $query .= " LIMIT $perPage OFFSET $offset";
         $stmt = $pdo->prepare($query);
         $stmt->execute(['brand' => $brand]);
         $products = [];
@@ -384,5 +389,17 @@ class ProductDao{
         }else{
             return true;
         }
+    }
+
+    public static function countProductsByBrand($brand){
+        /** @var \PDO $pdo */
+        $pdo = $GLOBALS["PDO"];
+        $query = "SELECT (COUNT(*)) as total FROM products as p
+                  LEFT JOIN models as m ON m.id = p.modelId
+                  LEFT JOIN brands as b ON b.id = m.brandId WHERE b.name = :brand";
+        $stmt = $pdo->prepare($query);
+        $stmt->execute(['brand' => $brand]);
+        $row = $stmt->fetch(\PDO::FETCH_ASSOC);
+        return $row["total"];
     }
 }

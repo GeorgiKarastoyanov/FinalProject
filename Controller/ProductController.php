@@ -229,8 +229,15 @@ class ProductController extends BaseController
     public function showTopBrandProducts(){
         if(isset($_GET['brandName']) && !empty($_GET['brandName'])){
             $brand = $_GET['brandName'];
-            $products = ProductDao::topBrandsProducts($brand);
-            $this->renderView(['productsFromABrand'], ['products' => $products, 'brand' => $brand]);
+            if(isset($_GET['page'])){
+                $page = $_GET['page'];
+            }else{
+                $page = 1;
+            }
+            $products = ProductDao::topBrandsProducts($brand, $page);
+            $count = ProductDao::countProductsByBrand($brand);
+            $pages = $count/5;
+            $this->renderView(['productsFromABrand'], ['products' => $products, 'brand' => $brand, 'pages' => $pages]);
         }else{
             throw new NotFoundException();
         }
