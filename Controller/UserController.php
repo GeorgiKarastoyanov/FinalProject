@@ -395,7 +395,7 @@ class UserController extends BaseController
         }
         foreach ($_POST['product'] as $product){
             if($product['quantity'] < 0){
-                throw new CustomException("Quantity must be a positive number!","cart");
+                throw new CustomException(" Ordered quantity must be a positive number!","cart");
             }
         }
         $orderedProducts = $_POST['product'];
