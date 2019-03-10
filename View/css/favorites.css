@@ -1,10 +1,11 @@
 #favorites {
-    width: 65%;
-    height: 65vh;
-    background-color: rgba(128, 128, 128, 0.3);
-    margin: auto;
+    margin-top: 5vh;
+    margin-left:20%;
+    height:60vh;
+    width: 70%;
+    text-align: center;
+    background-color: rgba(147, 147, 147,0.5);
     border-radius: 10px;
-    float: left;
 }
 
 .td-favorites{
@@ -13,6 +14,7 @@
 
 #favorite-product {
     margin: auto;
+    width: 70%;
 
 }
 
@@ -39,5 +41,5 @@
 #logo-img {
     width: 15%;
     height: 8vh;
-    margin-left: 40%;
+    margin:auto;
 }

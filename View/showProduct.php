@@ -1,5 +1,4 @@
 <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
 <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
 <script src="View/js/addToCartOrFavourites.js"></script>
 <link href="View/css/showProduct.css">
@@ -8,14 +7,16 @@
 <!DOCTYPE html>
 <html>
 <body>
-<div class="container">
+<?php  $productId = $params['product']->getId();
+       $product = $params['product']->getBrand() . ' ' . $params['product']->getModel(); ?>
+    <div class="container" style="margin-top: 100px; margin-bottom:152px; ">
     <div class="row">
-        <div class="col-xs-4 item-photo">
-            <img style="width: 400px;height: 300px" src="<?php echo $params['product']->getImg(); ?>"/>
+        <div class="col-xs-4 item-photo" style="border: 1px solid black">
+            <img style="width: 350px;height: 300px" src="<?php echo $params['product']->getImg(); ?>"/>
         </div>
-        <div class="col-xs-5" style="border:0px solid gray">
+        <div class="col-xs-5" style="margin-left: 250px">
 
-            <h1><?php echo $params['product']->getBrand() . ' ' . $params['product']->getModel(); ?></h1>
+            <h1><?= $product ?></h1>
 
             <h2 class="title-price">
                 <small>Price</small>
@@ -35,24 +36,29 @@
             </div>
             <div class="section" style="padding-bottom:20px;">
                 <form method="post" action="?target=product&action=fillCart&field=getProduct">
-                    <input type="hidden" name="productId" value="<?php echo $params['product']->getId(); ?>"">
-                    <button onclick="addToCart('<?php echo $params['product']->getBrand() . ' ' . $params['product']->getModel(); ?>')"
+                    <input type="hidden" name="productId" value="<?= $productId ?>"">
+                    <button onclick="addToCart('<?= $product ?>')"
                             class="btn btn-success"><span style="margin-right:20px"
                                                           class="glyphicon glyphicon-shopping-cart"
                                                           aria-hidden="true"></span> Add to cart
                     </button>
                 </form>
-                <form method="post" action="?target=product&action=addToFavourites">
-                    <input type="hidden" name="productId" value="<?php echo $params['product']->getId(); ?>">
-                    <button onclick="addToFavourites('<?php echo $params['product']->getBrand() . ' ' . $params['product']->getModel(); ?>')"
-                            style="width: 130px"><h6><span class="glyphicon glyphicon-heart-empty"
-                                                           style="cursor:pointer;"></span> Add to favourites</h6>
+                <a href='?target=product&action=favourites&productId=<?= $productId ;?>' style="text-decoration: none"
+                   onclick="<?=  $params['existsInFavourites'] !== true ?
+                                "addToFavourites('$product')" :
+                                "removeFromFavourites('$product')" ?>">
+                    <button  style="width: 130px">
+                        <h6>
+                            <span class="glyphicon glyphicon-heart-empty" style="cursor:pointer;"></span>
+                            <?= $params['existsInFavourites'] == true ? 'Remove form favourites' : 'Add to favourites' ?>
+                        </h6>
                     </button>
-                </form>
+                </a>
             </div>
         </div>
 
-        <div class="col-xs-9">
+        <div class="col-xs-9" style="margin-top: 10px">
+            <h3>Specifications</h3>
             <ul class="menu-items">
                 <?php foreach ($params['specifications'] as $specification) { ?>
                     <li class="active"><?php echo $specification["name"] . ' : ' . $specification["value"]; ?> </li>

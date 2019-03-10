@@ -12,8 +12,11 @@
                             <img class="card-img-top" src="<?= $product->getImg(); ?>" alt="Card image" style="width:80%">
                             <div class="card-body">
                             <a href="?target=product&action=getProduct&productId=<?=$product->getId(); ?>" class="btn btn-primary , stretched-link">View product</a><br>
-                                Price :<?= $product->getPrice(); ?> $<br>
-                                Quantity(<?=$product->getQuantity(); ?>)<input type="number" name="product[<?=$product->getId(); ?>]" value="1" required>
+                                Price :<?= $product->getPrice(); ?> $ <br>
+                                Quantity(<?=$product->getQuantity(); ?>)
+                                <input type="number" name="product[<?=$product->getId(); ?>][quantity]" max="<?=$product->getQuantity(); ?>" required
+                                       id="quantity" onkeyup="calculate()">
+                                <input id="price" type="hidden" name="product[<?=$product->getId(); ?>][price]" value="<?= $product->getPrice(); ?>">
                                 <a href="?target=product&action=removeFromCart&productId=<?=$product->getId(); ?>"
                                    class="btn btn-primary , streched-link" style="color: white; background-color: grey">Remove from cart</a>
                             </div>
@@ -26,9 +29,12 @@
             <div>
                 <input   type="submit" name="buy" value="Buy">
                 <h3 >Total sum is: <?=$totalSum ?></h3>
+                <div id="result"></div>
             </div>
         </form>
     <?php } else { ?>
         <h1>Cart is empty</h1>
     <?php } ?>
 </div>
+<script src="View/js/calculateFullPrice.js">
+</script>

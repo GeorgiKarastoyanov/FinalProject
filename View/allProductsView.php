@@ -45,7 +45,9 @@
         <li class="page-item disabled" ><a class="page-link" href="">Previous</a></li>
         <?php  for($i = 0; $i < $params['pages']; $i++){?>
         <li class="page-item" >
+
             <a class="page-link" href="?target=product&action=filter&priceOrder=all&brand=all&page=<?= $i + 1; ?>"><?= $i+1; ?></a>
+            <a class="page-link" href="?target=product&action=filter&priceOrder=<?= $params['selectedOrder']; ?>&page=<?= $i + 1; ?>"><?= $i+1; ?></a>
         </li>
         <?php } ?>
         <li class="page-item disabled"><a class="page-link" href="">Next</a></li>

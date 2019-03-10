@@ -51,14 +51,25 @@ class UserController extends BaseController
             throw new CustomException('Last name must be at least two characters long!', 'registerUser');
         }
 
+        if (!isset($_POST['first-name']) || strlen($_POST['first-name']) > 50) {
+            throw new CustomException('First name cannot be more than 50 characters long!', 'registerUser');
+        }
+
+        if (!isset($_POST['last-name']) || strlen($_POST['last-name']) > 50) {
+            throw new CustomException('Last name cannot be more than 50 characters long!', 'registerUser');
+        }
+
         if (!isset($_POST['password']) || !isset($_POST['confirm-password'])) {
             throw new CustomException('You must enter password!', 'registerUser');
         }
         trim($_POST['password']);
         trim($_POST['confirm-password']);
         if (strlen($_POST['password']) < 6) {
-            throw new CustomException('Password must be at least 6 c 
-            0haracters long!', 'registerUser');
+            throw new CustomException('Password must be at least 6 characters long!', 'registerUser');
+        }
+
+        if (strlen($_POST['password']) > 30) {
+            throw new CustomException('Password cannot be more than 30 characters long!', 'registerUser');
         }
 
         if ($_POST['password'] !== $_POST['confirm-password']) {
@@ -71,7 +82,7 @@ class UserController extends BaseController
         $user = new UserInfo($email, $password, $firstName, $lastName);
         $userId = UserDao::addUser($user);
         if (!$userId) {
-            throw new CustomException('User not added!', 'registerUser');
+            throw new NotFoundException();
         }
 
         $user->setId($userId);
@@ -136,7 +147,7 @@ class UserController extends BaseController
 
     public function logout()
     {
-        unset($_SESSION['user']);
+        session_destroy();
         header("Location: ?target=home&action=index");
     }
 
@@ -193,7 +204,7 @@ class UserController extends BaseController
         }
 
         //password
-        if ((!isset($_POST['password']) || !isset($_POST['confirm-password'])) ||
+        if ((! isset($_POST['password']) || ! isset($_POST['confirm-password'])) ||
             ($_POST['password'] == '' && $_POST['confirm-password'] == '')) {
             $password = false;
         }
@@ -209,6 +220,7 @@ class UserController extends BaseController
             }
             $password = password_hash($_POST["password"], PASSWORD_BCRYPT, ["cost" => 5]);
         }
+
 
         //address
         if (!isset($_POST['address'])) {
@@ -275,20 +287,20 @@ class UserController extends BaseController
             header('Location: ?target=home&action=index');
         }
         if (!isset($_POST['addProductStep1'])) {
-            throw new CustomException('First Step Not Complete');
+            throw new NotFoundException();
         }
         if (!isset($_POST['sub-categories'])) {
-            throw new CustomException('Sub-categories not set');
+            throw new NotFoundException();
         }
-        if (!isset($_POST['brands'])) {
-            throw new CustomException('Brands not set');
+        if (!isset($_POST['brand'])) {
+            throw new NotFoundException();
         }
         if (!isset($_POST['model'])) {
-            throw new CustomException('Model not set');
+            throw new NotFoundException();
         }
 
         $subCategoryId = $_POST['sub-categories'];
-        $brandName = $_POST['brands'];
+        $brandName = $_POST['brand'];
         $modelName = $_POST['model'];
         $brandId = ProductDao::checkBrandIdExist($brandName,$subCategoryId);
         if($brandId != false){
@@ -301,6 +313,8 @@ class UserController extends BaseController
             }
         }
         $productSpec = SubCategoryDao::getAllSpecForCategory($subCategoryId);
+        $_SESSION['exceptionParam'] = $productSpec;
+        $_SESSION['user']['addProduct']['brandNameView'] = $_POST['brand'];
         $_SESSION['user']['addProduct']['brandName'] = $brandName;
         $_SESSION['user']['addProduct']['model'] = $modelName;
         $_SESSION['user']['addProduct']['subCategoryId'] = $subCategoryId;
@@ -333,12 +347,16 @@ class UserController extends BaseController
         if (!isset($_POST['edit-product'])) {
             throw new CustomException('Form not send!','accountAdminEdit');
         }
-        if (!isset($_POST['quantity']) || $_POST['quantity'] < 0) {
+        if (!isset($_POST['quantity']) || $_POST['quantity'] < 0 || $_POST['quantity'] > 5000) {
             throw new CustomException('Invalid quantity!','accountAdminEdit');
         }
         if (!isset($_POST['price']) || $_POST['price'] < 0) {
-            throw new CustomException('Invalid price!','accountAdminEdit');
+            throw new CustomException('Price must be a positive number!','accountAdminEdit');
         }
+        if (!isset($_POST['price']) ||  $_POST['price'] > 5000) {
+            throw new CustomException('Max price is 5000!','accountAdminEdit');
+        }
+
 
         $quantity = $_POST['quantity'];
         $price = $_POST['price'];
@@ -361,10 +379,8 @@ class UserController extends BaseController
         }
         $userId = $_SESSION['user']['id'];
         $productId = $_GET['productId'];
-        if (!UserDao::removeFavorite($productId, $userId)) {
-            throw new CustomException("Product not removed form favorites");
-        }
-        header("Location: ?target=user&action=favorites");
+
+        header("Location: ?target=product&action=getProduct&productId=$productId");
     }
 
     public function buyAction(){
@@ -377,12 +393,11 @@ class UserController extends BaseController
         if(! isset($_POST['product'])){
             header("Location: ?target=home&action=index");
         }
-        foreach ($_POST['product'] as $quantity) {
-            if($quantity < 0){
+        foreach ($_POST['product'] as $product){
+            if($product['quantity'] < 0){
                 throw new CustomException("Quantity must be a positive number!","cart");
             }
         }
-        //['productId => $quantity]
         $orderedProducts = $_POST['product'];
         $checkIsQtyEnough = ProductDao::checkQtyAvailabilityPerProduct($orderedProducts);
         if(is_array($checkIsQtyEnough)){

@@ -4,6 +4,9 @@ use exception\NotFoundException;
 use exception\CustomException;
 use controller\HomeController;
 
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
 try{
     require_once __DIR__ . DIRECTORY_SEPARATOR . 'helpers.php';
     //register autoload
@@ -19,7 +22,9 @@ try{
     });
 
     include "config.php";
-    $GLOBALS["PDO"] = new PDO("mysql:host=127.0.0.1:".DB_PORT.";dbname=emag","root");
+    $GLOBALS["PDO"] = new PDO("mysql:host=127.0.0.1:".DB_PORT.";dbname=emag","root", "", array(
+        PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
+    ));
 
     session_start();
 

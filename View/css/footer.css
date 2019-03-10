@@ -1,73 +1,8 @@
-#myFooter {
-    background-color: white;
-    color: black;
-}
 
-#myFooter ul {
-    list-style-type: none;
-    padding-left: 0;
-    line-height: 1.7;
-}
-
-#myFooter h5 {
-    font-size: 18px;
-    color: black;
-    font-weight: bold;
-    margin-top: 10px;
-}
-
-#myFooter a {
-    color: #c5c5c5;
-    text-decoration: none;
-
-}
-
-#myFooter a:hover, #myFooter a:focus {
-    text-decoration: none;
-    color: #383737;
-}
-
-#myFooter .myCols {
-    text-align: center;
-}
-
-#myFooter .social-networks {
-    text-align: center;
-    padding-top: 30px;
-    padding-bottom: 38px;
-}
-
-#myFooter .social-networks a {
-    font-size: 32px;
-    margin-right: 5px;
-    margin-left: 5px;
-    color: #0a8da9;
-    padding: 10px;
-    transition: 0.2s;
-}
-
-#myFooter .social-networks a:hover {
-    text-decoration: none;
-
-}
-
-#myFooter .facebook:hover {
-    color: #0077e2;
-}
-
-#myFooter .google:hover {
-    color: #ef1a1a;
-}
-
-#myFooter .twitter:hover {
-    color: #00aced;
-}
-
-@media screen and (max-width: 767px) {
-    #myFooter {
-        text-align: center;
-    }
-}
-.col-sm-3{
-    margin: auto;
+#myFooter{
+    margin-top: 50px;
+    height: 16.9vh;
+    width:100%;
+    background-color: blue;
+    color: white;
 }

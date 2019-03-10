@@ -175,7 +175,7 @@ class ProductDao{
     }
 
     public static function getOrderDetails($orderId){
-        $query = "SELECT b.id, CONCAT(d.name, ' ', c.name) as productName, b.price * a.quantity as price, a.quantity FROM ordered_products as a 
+        $query = "SELECT b.id, CONCAT(d.name, ' ', c.name) as productName, a.singlePrice, a.quantity FROM ordered_products as a 
                   LEFT JOIN products as b ON b.id = a.productId
                   LEFT JOIN models as c ON c.id = b.modelId
                   LEFT JOIN brands as d ON c.brandId = d.id
@@ -191,9 +191,11 @@ class ProductDao{
                   LEFT JOIN products as d ON d.id = a.productId
                   LEFT JOIN models as b ON b.id = d.modelId
                   LEFT JOIN brands as c ON c.id = b.brandId
-                  LEFT JOIN products_images as e ON b.id = e.productId
-                  GROUP BY a.productId ORDER BY totalSells DESC LIMIT 5;";
-        $stmt = $GLOBALS['PDO']->prepare($query);
+                  LEFT JOIN products_images as e ON d.id = e.productId
+                  WHERE d.quantity > 0
+                  GROUP BY a.productId ORDER BY totalSells DESC LIMIT 6;";
+        $stmt = $GLOBALS["PDO"]->prepare($query);
+
         $stmt->execute();
         $topProducts = $stmt->fetchAll(\PDO::FETCH_ASSOC);
         return $topProducts;
@@ -286,18 +288,17 @@ class ProductDao{
         //This function check if the product is available for a given product id and quantity ordered.
         //If quantity ordered is bigger than the quantity in stock the function return assoc array
         //with the quantity(value) in stock of the given product(key)
-        //The parameter given to this function is assoc array ['productId' => $quantity]
         //If more than one product/quantity is given and all products are available return true
         //If one of the given product/quantity is not available return the first occurrences
 
         /** @var \PDO $pdo */
         $pdo = $GLOBALS["PDO"];
-        foreach ($products as $productId => $quantity) {
+        foreach ($products as $productId => $product) {
             $query = "SELECT quantity FROM products WHERE id = :id";
             $stmt = $pdo->prepare($query);
             $stmt->execute(array('id' => $productId));
             $quantityResult = $stmt->fetch(\PDO::FETCH_ASSOC);
-            if($quantityResult['quantity'] == 0 || $quantityResult['quantity'] < $quantity){
+            if($quantityResult['quantity'] == 0 || $quantityResult['quantity'] < $product['quantity']){
                 $result['productId'] = $productId;
                 $result['quantity'] = $quantityResult['quantity'];
                 return $result;
@@ -316,9 +317,9 @@ class ProductDao{
                   JOIN models as m ON m.id = p.modelId
                   JOIN brands as b ON b.id = m.brandId
                   JOIN products_images as pi ON pi.productId = p.id 
-                  WHERE p.id IN ($idList)";
+                  WHERE p.id IN (:idList)";
         $stmt = $pdo->prepare($query);
-        $stmt->execute();
+        $stmt->execute(['idList' => $idList]);
         $products = [];
         while ($row = $stmt->fetch(\PDO::FETCH_OBJ)) {
             $products[] = new Product($row->id, $row->price, $row->quantity, $row->subCat, $row->cat, $row->model, $row->brand, $row->img);
@@ -363,4 +364,17 @@ class ProductDao{
         return $modelId;
     }
 
+    public static function checkIfExist($userId, $productId){
+        /** @var \PDO $pdo */
+        $pdo = $GLOBALS["PDO"];
+        $query = "SELECT COUNT(*) as matches from favourites as f WHERE userId = :userId AND productId = :productId";
+        $stmt = $pdo->prepare($query);
+        $stmt->execute(array('userId' => $userId, 'productId' => $productId));
+        $count = $stmt->fetch(\PDO::FETCH_ASSOC);
+        if($count['matches'] == 0){
+            return false;
+        }else{
+            return true;
+        }
+    }
 }
