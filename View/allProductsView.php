@@ -29,10 +29,10 @@
         <?php } ?>
     </select>
 </div>
-<div class="card-deck" style="margin-top:2%; margin-left: 10%; width: 80%; margin-bottom: 4.6% ">
+<div class="card-deck" style="margin-top:2.6%; margin-left: 10%; width: 80%; margin-bottom: 4.55% ">
     <?php foreach ( $params['products'] as $product) {?>
         <div class="container, mh-20">
-            <h2 style="margin-left: 20px"><?php echo $product->getBrand() . ' ' . $product->getModel(); ?></h2>
+            <h2 id="productName" style="margin-left: 20px"><?php echo $product->getBrand() . ' ' . $product->getModel(); ?></h2>
             <div id="table-picture-brand" class="card" style="width:250px; height: 270px">
                 <img class="card-img-top" src="<?= $product->getImg();?>" alt="Card image" style="width:250px; height: 210px" >
                 <div class="card-body" style="text-align: center; background-color: lightgray">

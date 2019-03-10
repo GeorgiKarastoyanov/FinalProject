@@ -14,7 +14,7 @@
     <form action="?target=user&action=registerEmail" method="post" class="form">
         <h1 class="reg-text">Welcome!</h1>
         <h3 class="reg-text2">Please enter e-mail address</h3>
-        <input type="email" class="reg_mail" name="email" placeholder="email" required><br>
+        <input type="email" class="reg_mail" name="email" placeholder="email" max="50" required><br>
         <input type="submit" class="reg_submit-button" name="register-email" value="Continue"> <br>
         <p class="text-login-reg">You already have an account? <a href="?target=user&action=loginEmailView">Log In</a>
         </p>

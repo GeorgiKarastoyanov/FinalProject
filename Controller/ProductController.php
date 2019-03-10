@@ -101,7 +101,6 @@ class ProductController extends BaseController
     {
         if (isset($_GET["productId"]) && !empty($_GET["productId"])
         && ProductDao::checkIfProductExistByProductId($_GET['productId'])) {
-            $existsInFavourites = 'disabled';
             $productId = $_GET["productId"];
             $product = ProductDao::getProduct($productId);
             $specifications = ProductDao::getSpecs($productId);
@@ -177,7 +176,6 @@ class ProductController extends BaseController
     public function showAutoLoadNames()
     {
         if(isset($_POST["text"])){
-            header("content-type:application/jason");
             $this->isJson = true;
             $text = $_POST["text"];
             return ProductDao::getAutoLoadNames($text);

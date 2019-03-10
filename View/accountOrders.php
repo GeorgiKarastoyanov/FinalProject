@@ -13,7 +13,7 @@
     <img src="View/images/logo-login.png" id="my-acc-logo-img" alt="eMAG">
     <h3>My Orders</h3>
     <?php if(empty($params['orders'])){
-        echo "  <h1>Cart is empty</h1>";
+        echo "  <h1>You dont have any orders</h1>";
     }
     else { ?>
     <table id="table-my-orders">
@@ -32,7 +32,7 @@
             </tr>
         <?php } }?>
     </table>
-    <div id="err" <?= isset($params['errMsg']) ? "" : "style='display: none'"; ?>><?= isset($params['errMsg']) ? $params['errMsg'] : ""; ?></div>
+    <div id="err" style="color: blue" <?= isset($params['errMsg']) ? "" : "style='display: none'"; ?>><?= isset($params['errMsg']) ? $params['errMsg'] : ""; ?></div>
 </div>
 </body>
 </html>

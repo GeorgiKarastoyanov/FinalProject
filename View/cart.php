@@ -1,10 +1,11 @@
 <link rel="stylesheet" href="View/css/cart.css">
-<div id="cart"">
+<div id="cart">
     <h2>Your Cart</h2>
     <?php  if(! empty($params['products'])) {?>
         <form id='cart-form' action="?target=user&action=buyAction" method="post">
             <div class="card-deck" style="margin-left: 50px">
                 <?php foreach ( $params['products'] as $product) {?>
+
                     <div class="container, mh-20" style="margin-left: 50px; display: inline-block" >
                         <h4 style="margin-left: 20px"><?=$product->getBrand(). ' ' . $product->getModel();?></h4>
                         <div id="table-picture-brand" class="card" style="width:180px">
@@ -20,14 +21,15 @@
                             </div>
                         </div>
                     </div>
+                <?php } ?>
             </div>
             <div id="err" <?= isset($params['errMsg']) ? "" : "style='display: none'"; ?>><?= isset($params['errMsg']) ? $params['errMsg'] : ""; ?></div>
             <div>
-                <input   type="submit" name="buy" value="Continue">
+                <input id="buy"   type="submit" name="buy" value="Continue">
 
             </div>
         </form>
-    <?php }} else { ?>
+    <?php } else { ?>
         <h1>Cart is empty</h1>
     <?php } ?>
 </div>

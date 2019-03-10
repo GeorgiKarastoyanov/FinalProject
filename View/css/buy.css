@@ -16,3 +16,15 @@
     border: 1px solid #10aced;
     color: #10aced;
 }
+#address{
+    font-size: 30px;
+}
+#complete{
+    font-size: 30px;
+}
+
+#register-img {
+    width: 10%;
+    height: 10vh;
+    margin:auto;
+}

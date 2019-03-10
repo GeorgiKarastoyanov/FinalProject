@@ -164,6 +164,9 @@ class UserController extends BaseController
 
     public function editProfile()
     {
+        if(! isset($_SESSION['user'])){
+            header("Location: ?target=home&action=index");
+        }
         if (strtolower($_SERVER["REQUEST_METHOD"]) !== "post") {
             throw new NotFoundException();
         }
