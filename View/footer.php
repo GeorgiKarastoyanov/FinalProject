@@ -34,10 +34,10 @@
             </div>
             <div class="col-sm-3 myCols">
                 <h5>Our Partners</h5>
-                <ul>
-                    <li><a href="https://www.samsung.com/bg/" target="_blank">Samsung</a></li>
-                    <li><a href="https://www.zara.com/bg/en/" target="_blank">Zara Fashion</a></li>
-                    <li><a href="https://www.bosch.bg/" target="_blank">Bosh</a></li>
+                <ul class="footer-partners">
+                    <li><a href="https://www.samsung.com/bg/" target="_blank" class="footer-partners">Samsung</a></li>
+                    <li><a href="https://www.zara.com/bg/en/" target="_blank" class="footer-partners">Zara Fashion</a></li>
+                    <li><a href="https://www.bosch.bg/" target="_blank" class="footer-partners">Bosh</a></li>
                 </ul>
             </div>
         </div>
