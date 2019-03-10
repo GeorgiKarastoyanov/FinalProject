@@ -99,7 +99,8 @@ class ProductController extends BaseController
 
     public function getProduct()
     {
-        if (isset($_GET["productId"]) && !empty($_GET["productId"])) {
+        if (isset($_GET["productId"]) && !empty($_GET["productId"])
+        && ProductDao::checkIfProductExistByProductId($_GET['productId'])) {
             $existsInFavourites = 'disabled';
             $productId = $_GET["productId"];
             $product = ProductDao::getProduct($productId);

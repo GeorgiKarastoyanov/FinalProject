@@ -2,6 +2,7 @@
 $address = $_SESSION['user']['address'];
 
 ?>
+<link rel="stylesheet" href="View/css/buy.css">
 <div id="buy">
     <h1>Final step</h1>
     <div>
@@ -13,7 +14,7 @@ $address = $_SESSION['user']['address'];
         "<h2>You must set your address to complete the order!</h2><br>
         Adress:<input type='text' name='address'><br>";?>
     </div>
-        <input type="submit" name="buy" value="Complete Order">
+        <input id="complete" type="submit" name="buy" value="Buy">
     </form>
     <div id="err" <?= isset($params['errMsg']) ? "" : "style='display: none'"; ?>><?= isset($params['errMsg']) ? $params['errMsg'] : ""; ?></div>
 </div>

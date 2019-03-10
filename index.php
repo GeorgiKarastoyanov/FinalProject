@@ -68,7 +68,7 @@ catch (Exception $e){
         }
     }
     else{
-        dd($e);
+        require_once "View/not-found.php";
     }
 }
 die;

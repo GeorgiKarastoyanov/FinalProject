@@ -335,7 +335,7 @@ class ProductDao{
             }
     }
 
-    public static  function addToFavourites($userId, $productId){
+    public static function addToFavourites($userId, $productId){
         /** @var \PDO $pdo */
         $pdo = $GLOBALS["PDO"];
         $query = "INSERT INTO favourites (userId, productId) VALUES (:userId , :productId)";
@@ -391,7 +391,9 @@ class ProductDao{
         }
     }
 
-    public static function countProductsByBrand($brand){
+
+    public static function countProductsByBrand($brand)
+    {
         /** @var \PDO $pdo */
         $pdo = $GLOBALS["PDO"];
         $query = "SELECT (COUNT(*)) as total FROM products as p
@@ -401,5 +403,19 @@ class ProductDao{
         $stmt->execute(['brand' => $brand]);
         $row = $stmt->fetch(\PDO::FETCH_ASSOC);
         return $row["total"];
+    }
+    
+    public static function checkIfProductExistByProductId($productId){
+        /** @var \PDO $pdo */
+        $pdo = $GLOBALS["PDO"];
+        $query = "SELECT id FROM products WHERE id = :id";
+        $stmt = $pdo->prepare($query);
+        $stmt->execute(array('id' => $productId));
+        $product = $stmt->fetch(\PDO::FETCH_ASSOC);
+        if(empty($product)){
+            return false;
+        }else{
+            return true;
+        }
     }
 }
