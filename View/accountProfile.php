@@ -46,9 +46,7 @@
         <input type="submit" id="submit-my-profile" name="edit-profile" value="Save Edit">
 
         <div id="err" <?= isset($params['errMsg']) ? "" : "style='display: none'"; ?>><?= isset($params['errMsg']) ? $params['errMsg'] : ""; ?></div>
-        <a href='?target=user&action=delete' onclick="return confirm('Do you really want to delete your profile?')">Delete Account</a>
-
-
+        <a href='?target=user&action=delete' onclick="return confirm('Do you really want to delete your profile?')"><h2>Delete Account</h2></a>
     </form>
 </div>
 </body>

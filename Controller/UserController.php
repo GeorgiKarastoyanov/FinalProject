@@ -334,6 +334,9 @@ class UserController extends BaseController
         }
         $productId = $_GET['productId'];
         $product = ProductDao::getProduct($productId);
+        if($product->getId() == null){
+            header("Location: ?target=user&action=editProductSearch");
+        }
         $this->renderView(['account', 'accountAdminEdit'], ['product' => $product]);
     }
 

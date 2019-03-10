@@ -27,3 +27,7 @@
 .td-favorites{
     text-align: center;
 }
+#err {
+    color: #3bff2c;
+    font-size: 25px;
+}
