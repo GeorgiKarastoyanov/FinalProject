@@ -52,3 +52,8 @@
     text-align: center;
     color: #444444;
 }
+
+#err {
+    color: #ff2d1f;
+    font-size: 25px;
+}

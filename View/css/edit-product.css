@@ -16,6 +16,7 @@
 
 .edit-products-table {
     margin: auto;
+    width: 70%;
 }
 
 .td-favorites{
@@ -81,4 +82,5 @@
 }
 #err {
     color: #ff2d1f;
+    font-size: 25px;
 }

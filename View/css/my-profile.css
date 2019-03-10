@@ -25,3 +25,7 @@
     background-color: #185fa9;
     color: white;
 }
+#err {
+    color: #ff2d1f;
+    font-size: 25px;
+}
