@@ -607,6 +607,12 @@
 }
 #subCategories{
     margin-left: 50px;
+    width: 60%;
+    margin: auto;
+    display: flex;
+    flex-direction: row;
+    height: 50px;
+    display: none;
 }
 #categories{
     width: 24.805%;
@@ -630,11 +636,25 @@
     height: 5vh;
     width: 166px;
     text-align: center;
-    margin-bottom: 5%;
 }
 .button2{
-    margin-bottom: 5%;
     background-color: white;
     border: 1px solid #10aced;
     color: #10aced;
+}
+#subCategoriesButtons{
+    /*width: 24.805%;*/
+    height: 100%;
+    /*background-color: #bcbcbc;*/
+    /*border-width: 1px;*/
+    /*border-color: #020102;*/
+    /*font-size: 25px;*/
+    flex: 1;
+    displa: flex;
+    justify-content: space-between;
+    margin-top: 5px;
+    background-color: #dadada;
+    border: none;
+    font-size: 1.2em;
+    margin: 0 2px;
 }

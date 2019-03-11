@@ -42,7 +42,7 @@
         <input id="categories" type="submit" onclick="getSubCategory('<?= $cat['name'];?>')" name='<?= $cat['name'];?>' value='<?= $cat['name'];?>'>
     <?php } ?>
 </div>
-<div id="subCategories" >
+<div id="subCategories"  >
 </div>
 
 <div id="autoComplete"></div>

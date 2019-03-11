@@ -9,11 +9,13 @@ function getSubCategory(name) {
         return response.json();
     })
         .then(function (myJson) {
+            document.getElementById("subCategories").style.display = 'flex';
             var buttons_div = document.getElementById("subCategories");
             buttons_div.innerHTML = "";
             for (var i = 0;i < myJson.length; i++){
                 var button = document.createElement("button");
                 button.value = myJson[i]["name"];
+                button.id = 'subCategoriesButtons';
                 button.innerHTML = myJson[i]["name"];
                 var subCat =  myJson[i]["name"];
                 button.addEventListener('click', function (subCat) {
