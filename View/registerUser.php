@@ -7,6 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Register User</title>
     <link rel="stylesheet" href="View/css/registerUser.css">
+    <link rel="shortcut icon" sizes="any" type="image/png" href="https://s12emagst.akamaized.net/assets/bg/css/icons/favicon.ico?v=1a">
 </head>
 <body>
 <a href="?target=home&action=index"><img src="View/images/logo-login.png" id="register-img" alt="eMAG"></a>

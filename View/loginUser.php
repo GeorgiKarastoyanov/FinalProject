@@ -7,6 +7,7 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Login</title>
+    <link rel="shortcut icon" sizes="any" type="image/png" href="https://s12emagst.akamaized.net/assets/bg/css/icons/favicon.ico?v=1a">
     <link rel="stylesheet" href="View/css/login-user.css">
 </head>
 <body>
