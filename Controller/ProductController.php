@@ -104,10 +104,10 @@ class ProductController extends BaseController
             $productId = $_GET["productId"];
             $product = ProductDao::getProduct($productId);
             $specifications = ProductDao::getSpecs($productId);
+            $existsInFavourites = false;
             if(isset($_SESSION['user']['id'])){
                 $userId = $_SESSION['user']['id'];
                 $existsInFavourites = ProductDao::checkIfExist($userId, $productId);
-
             }
             $this->renderView(['showProduct'],
                 ['product' => $product, 'specifications' => $specifications, 'existsInFavourites' => $existsInFavourites]);

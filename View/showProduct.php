@@ -43,11 +43,15 @@
                                                           aria-hidden="true"></span> Add to cart
                     </button>
                 </form>
-                <a href='?target=product&action=favourites&productId=<?= $productId ;?>' style="text-decoration: none"
+                <a  href="<?= isset($_SESSION['user']['id']) ?
+                    "?target=product&action=favourites&productId=$productId" :
+                    '?target=user&action=loginEmailView'?>" style="text-decoration: none"
+                    <?php if(isset($_SESSION['user']['id'])){?>
                    onclick="<?=  $params['existsInFavourites'] !== true ?
                                 "addToFavourites('$product')" :
-                                "removeFromFavourites('$product')" ?>">
-                    <button  style="width: 130px">
+                                "removeFromFavourites('$product')" ?>"
+                    <?php }?>>
+                    <button style="width: 130px">
                         <h6>
                             <span class="glyphicon glyphicon-heart-empty" style="cursor:pointer;"></span>
                             <?= $params['existsInFavourites'] == true ? 'Remove form favourites' : 'Add to favourites' ?>

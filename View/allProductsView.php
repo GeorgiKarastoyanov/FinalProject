@@ -14,6 +14,9 @@
     <link rel="stylesheet" href="View/css/styles.css">
 </head>
 <body>
+<div id="label">
+    <h1><?= $_SESSION['subCat'] ?></h1>
+</div>
 <?php if(count($params['products']) > 0){ ?>
 <input id="hiddenPage" type="hidden" value="<?php echo $params['page']; ?>">
 <div id="filters">
