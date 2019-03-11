@@ -25,8 +25,7 @@
             </div>
             <div id="err" <?= isset($params['errMsg']) ? "" : "style='display: none'"; ?>><?= isset($params['errMsg']) ? $params['errMsg'] : ""; ?></div>
             <div>
-                <input id="buy"   type="submit" name="buy" value="Continue">
-
+                <input id="buy"   type="submit" name="buy" value="Proceed to purchase">
             </div>
         </form>
     <?php } else { ?>

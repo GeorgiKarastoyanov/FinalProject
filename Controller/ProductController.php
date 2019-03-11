@@ -54,8 +54,8 @@ class ProductController extends BaseController
         if(! isset($_POST['price']) || $_POST['price'] < 0){
             throw new CustomException('Price must be a positive number!','addProduct');
         }
-        if(! isset($_POST['price']) || $_POST['price'] > 5000){
-            throw new CustomException('Max price is 5000!','addProduct');
+        if(! isset($_POST['price']) || $_POST['price'] > 20000){
+            throw new CustomException('Max price is 20000$!','addProduct');
         }
         if(! isset($_POST['quantity']) || $_POST['quantity'] < 0 || $_POST['quantity'] > 5000){
             throw new CustomException('Invalid quantity!','addProduct');
