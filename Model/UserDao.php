@@ -49,7 +49,7 @@ class UserDao{
 
     public static function delete($user_id){
 
-        $query = "UPDATE users SET email='DELETED', password='DELETED', firstName='DELETED', lastName='DELETED', address='DELETED' WHERE id = :id LIMIT 1;";
+        $query = "UPDATE users SET email='DELETED:id', password='DELETED', firstName='DELETED', lastName='DELETED', address='DELETED' WHERE id = :id LIMIT 1;";
         $stmt = $GLOBALS['PDO']->prepare($query);
         try{
             $stmt->execute(array('id' => $user_id));

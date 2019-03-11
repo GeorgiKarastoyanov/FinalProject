@@ -26,14 +26,32 @@
         </div>
     <?php } ?>
 </div>
+<?php
+$previousLink = '';
+$disabled = 'disabled';
+if($params['page'] > 1){
+    $disabled = '';
+    $previousPage = $params['page'] - 1;
+    $previousLink = "?target=product&action=showTopBrandProducts&brandName=" . $params['brand'] . "&page=" . $previousPage;
+}
+
+$nextLink = '';
+$disabledNext = 'disabled';
+if($params['page'] < $params['pages']){
+    $disabledNext = '';
+    $nextPage = $params['page'] + 1;
+    $nextLink = "?target=product&action=showTopBrandProducts&brandName=" . $params['brand'] . "&page=" . $nextPage;
+}
+
+?>
 <nav aria-label="Page navigation example" style="margin-left: 40%" >
     <ul class="pagination justify-content-center" >
-        <li class="page-item disabled" ><a class="page-link" href="">Previous</a></li>
+        <li class="page-item <?= $disabled ?>" ><a class="page-link" href="<?= $previousLink ?>">Previous</a></li>
         <?php  for($i = 0; $i < $params['pages']; $i++){?>
             <li class="page-item" style="height: 100%; width: 20%" >
                 <a class="page-link" href="?target=product&action=showTopBrandProducts&brandName=<?= $params['brand']?>&page=<?= $i + 1; ?>"><?= $i+1; ?></a>
             </li>
         <?php } ?>
-        <li class="page-item disabled"><a class="page-link" href="">Next</a></li>
+        <li class="page-item <?= $disabledNext ?>"><a class="page-link" href="<?= $nextLink ?>">Next</a></li>
     </ul>
 </nav>

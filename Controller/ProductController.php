@@ -235,8 +235,8 @@ class ProductController extends BaseController
             }
             $products = ProductDao::topBrandsProducts($brand, $page);
             $count = ProductDao::countProductsByBrand($brand);
-            $pages = $count/5;
-            $this->renderView(['productsFromABrand'], ['products' => $products, 'brand' => $brand, 'pages' => $pages]);
+            $pages = intval(ceil($count/5));
+            $this->renderView(['productsFromABrand'], ['products' => $products, 'brand' => $brand, 'page' => $page, 'pages' => $pages]);
         }else{
             throw new NotFoundException();
         }
