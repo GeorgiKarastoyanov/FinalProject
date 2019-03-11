@@ -13,9 +13,9 @@
 <div id="favorites">
     <table id="favorite-product">
         <img src="View/images/logo-login.png" id="logo-img" alt="eMAG">
-        <h2 id="fav_text">My favourites products</h2>
+        <h2 id="fav_text">My favourite products</h2>
         <?php if(empty($params['favorites'])){
-            echo "<h1>You dont have favourites products</h1>";
+            echo "<h1>You don`t have favourite products</h1>";
         } else {?>
         <tr>
             <th class="td-favorites">Product Name</th>

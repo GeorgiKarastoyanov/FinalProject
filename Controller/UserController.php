@@ -359,8 +359,8 @@ class UserController extends BaseController
         if (!isset($_POST['price']) || $_POST['price'] < 0) {
             throw new CustomException('Price must be a positive number!','accountAdminEdit');
         }
-        if (!isset($_POST['price']) ||  $_POST['price'] > 5000) {
-            throw new CustomException('Max price is 5000!','accountAdminEdit');
+        if (!isset($_POST['price']) ||  $_POST['price'] > 20000) {
+            throw new CustomException('Max price is 20000$!','accountAdminEdit');
         }
 
 
@@ -408,8 +408,10 @@ class UserController extends BaseController
         $checkIsQtyEnough = ProductDao::checkQtyAvailabilityPerProduct($orderedProducts);
         if(is_array($checkIsQtyEnough)){
             $productId = $checkIsQtyEnough['productId'];
+            $product = ProductDao::getProduct($productId);
+            $productName = $product->getBrand() . ' ' . $product->getModel();
             $quantity = $checkIsQtyEnough['quantity'];
-            throw new CustomException("Product with id=$productId have available quantity of $quantity",'cart');
+            throw new CustomException("Sorry, we have only $quantity available from $productName",'cart');
         }
         $totalSum = 0;
         $totalProducts = 0;

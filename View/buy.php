@@ -11,7 +11,7 @@ $address = $_SESSION['user']['address'];
     </div>
     <form action="?target=product&action=finalBuy" method="post">
     <div id="address">
-        <?= $address !== null ? "Your address is $address." :
+        <?= $address !== null ? "Your items will arrive soon at $address." :
         "<h2 id='address'>You must set your address to complete the order!</h2><br>
         Adress:<input type='text' name='address'><br>";?>
     </div>
