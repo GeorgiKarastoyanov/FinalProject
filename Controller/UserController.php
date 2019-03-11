@@ -281,7 +281,7 @@ class UserController extends BaseController
         }
         $allSubCategories = SubCategoryDao::getSubCategory();
         $distinctBrands = SubCategoryDao::getAllDistinctBrands();
-        $this->renderView(['account', 'addProductStep1'], ['allSubCategories' => $allSubCategories, 'brands' => $distinctBrands]);
+        $this->renderView(['account', 'addProductStep1'], ['allSubCategories' => $allSubCategories, 'distinctBrands' => $distinctBrands]);
     }
 
     public function addProductStep2View()

@@ -1,3 +1,5 @@
+
+
 <!doctype html>
 <html lang="en">
 <head>
@@ -15,15 +17,13 @@
     <form action="?target=user&action=addProductStep2View"  method="post" class="form">
         <label for="" class="add-product-input">Sub-Categories:</label>  <select name="sub-categories" class="requirements" required>
             <?php foreach ($params['allSubCategories'] as $category) { ?>
-                "
-                <option value="<?= $category['id'] ?>"><?= $category['name'] ?></option>"
+                "<option value="<?= $category['id'] ?>"><?= $category['name'] ?></option>"
             <?php } ?>
         </select>
         <label for="" class="add-product-input">Brands:</label> <input type="text" name="brand" list="brands" required>
         <datalist id="brands">
-            <?php foreach ($params['brands'] as $brand) { ?>
-                "
-                <option><?= $brand['name'] ?></option>"
+            <?php foreach ($params['distinctBrands'] as $brand) { ?>
+                "<option><?= $brand['name'] ?></option>"
             <?php } ?>
         </datalist>
         <label for="" class="add-product-input">Model:</label> <input type="text" name="model" required>

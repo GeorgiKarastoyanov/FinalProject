@@ -38,8 +38,8 @@
 </nav>
 <div id="autoComplete"></div>
 <div id="categoriesNav">
-    <?php foreach ($params['brands'] as $brand){ ?>
-        <input id="categories" type="submit" onclick="getSubCategory('<?= $brand['name'];?>')" name='<?= $brand['name'];?>' value='<?= $brand['name'];?>'>
+    <?php foreach ($params['cat'] as $cat){ ?>
+        <input id="categories" type="submit" onclick="getSubCategory('<?= $cat['name'];?>')" name='<?= $cat['name'];?>' value='<?= $cat['name'];?>'>
     <?php } ?>
 </div>
 <div id="subCategories" >

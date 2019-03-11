@@ -7,8 +7,9 @@ abstract class BaseController
     public $isJson = false;
 
     protected function renderView(array $viewNames, array $params = array()){
+
         $addParams = [
-            'brands' => \model\ProductDao::getAllCategories(),
+            'cat' => \model\ProductDao::getAllCategories(),
             'cartProducts' => (isset($_SESSION['user']['cart'])) ? count($_SESSION['user']['cart']) : '0'
         ];
 

@@ -1,3 +1,5 @@
+
+
 <!doctype html>
 <html lang="en">
 <head>
@@ -48,6 +50,9 @@
     <?php } ?>
 </div>
     <?php
+    if(!isset($params['page'])){
+        $params['page'] = 1;
+    }
     $previousLink = '';
     $disabled = 'disabled';
     if($params['page'] > 1){
