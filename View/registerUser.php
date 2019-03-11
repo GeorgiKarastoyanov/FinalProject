@@ -15,9 +15,9 @@
     <form action="?target=user&action=registerUser" method="post" class="form">
         <h1 id="reg_text_user">Registration</h1>
         <label for="" class="reg_user">First Name</label><br>
-        <input type="text" class="reg_input" name="first-name" placeholder="First name" min="2" max="50"><br>
+        <input type="text" class="reg_input" name="first-name" placeholder="First name" min="2" max="50" required><br>
         <label for="" class="reg_user">Last Name </label><br>
-        <input type="text" class="reg_input"  name="last-name" placeholder="Last name" min="2" max="50"><br>
+        <input type="text" class="reg_input"  name="last-name" placeholder="Last name" min="2" max="50" required><br>
         <label for="" class="reg_user">Password </label><br>
         <input type="password" class="reg_input"  name="password" placeholder="Password" min="6" max="30" required><br>
         <label for="" class="reg_user">Confirm Password </label><br>

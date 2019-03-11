@@ -1,6 +1,4 @@
 <?php
-$brands = \model\ProductDao::getAllCategories();
-
 ?>
 <html lang="en">
 <head>
@@ -28,7 +26,9 @@ $brands = \model\ProductDao::getAllCategories();
                     <?= isset($_SESSION['user']['id']) ? 'Account' : 'LogIn'?></a>
             </li>
             <li id="LI_10" style="margin-left: 35px">
-                <a href="<?= isset($_SESSION['user']['id']) ? '?target=product&action=showCart' : '?target=user&action=loginEmailView'?>" id="A_11">Cart</a>
+                <a href="<?= isset($_SESSION['user']['id']) ? '?target=product&action=showCart' : '?target=user&action=loginEmailView'?>" id="A_11">
+                    Cart(<?= $params['cartProducts']; ?>)
+                </a>
             </li>
             <li id="LI_12">
                 <a href="<?= isset($_SESSION['user']['id']) ? '?target=user&action=favorites' : '?target=user&action=loginEmailView'?>" id="A_13">Favourites</a>
@@ -38,7 +38,7 @@ $brands = \model\ProductDao::getAllCategories();
 </nav>
 <div id="autoComplete"></div>
 <div id="categoriesNav">
-    <?php foreach ($brands as $brand){ ?>
+    <?php foreach ($params['brands'] as $brand){ ?>
         <input id="categories" type="submit" onclick="getSubCategory('<?= $brand['name'];?>')" name='<?= $brand['name'];?>' value='<?= $brand['name'];?>'>
     <?php } ?>
 </div>

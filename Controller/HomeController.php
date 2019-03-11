@@ -8,6 +8,7 @@ class HomeController extends BaseController
     {
         $topProducts = \model\ProductDao::getTopProducts();
         $topBrands = \model\ProductDao::getAllPictureBrands();
+
         $this->renderView(['topProducts', 'topBrands'],['topProducts' => $topProducts,'topBrands' => $topBrands]);
     }
 

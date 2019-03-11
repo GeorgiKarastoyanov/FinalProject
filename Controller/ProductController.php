@@ -267,7 +267,7 @@ class ProductController extends BaseController
                 throw new CustomException("You must enter address!","buy");
             }
             if(strlen($_POST['address']) < 3){
-                throw new CustomException("You must be at lest 3 characters long!","buy");
+                throw new CustomException("The address must be at least 3 characters long!","buy");
             }
             if(! UserDao::addUserAddress($userId,$_POST["address"])) {
                 throw new CustomException("Address not inserted!", "buy");
