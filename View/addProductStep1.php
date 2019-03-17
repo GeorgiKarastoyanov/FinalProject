@@ -20,13 +20,13 @@
                 "<option value="<?= $category['id'] ?>"><?= $category['name'] ?></option>"
             <?php } ?>
         </select>
-        <label for="" class="add-product-input">Brands:</label> <input type="text" name="brand" list="brands" required>
+        <label for="" class="add-product-input">Brands:</label> <input type="text" name="brand" list="brands" minlength="1" maxlength="15" required>
         <datalist id="brands">
             <?php foreach ($params['distinctBrands'] as $brand) { ?>
                 "<option><?= $brand['name'] ?></option>"
             <?php } ?>
         </datalist>
-        <label for="" class="add-product-input">Model:</label> <input type="text" name="model" required>
+        <label for="" class="add-product-input">Model:</label> <input type="text" name="model" minlength="1" maxlength="15" required>
         <br>
         <input type="submit" class="submit-addStep1" name="addProductStep1" value="Go next">
         <div id="err" <?= isset($params['errMsg']) ? "" : "style='display: none'"; ?>><?= isset($params['errMsg']) ? $params['errMsg'] : ""; ?></div>

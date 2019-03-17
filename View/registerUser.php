@@ -15,11 +15,13 @@
     <form action="?target=user&action=registerUser" method="post" class="form">
         <h1 id="reg_text_user">Registration</h1>
         <label for="" class="reg_user">First Name</label><br>
-        <input type="text" class="reg_input" name="first-name" placeholder="First name" min="2" max="50" required><br>
+        <input type="text" class="reg_input" name="first-name" placeholder="First name" min="2" max="15"
+               value="<?= isset($_SESSION['registerFirstName']) ? $_SESSION['registerFirstName'] : ''  ?>" required><br>
         <label for="" class="reg_user">Last Name </label><br>
-        <input type="text" class="reg_input"  name="last-name" placeholder="Last name" min="2" max="50" required><br>
+        <input type="text" class="reg_input"  name="last-name" placeholder="Last name" min="2" max="15"
+               value="<?= isset($_SESSION['registerLastName']) ? $_SESSION['registerLastName'] : ''  ?>" required><br>
         <label for="" class="reg_user">Password </label><br>
-        <input type="password" class="reg_input"  name="password" placeholder="Password" min="6" max="30" required><br>
+        <input type="password" class="reg_input"  name="password" placeholder="Password" min="8" max="30" required><br>
         <label for="" class="reg_user">Confirm Password </label><br>
         <input type="password" class="reg_input"  name="confirm-password" placeholder="Confirm password" min="6" max="30" required><br>
         <input type="submit" class="reg_submit-button" name="register-mail" value="Register"> <br>

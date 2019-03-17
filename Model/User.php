@@ -1,39 +1,36 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Natsi
- * Date: 22.2.2019 г.
- * Time: 19:45
- */
+
 
 namespace model;
 class User
 {
 
-    protected  $id;
-    protected  $email;
-    protected  $password;
+    private $id;
+    private $email;
+    private $password;
+    private $firstName;
+    private $lastName;
+    private $address;
+    private $isAdmin;
 
     /**
      * User constructor.
-     * @param $name
-     * @param $age
      * @param $email
      * @param $password
+     * @param $firstName
+     * @param $lastName
+     * @param $address
+     * @param $isAdmin
      */
-    public function __construct( $email, $password)
+
+    public function __construct( $email, $password,$firstName, $lastName, $address = null, $isAdmin = false)
     {
         $this->email = $email;
         $this->password = $password;
-    }
-
-
-
-    /**
-     * @param mixed $id
-     */
-    public function setId($id){
-        $this->id = $id;
+        $this->firstName = $firstName;
+        $this->lastName = $lastName;
+        $this->address = $address;
+        $this->isAdmin =  $isAdmin;
     }
 
     /**
@@ -45,11 +42,27 @@ class User
     }
 
     /**
+     * @param mixed $id
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+    }
+
+    /**
      * @return mixed
      */
     public function getEmail()
     {
         return $this->email;
+    }
+
+    /**
+     * @param mixed $email
+     */
+    public function setEmail($email)
+    {
+        $this->email = $email;
     }
 
     /**
@@ -59,4 +72,77 @@ class User
     {
         return $this->password;
     }
+
+    /**
+     * @param mixed $password
+     */
+    public function setPassword($password)
+    {
+        $this->password = $password;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getFirstName()
+    {
+        return $this->firstName;
+    }
+
+    /**
+     * @param mixed $firstName
+     */
+    public function setFirstName($firstName)
+    {
+        $this->firstName = $firstName;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getLastName()
+    {
+        return $this->lastName;
+    }
+
+    /**
+     * @param mixed $lastName
+     */
+    public function setLastName($lastName)
+    {
+        $this->lastName = $lastName;
+    }
+
+    /**
+     * @return null
+     */
+    public function getAddress()
+    {
+        return $this->address;
+    }
+
+    /**
+     * @param null $address
+     */
+    public function setAddress($address)
+    {
+        $this->address = $address;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isAdmin()
+    {
+        return $this->isAdmin;
+    }
+
+    /**
+     * @param bool $isAdmin
+     */
+    public function setIsAdmin($isAdmin)
+    {
+        $this->isAdmin = $isAdmin;
+    }
+
 }

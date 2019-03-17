@@ -3,7 +3,6 @@
 
 namespace controller;
 
-use Couchbase\Exception;
 use model\Product;
 use model\ProductDao;
 use exception\CustomException;
@@ -51,8 +50,8 @@ class ProductController extends BaseController
         if(! isset($_POST['addProduct'])){
             throw new CustomException('Second Step input not submit');
         }
-        if(! isset($_POST['price']) || $_POST['price'] < 0){
-            throw new CustomException('Price must be a positive number!','addProduct');
+        if(! isset($_POST['price']) || $_POST['price'] < 1){
+            throw new CustomException('Price must be bigger number than one!','addProduct');
         }
         if(! isset($_POST['price']) || $_POST['price'] > 20000){
             throw new CustomException('Max price is 20000$!','addProduct');

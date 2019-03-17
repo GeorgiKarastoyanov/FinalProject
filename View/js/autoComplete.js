@@ -1,7 +1,7 @@
 
 function loadNames() {
     var text = document.getElementById("input-products").value;
-    if (text.length > 2) {
+    if (text.length > 1) {
         fetch('?target=product&action=showAutoLoadNames', {
             method: 'POST',
             headers: {'Content-type': 'application/x-www-form-urlencoded'},
@@ -31,7 +31,7 @@ function loadNames() {
 
 function loadProducts() {
     var text = document.getElementById("input-products2").value;
-    if (text.length > 2) {
+    if (text.length > 1) {
         fetch('?target=product&action=showAutoLoadNames', {
             method: 'POST',
             headers: {'Content-type': 'application/x-www-form-urlencoded'},

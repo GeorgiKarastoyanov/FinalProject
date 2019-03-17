@@ -1,8 +1,10 @@
 <?php
 
 namespace model;
+
 class UserDao{
-    public static function addUser(UserInfo $user){
+
+    public static function addUser(User $user){
        $email= $user->getEmail();
        $password= $user->getPassword();
        $firstName = $user->getFirstName();
@@ -62,7 +64,7 @@ class UserDao{
         return true;
     }
 
-    public static function editProfile(UserInfo $user){
+    public static function editProfile(User $user){
         $query = "UPDATE users SET email = :email,";
         $params = [];
         $email = $user->getEmail();

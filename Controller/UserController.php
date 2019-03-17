@@ -6,8 +6,9 @@ use exception\CustomException;
 use exception\NotFoundException;
 use model\ProductDao;
 use model\SubCategoryDao;
+use model\User;
 use Model\UserDao;
-use model\UserInfo;
+
 
 class UserController extends BaseController
 {
@@ -18,11 +19,17 @@ class UserController extends BaseController
             throw new NotFoundException();
         }
 
-        if (!isset($_POST['email']) || !filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) {
-            throw new CustomException('Invalid email!', 'registerEmail');
+        //Email validations
+        if (isset($_POST['email'])){
+            $email=$this->testInput($_POST['email']);
+            if (!filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) {
+                throw new CustomException('Invalid email!', 'registerEmail');
+            }
+        }
+        else{
+            throw new CustomException('Please enter email!', 'registerEmail');
         }
 
-        $email = trim($_POST['email']);
 
         if (UserDao::existUserByEmail($email)) {
             throw new CustomException('Email already exists!', "registerEmail");
@@ -35,51 +42,64 @@ class UserController extends BaseController
 
     public function registerUser()
     {
-        if (!isset($_SESSION['register_email'])) {
-            $this->registerEmailView();
-        }
-
         if (strtolower($_SERVER["REQUEST_METHOD"]) !== "post") {
             throw new NotFoundException();
         }
 
-        if (!isset($_POST['first-name']) || strlen($_POST['first-name']) < 2) {
-            throw new CustomException('First name must be at least two characters long!', 'registerUser');
+        if (!isset($_SESSION['register_email'])) {
+            $this->registerEmailView();
         }
 
-        if (!isset($_POST['last-name']) || strlen($_POST['last-name']) < 2) {
-            throw new CustomException('Last name must be at least two characters long!', 'registerUser');
+        //First Name validations
+        if (isset($_POST['first-name'])){
+            $firstName = $this->testInput($_POST['first-name']);
+            $_SESSION['registerFirstName'] = $firstName;
+            $this->testName($firstName,"First Name",'registerUser');
+        }
+        else{
+            throw new CustomException("Please enter first name!",'registerUser');
         }
 
-        if (!isset($_POST['first-name']) || strlen($_POST['first-name']) > 50) {
-            throw new CustomException('First name cannot be more than 50 characters long!', 'registerUser');
+        //Last Name validations
+        if (isset($_POST['last-name'])){
+            $lastName = $this->testInput($_POST['last-name']);
+            $_SESSION['registerLastName'] = $lastName;
+            $this->testName($lastName,"Last Name",'registerUser');
+        }
+        else{
+            throw new CustomException("Please enter last name!",'registerUser');
         }
 
-        if (!isset($_POST['last-name']) || strlen($_POST['last-name']) > 50) {
-            throw new CustomException('Last name cannot be more than 50 characters long!', 'registerUser');
+        //Password validations
+        if(!empty($_POST["password"]) && ($_POST["password"] == $_POST["confirm-password"])) {
+            $password =  $this->testInput($_POST["password"]);
+            if (strlen($password) < 8) {
+                throw new CustomException("Your Password Must Contain At Least 8 Characters!",'registerUser');
+            }
+            elseif (strlen($password) > 30) {
+                throw new CustomException("Your Password Should Not Be More Than 30 Characters !",'registerUser');
+            }
+            elseif(!preg_match("#[0-9]+#",$password)) {
+                throw new CustomException("Your Password Must Contain At Least 1 Number!",'registerUser');
+            }
+            elseif(!preg_match("#[A-Z]+#",$password)) {
+                throw new CustomException("Your Password Must Contain At Least 1 Capital Letter!",'registerUser');
+            }
+            elseif(!preg_match("#[a-z]+#",$password)) {
+                throw new CustomException("Your Password Must Contain At Least 1 Lowercase Letter!",'registerUser');
+            }
+        }
+        elseif(!empty($_POST["password"])) {
+            throw new CustomException("Please Check You've Entered Or Confirmed Your Password!",'registerUser');
+        } else {
+            throw new CustomException("Please enter password!",'registerUser');
         }
 
-        if (!isset($_POST['password']) || !isset($_POST['confirm-password'])) {
-            throw new CustomException('You must enter password!', 'registerUser');
-        }
-        trim($_POST['password']);
-        trim($_POST['confirm-password']);
-        if (strlen($_POST['password']) < 6) {
-            throw new CustomException('Password must be at least 6 characters long!', 'registerUser');
-        }
 
-        if (strlen($_POST['password']) > 30) {
-            throw new CustomException('Password cannot be more than 30 characters long!', 'registerUser');
-        }
 
-        if ($_POST['password'] !== $_POST['confirm-password']) {
-            throw new CustomException('Passwords do not match!', 'registerUser');
-        }
         $email = $_SESSION['register_email'];
-        $password = password_hash($_POST["password"], PASSWORD_BCRYPT, ["cost" => 5]);
-        $firstName = $_POST['first-name'];
-        $lastName = $_POST['last-name'];
-        $user = new UserInfo($email, $password, $firstName, $lastName);
+        $password = password_hash($password, PASSWORD_BCRYPT, ["cost" => 5]);
+        $user = new User($email, $password, $firstName, $lastName);
         $userId = UserDao::addUser($user);
         if (!$userId) {
             throw new NotFoundException();
@@ -93,6 +113,8 @@ class UserController extends BaseController
         $_SESSION['user']['address'] = $user->getAddress();
         $_SESSION['user']['isAdmin'] = false;
 
+        unset($_SESSION['registerFirstName']);
+        unset($_SESSION['registerLastName']);
         unset($_SESSION['register_email']);
 
         header("Location: ?target=home&action=index");
@@ -176,53 +198,69 @@ class UserController extends BaseController
         }
 
 
-        //first name
-        if (!isset($_POST['first-name'])) {
-            throw new CustomException('First name is not set!','accountProfile');
-        } else if (strlen($_POST['first-name']) < 2) {
-            throw new CustomException('First name must be at least two characters long!','accountProfile');
-        } else {
-            $firstName = $_POST['first-name'];
-        }
-
-        //last name
-        if (!isset($_POST['last-name'])) {
-            throw new CustomException('Last name is not set!','accountProfile');
-        } else if (strlen($_POST['last-name']) < 2) {
-            throw new CustomException('Last name must be at least two characters long!','accountProfile');
-        } else {
-            $lastName = $_POST['last-name'];
-        }
-
-        //email
-        if (!isset($_POST['email'])) {
-            throw new CustomException('Email is not set!','accountProfile');
-        }
-        $email = trim($_POST['email']);
-        if (!filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) {
-            throw new CustomException('Invalid input for email!','accountProfile');
-        }
-        if(UserDao::existUserByEmail($email) && $_POST['email'] !== $_SESSION['user']['email']){
-            throw new CustomException('This email already exist!','accountProfile');
-        }
-
-        //password
-        if ((! isset($_POST['password']) || ! isset($_POST['confirm-password'])) ||
-            ($_POST['password'] == '' && $_POST['confirm-password'] == '')) {
-            $password = false;
+        //First Name validations
+        if (isset($_POST['first-name'])){
+            $firstName = $this->testInput($_POST['first-name']);
+            $this->testName($firstName,"First Name",'accountProfile');
         }
         else{
-            trim($_POST['password']);
-            trim($_POST['confirm-password']);
+            throw new CustomException("Please enter first name!",'accountProfile');
+        }
 
-            if (strlen($_POST['password']) < 6) {
-                throw new CustomException('Password must be at least 6 characters long!Spaces forbidden!', 'accountProfile');
+        //Last Name validations
+        if (isset($_POST['last-name'])){
+            $lastName = $this->testInput($_POST['last-name']);
+            $this->testName($lastName,"Last Name",'accountProfile');
+        }
+        else{
+            throw new CustomException("Please enter last name!",'accountProfile');
+        }
+
+
+        //Email validations
+        if (isset($_POST['email'])){
+            $email=$this->testInput($_POST['email']);
+            if (!filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) {
+                throw new CustomException('Invalid email!', 'accountProfile');
             }
-            if ($_POST['password'] !== $_POST['confirm-password']) {
-                throw new CustomException('Passwords do not match!','accountProfile');
+            elseif(UserDao::existUserByEmail($email) && $_POST['email'] !== $_SESSION['user']['email']){
+                throw new CustomException('This email already exist!','accountProfile');
+            }
+        }
+        else{
+            throw new CustomException('Please enter email!', 'accountProfile');
+        }
+
+
+        //Password validations
+        if ((! isset($_POST['password']) && ! isset($_POST['confirm-password'])) ||
+            ($_POST['password'] == '' && $_POST['confirm-password'] == '')) {
+            $password = false;
+
+        }
+        elseif(isset($_POST["password"]) && ($_POST["password"] == $_POST["confirm-password"])) {
+            $password =  $this->testInput($_POST["password"]);
+            if (strlen($password) < 8) {
+                throw new CustomException("Your Password Must Contain At Least 8 Characters!",'accountProfile');
+            }
+            elseif (strlen($password) > 30) {
+                throw new CustomException("Your Password Should Not Be More Than 30 Characters !",'accountProfile');
+            }
+            elseif(!preg_match("#[0-9]+#",$password)) {
+                throw new CustomException("Your Password Must Contain At Least 1 Number!",'accountProfile');
+            }
+            elseif(!preg_match("#[A-Z]+#",$password)) {
+                throw new CustomException("Your Password Must Contain At Least 1 Capital Letter!",'accountProfile');
+            }
+            elseif(!preg_match("#[a-z]+#",$password)) {
+                throw new CustomException("Your Password Must Contain At Least 1 Lowercase Letter!",'accountProfile');
             }
             $password = password_hash($_POST["password"], PASSWORD_BCRYPT, ["cost" => 5]);
         }
+        else{
+            throw new CustomException("Passwords Do Not Match!",'accountProfile');
+        }
+
 
 
         //address
@@ -236,7 +274,7 @@ class UserController extends BaseController
             $address = $_POST['address'];
         }
 
-        $user = new UserInfo($email, $password, $firstName, $lastName, $address);
+        $user = new User($email, $password, $firstName, $lastName, $address);
         $user->setId($_SESSION['user']['id']);
         if (!UserDao::editProfile($user)) {
             throw new CustomException('Profile not edited!','accountProfile');

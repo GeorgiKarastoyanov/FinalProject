@@ -24,17 +24,17 @@
             </tr>
             <tr>
                 <td><label for="">Email:</label></td>
-                <td><input type="email" name="email" required min="2" max="50"
+                <td><input type="email" name="email" required minlength="5" maxlength="50"
                             value="<?= isset($_SESSION['user']['email']) ? $_SESSION['user']['email'] : "" ?>"></td>
             </tr>
             <tr>
                 <td><label for="">First Name:</label></td>
-                <td><input type="text" name="first-name" required min="2" max="50"
+                <td><input type="text" name="first-name" minlength="2" maxlength="15" required
                             value="<?= isset($_SESSION['user']['firstName']) ? $_SESSION['user']['firstName'] : "" ?>"></td>
             </tr>
             <tr>
                 <td><label for="">Last Name:</label></td>
-                <td><input type="text" name="last-name" required min="2" max="50"
+                <td><input type="text" name="last-name" minlength="2" maxlength="15" required
                                value="<?= isset($_SESSION['user']['lastName']) ? $_SESSION['user']['lastName'] : "" ?>"></td>
             </tr>
             <tr>
